@@ -1,0 +1,795 @@
+.lazyollama-gui {
+  font-family: 'Inter', sans-serif;
+  min-height: 100vh;
+  display: flex;
+  overflow: hidden;
+}
+
+.lazyollama-gui--light {
+  background-color: #f5f5f5;
+  color: #333333;
+}
+
+.lazyollama-gui--dark {
+  background-color: #1a1a1a;
+  color: #ffffff;
+}
+
+/* Sidebar */
+.lazyollama-gui__sidebar {
+  width: 250px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  border-right-width: 1px;
+  border-right-style: solid;
+}
+
+.lazyollama-gui--light .lazyollama-gui__sidebar {
+  background-color: #ffffff;
+  border-right-color: #e0e0e0;
+}
+
+.lazyollama-gui--dark .lazyollama-gui__sidebar {
+  background-color: #2a2a2a;
+  border-right-color: #444444;
+}
+
+.lazyollama-gui__sidebar-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 32px;
+}
+
+.lazyollama-gui__logo-icon {
+  height: 32px;
+  width: 32px;
+  margin-right: 8px;
+}
+
+.lazyollama-gui__title {
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+.lazyollama-gui__nav {
+  flex: 1;
+}
+
+.lazyollama-gui__nav-list {
+  list-style: none;
+}
+
+.lazyollama-gui__nav-item {
+  margin-bottom: 8px;
+  border-radius: 4px;
+}
+
+.lazyollama-gui--light .lazyollama-gui__nav-item--active {
+  background-color: #e0e0e0;
+}
+
+.lazyollama-gui--dark .lazyollama-gui__nav-item--active {
+  background-color: #444444;
+}
+
+.lazyollama-gui__nav-button {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 8px;
+  border: none;
+  background: none;
+  text-align: left;
+  cursor: pointer;
+  border-radius: 4px;
+  color: inherit;
+  font-family: 'Inter', sans-serif;
+}
+
+.lazyollama-gui--light .lazyollama-gui__nav-button:hover {
+  background-color: #f0f0f0;
+}
+
+.lazyollama-gui--dark .lazyollama-gui__nav-button:hover {
+  background-color: #3a3a3a;
+}
+
+.lazyollama-gui__nav-icon {
+  margin-right: 8px;
+  height: 20px;
+  width: 20px;
+}
+
+.lazyollama-gui__theme-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px;
+  margin-top: 16px;
+  border-top-width: 1px;
+  border-top-style: solid;
+  cursor: pointer;
+  background: none;
+  border: none;
+  width: 100%;
+  color: inherit;
+  font-family: 'Inter', sans-serif;
+}
+
+.lazyollama-gui--light .lazyollama-gui__theme-toggle {
+  border-top-color: #e0e0e0;
+}
+
+.lazyollama-gui--dark .lazyollama-gui__theme-toggle {
+  border-top-color: #444444;
+}
+
+.lazyollama-gui__theme-icon {
+  height: 20px;
+  width: 20px;
+}
+
+/* Main Content */
+.lazyollama-gui__main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* Header */
+.lazyollama-gui__header {
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+}
+
+.lazyollama-gui--light .lazyollama-gui__header {
+  background-color: #ffffff;
+  border-bottom-color: #e0e0e0;
+}
+
+.lazyollama-gui--dark .lazyollama-gui__header {
+  background-color: #2a2a2a;
+  border-bottom-color: #444444;
+}
+
+.lazyollama-gui__header-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.lazyollama-gui__search-container {
+  position: relative;
+  margin-right: 16px;
+}
+
+.lazyollama-gui__search-icon {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #888888;
+  height: 20px;
+  width: 20px;
+}
+
+.lazyollama-gui__search-input {
+  padding: 8px 8px 8px 36px;
+  border-radius: 4px;
+  border: none;
+  width: 200px;
+  font-family: 'Inter', sans-serif;
+}
+
+.lazyollama-gui--light .lazyollama-gui__search-input {
+  background-color: #f0f0f0;
+  color: #333333;
+}
+
+.lazyollama-gui--dark .lazyollama-gui__search-input {
+  background-color: #444444;
+  color: #ffffff;
+}
+
+/* Content */
+.lazyollama-gui__content {
+  flex: 1;
+  padding: 24px;
+  overflow-y: auto;
+}
+
+.lazyollama-gui__section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.lazyollama-gui__section-title {
+  font-size: 1.125rem;
+  font-weight: 600;
+}
+
+.lazyollama-gui__section-title--spaced {
+  margin-bottom: 24px;
+}
+
+.lazyollama-gui__filter-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.lazyollama-gui__filter-button {
+  padding: 4px 12px;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-family: 'Inter', sans-serif;
+}
+
+.lazyollama-gui--light .lazyollama-gui__filter-button {
+  background-color: #f0f0f0;
+  color: #333333;
+}
+
+.lazyollama-gui--dark .lazyollama-gui__filter-button {
+  background-color: #3a3a3a;
+  color: #ffffff;
+}
+
+.lazyollama-gui--light .lazyollama-gui__filter-button--active {
+  background-color: #e0e0e0;
+}
+
+.lazyollama-gui--dark .lazyollama-gui__filter-button--active {
+  background-color: #444444;
+}
+
+/* Models List */
+.lazyollama-gui__models-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.lazyollama-gui__model-card {
+  border-radius: 8px;
+  overflow: hidden;
+  border-width: 1px;
+  border-style: solid;
+}
+
+.lazyollama-gui--light .lazyollama-gui__model-card {
+  background-color: #ffffff;
+  border-color: #e0e0e0;
+}
+
+.lazyollama-gui--dark .lazyollama-gui__model-card {
+  background-color: #2a2a2a;
+  border-color: #444444;
+}
+
+.lazyollama-gui__model-header {
+  padding: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.lazyollama-gui--light .lazyollama-gui__model-header:hover {
+  background-color: #f8f8f8;
+}
+
+.lazyollama-gui--dark .lazyollama-gui__model-header:hover {
+  background-color: #3a3a3a;
+}
+
+.lazyollama-gui__model-info {
+  display: flex;
+  align-items: center;
+}
+
+.lazyollama-gui__model-icon {
+  margin-right: 12px;
+  height: 24px;
+  width: 24px;
+  color: #888888;
+}
+
+.lazyollama-gui__model-icon--running {
+  color: #10b981;
+}
+
+.lazyollama-gui__model-name {
+  font-weight: 500;
+}
+
+.lazyollama-gui__model-description {
+  font-size: 0.875rem;
+}
+
+.lazyollama-gui--light .lazyollama-gui__model-description {
+  color: #666666;
+}
+
+.lazyollama-gui--dark .lazyollama-gui__model-description {
+  color: #bbbbbb;
+}
+
+.lazyollama-gui__model-meta {
+  display: flex;
+  align-items: center;
+}
+
+.lazyollama-gui__model-tags {
+  display: flex;
+  margin-right: 16px;
+}
+
+.lazyollama-gui__model-tag {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  margin-right: 8px;
+}
+
+.lazyollama-gui--light .lazyollama-gui__model-tag {
+  background-color: #f0f0f0;
+}
+
+.lazyollama-gui--dark .lazyollama-gui__model-tag {
+  background-color: #444444;
+}
+
+.lazyollama-gui__chevron {
+  height: 20px;
+  width: 20px;
+  transition: transform 0.2s;
+}
+
+.lazyollama-gui__chevron--expanded {
+  transform: rotate(180deg);
+}
+
+.lazyollama-gui__model-actions {
+  padding: 16px;
+  border-top-width: 1px;
+  border-top-style: solid;
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.lazyollama-gui--light .lazyollama-gui__model-actions {
+  border-top-color: #e0e0e0;
+}
+
+.lazyollama-gui--dark .lazyollama-gui__model-actions {
+  border-top-color: #444444;
+}
+
+/* Buttons */
+.lazyollama-gui__button {
+  display: flex;
+  align-items: center;
+  padding: 4px 12px;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-family: 'Inter', sans-serif;
+}
+
+.lazyollama-gui__button-icon {
+  height: 16px;
+  width: 16px;
+  margin-right: 4px;
+}
+
+.lazyollama-gui__button--primary {
+  background-color: #2563eb;
+  color: white;
+}
+
+.lazyollama-gui__button--primary:hover {
+  background-color: #1d4ed8;
+}
+
+.lazyollama-gui__button--success {
+  background-color: #10b981;
+  color: white;
+}
+
+.lazyollama-gui__button--success:hover {
+  background-color: #059669;
+}
+
+.lazyollama-gui__button--danger {
+  background-color: #ef4444;
+  color: white;
+}
+
+.lazyollama-gui__button--danger:hover {
+  background-color: #dc2626;
+}
+
+.lazyollama-gui__button--secondary {
+  color: inherit;
+}
+
+.lazyollama-gui--light .lazyollama-gui__button--secondary {
+  background-color: #e0e0e0;
+}
+
+.lazyollama-gui--light .lazyollama-gui__button--secondary:hover {
+  background-color: #d0d0d0;
+}
+
+.lazyollama-gui--dark .lazyollama-gui__button--secondary {
+  background-color: #444444;
+}
+
+.lazyollama-gui--dark .lazyollama-gui__button--secondary:hover {
+  background-color: #555555;
+}
+
+/* Running Models */
+.lazyollama-gui__running-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 24px;
+}
+
+.lazyollama-gui__running-card {
+  padding: 16px;
+  border-radius: 8px;
+  border-width: 1px;
+  border-style: solid;
+}
+
+.lazyollama-gui--light .lazyollama-gui__running-card {
+  background-color: #ffffff;
+  border-color: #e0e0e0;
+}
+
+.lazyollama-gui--dark .lazyollama-gui__running-card {
+  background-color: #2a2a2a;
+  border-color: #444444;
+}
+
+.lazyollama-gui__running-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.lazyollama-gui__running-name {
+  display: flex;
+  align-items: center;
+}
+
+.lazyollama-gui__running-icon {
+  margin-right: 8px;
+  color: #10b981;
+  height: 20px;
+  width: 20px;
+}
+
+.lazyollama-gui__metrics {
+  font-size: 0.875rem;
+  margin-bottom: 16px;
+}
+
+.lazyollama-gui--light .lazyollama-gui__metrics {
+  color: #666666;
+}
+
+.lazyollama-gui--dark .lazyollama-gui__metrics {
+  color: #bbbbbb;
+}
+
+.lazyollama-gui__metric-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 4px;
+}
+
+.lazyollama-gui__progress-container {
+  width: 100%;
+  height: 8px;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.lazyollama-gui--light .lazyollama-gui__progress-container {
+  background-color: #e0e0e0;
+}
+
+.lazyollama-gui--dark .lazyollama-gui__progress-container {
+  background-color: #444444;
+}
+
+.lazyollama-gui__progress-bar {
+  height: 100%;
+  border-radius: 4px;
+  background-color: #2563eb;
+}
+
+.lazyollama-gui__progress-bar--blue {
+  background-color: #2563eb;
+}
+
+.lazyollama-gui__progress-bar--green {
+  background-color: #10b981;
+}
+
+.lazyollama-gui__progress-bar--purple {
+  background-color: #8b5cf6;
+}
+
+.lazyollama-gui__running-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* Empty State */
+.lazyollama-gui__empty-state {
+  text-align: center;
+  padding: 32px;
+  border-radius: 8px;
+  border-width: 1px;
+  border-style: solid;
+}
+
+.lazyollama-gui--light .lazyollama-gui__empty-state {
+  background-color: #ffffff;
+  border-color: #e0e0e0;
+}
+
+.lazyollama-gui--dark .lazyollama-gui__empty-state {
+  background-color: #2a2a2a;
+  border-color: #444444;
+}
+
+.lazyollama-gui__empty-icon {
+  height: 48px;
+  width: 48px;
+  margin: 0 auto 16px auto;
+  opacity: 0.5;
+}
+
+.lazyollama-gui__empty-title {
+  font-size: 1.125rem;
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+.lazyollama-gui__empty-text {
+  margin-bottom: 16px;
+}
+
+.lazyollama-gui--light .lazyollama-gui__empty-text {
+  color: #666666;
+}
+
+.lazyollama-gui--dark .lazyollama-gui__empty-text {
+  color: #bbbbbb;
+}
+
+/* Stats */
+.lazyollama-gui__stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-bottom: 24px;
+}
+
+.lazyollama-gui__stat-card {
+  padding: 16px;
+  border-radius: 8px;
+  border-width: 1px;
+  border-style: solid;
+}
+
+.lazyollama-gui--light .lazyollama-gui__stat-card {
+  background-color: #ffffff;
+  border-color: #e0e0e0;
+}
+
+.lazyollama-gui--dark .lazyollama-gui__stat-card {
+  background-color: #2a2a2a;
+  border-color: #444444;
+}
+
+.lazyollama-gui__stat-title {
+  font-size: 0.875rem;
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+.lazyollama-gui--light .lazyollama-gui__stat-title {
+  color: #666666;
+}
+
+.lazyollama-gui--dark .lazyollama-gui__stat-title {
+  color: #bbbbbb;
+}
+
+.lazyollama-gui__stat-value {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+.lazyollama-gui__chart-container {
+  padding: 16px;
+  border-radius: 8px;
+  border-width: 1px;
+  border-style: solid;
+  margin-bottom: 24px;
+}
+
+.lazyollama-gui--light .lazyollama-gui__chart-container {
+  background-color: #ffffff;
+  border-color: #e0e0e0;
+}
+
+.lazyollama-gui--dark .lazyollama-gui__chart-container {
+  background-color: #2a2a2a;
+  border-color: #444444;
+}
+
+.lazyollama-gui__chart-title {
+  font-weight: 500;
+  margin-bottom: 16px;
+}
+
+.lazyollama-gui__chart {
+  height: 256px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-around;
+}
+
+.lazyollama-gui__chart-bar {
+  width: 32px;
+  margin: 0 4px;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  background-color: #2563eb;
+}
+
+.lazyollama-gui__chart-labels {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 8px;
+  font-size: 0.75rem;
+  color: #888888;
+}
+
+/* Settings */
+.lazyollama-gui__settings-card {
+  padding: 16px;
+  border-radius: 8px;
+  border-width: 1px;
+  border-style: solid;
+  margin-bottom: 24px;
+}
+
+.lazyollama-gui--light .lazyollama-gui__settings-card {
+  background-color: #ffffff;
+  border-color: #e0e0e0;
+}
+
+.lazyollama-gui--dark .lazyollama-gui__settings-card {
+  background-color: #2a2a2a;
+  border-color: #444444;
+}
+
+.lazyollama-gui__settings-title {
+  font-weight: 500;
+  margin-bottom: 16px;
+}
+
+.lazyollama-gui__settings-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.lazyollama-gui__form-group {
+  margin-bottom: 16px;
+}
+
+.lazyollama-gui__form-label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+
+.lazyollama-gui--light .lazyollama-gui__form-label {
+  color: #666666;
+}
+
+.lazyollama-gui--dark .lazyollama-gui__form-label {
+  color: #bbbbbb;
+}
+
+.lazyollama-gui__form-input {
+  display: block;
+  width: 100%;
+  padding: 8px 12px;
+  border-radius: 4px;
+  border-width: 1px;
+  border-style: solid;
+  font-family: 'Inter', sans-serif;
+}
+
+.lazyollama-gui--light .lazyollama-gui__form-input {
+  background-color: #ffffff;
+  border-color: #e0e0e0;
+  color: #333333;
+}
+
+.lazyollama-gui--dark .lazyollama-gui__form-input {
+  background-color: #3a3a3a;
+  border-color: #444444;
+  color: #ffffff;
+}
+
+.lazyollama-gui__toggle-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.lazyollama-gui__toggle {
+  position: relative;
+  display: inline-flex;
+  height: 24px;
+  width: 44px;
+  align-items: center;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.lazyollama-gui--light .lazyollama-gui__toggle {
+  background-color: #d0d0d0;
+}
+
+.lazyollama-gui--dark .lazyollama-gui__toggle {
+  background-color: #555555;
+}
+
+.lazyollama-gui__toggle--active {
+  background-color: #2563eb;
+}
+
+.lazyollama-gui__toggle-dot {
+  position: absolute;
+  height: 16px;
+  width: 16px;
+  border-radius: 50%;
+  background-color: white;
+  transition: left 0.2s;
+}
+
+.lazyollama-gui__toggle .lazyollama-gui__toggle-dot {
+  left: 4px;
+}
+
+.lazyollama-gui__toggle--active .lazyollama-gui__toggle-dot {
+  left: 24px;
+}
