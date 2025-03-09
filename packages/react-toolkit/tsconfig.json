@@ -1,0 +1,24 @@
+{
+    "extends": "@lazyollama-gui/typescript-configs/typescript/library.tsconfig.json",
+    "compilerOptions": {
+
+        "lib": ["ESNext", "DOM"],
+        "rootDir": "./",
+        "baseUrl": "./",
+        "paths": {
+          "@/*": ["./lib/*"]
+        },
+        "noEmit": false,
+        "listEmittedFiles": true,
+        "allowArbitraryExtensions": true,
+        "declaration": true,
+        "emitDeclarationOnly": true,
+        "outDir": "./out",
+        "removeComments": false,
+        "resolveJsonModule": true,
+        "noEmitOnError": true,
+        "preserveSymlinks": true,
+    },
+    "include": ["lib"],
+    "exclude": ["node_modules"]
+}

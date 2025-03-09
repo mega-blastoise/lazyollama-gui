@@ -1,0 +1,43 @@
+FROM oven/bun:1.2.4-alpine AS base
+
+FROM base AS workspace_setup
+
+RUN mkdir -p /app/workspace
+
+WORKDIR /app/workspace
+
+FROM workspace_setup AS dependency_installation
+
+COPY ./package.json ./package.json
+COPY ./bun.lock* ./bun.lock*
+COPY ./turbo.json ./turbo.json
+COPY ./core/web ./core/web
+COPY ./packages ./packages
+
+RUN bun install
+
+FROM dependency_installation AS builder
+
+RUN bun run build
+
+FROM builder AS type_generation
+
+RUN bun run check-types
+
+FROM base AS runtime
+
+RUN mkdir -p /app/prod
+
+WORKDIR /app/prod
+
+COPY --from=builder /app/workspace/package.json /app/prod/package.json
+COPY --from=builder /app/workspace/bun.lock* /app/prod/bun.lock*
+COPY --from=builder /app/workspace/turbo.json /app/prod/turbo.json
+COPY --from=builder /app/workspace/core/web /app/prod/core/web
+COPY --from=builder /app/workspace/packages /app/prod/packages
+
+RUN rm -rf node_modules core/web/node_modules packages/**/node_modules
+
+RUN bun install --prod
+
+CMD ["bun", "run", "docker"]

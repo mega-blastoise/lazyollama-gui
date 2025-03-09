@@ -1,0 +1,35 @@
+{
+    "$schema": "https://turbo.build/schema.json",
+    "ui": "tui",
+    "remoteCache": {
+      "signature": false,
+      "enabled": true
+    },
+    "tasks": {
+      "build": {
+        "outputs": ["out/**"],
+        "dependsOn": ["^check-types", "^build"],
+        "cache": true
+      },
+      "check-types": {
+        "dependsOn": ["^check-types"]
+      },
+      "prettier": {
+        "dependsOn": []
+      },
+      "lint": { 
+        "dependsOn": ["prettier"] 
+      },
+      "clean": {
+        "dependsOn": ["^clean"]
+      },
+      "start": {
+        "cache": false,
+        "dependsOn": ["^start"]
+      },
+      "docker": {
+        "cache": false,
+        "dependsOn": ["^docker"]
+      }
+    }
+  }

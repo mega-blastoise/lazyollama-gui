@@ -1,0 +1,129 @@
+.sb-link {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--font-primary);
+  font-weight: 500;
+  text-decoration: none;
+  transition: color var(--transition-fast);
+  cursor: pointer;
+}
+
+/* Link variants */
+.sb-link-default {
+  color: var(--color-secondary);
+}
+
+.sb-link-default:hover {
+  color: var(--color-primary);
+  text-decoration: underline;
+}
+
+.sb-link-primary {
+  color: var(--color-primary);
+}
+
+.sb-link-primary:hover {
+  color: #e43771; /* Darker variant of primary */
+  text-decoration: underline;
+}
+
+.sb-link-secondary {
+  color: var(--color-text-secondary);
+}
+
+.sb-link-secondary:hover {
+  color: var(--color-text-primary);
+  text-decoration: underline;
+}
+
+.sb-link-subtle {
+  color: var(--color-text-tertiary);
+}
+
+.sb-link-subtle:hover {
+  color: var(--color-text-secondary);
+  text-decoration: underline;
+}
+
+.sb-link-nav {
+  color: var(--color-text-primary);
+  font-weight: 600;
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: var(--border-radius-sm);
+}
+
+.sb-link-nav:hover {
+  background-color: var(--color-bg-secondary);
+}
+
+.sb-link-nav.active {
+  color: var(--color-primary);
+  background-color: rgba(255, 71, 133, 0.1);
+}
+
+/* Disabled state */
+.sb-link-disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* Icons */
+.sb-link-icon {
+  display: inline-flex;
+  align-items: center;
+}
+
+.sb-link-icon-left {
+  margin-right: var(--spacing-xs);
+}
+
+.sb-link-icon-right {
+  margin-left: var(--spacing-xs);
+}
+
+.sb-link-external-icon {
+  display: inline-flex;
+  margin-left: var(--spacing-xs);
+  vertical-align: middle;
+}
+
+/* Focus state */
+.sb-link:focus {
+  outline: none;
+  text-decoration: underline;
+}
+
+.sb-link:focus-visible {
+  outline: 2px solid var(--color-secondary);
+  outline-offset: 2px;
+}
+
+/* Dark mode overrides */
+[data-theme='dark'] .sb-link-default {
+  color: #3db2ff; /* Brighter blue for dark mode */
+}
+
+[data-theme='dark'] .sb-link-secondary {
+  color: var(--color-dark-text-secondary);
+}
+
+[data-theme='dark'] .sb-link-secondary:hover {
+  color: var(--color-dark-text-primary);
+}
+
+[data-theme='dark'] .sb-link-subtle {
+  color: var(--color-dark-text-tertiary);
+}
+
+[data-theme='dark'] .sb-link-subtle:hover {
+  color: var(--color-dark-text-secondary);
+}
+
+[data-theme='dark'] .sb-link-nav {
+  color: var(--color-dark-text-primary);
+}
+
+[data-theme='dark'] .sb-link-nav:hover {
+  background-color: var(--color-dark-bg-secondary);
+}

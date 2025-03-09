@@ -1,0 +1,227 @@
+.sb-button {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: var(--border-radius-md);
+  font-family: var(--font-primary);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: center;
+}
+
+/* Button sizes */
+.sb-button-sm {
+  height: 32px;
+  padding: 0 var(--spacing-sm);
+  font-size: var(--font-size-sm);
+  min-width: 64px;
+}
+
+.sb-button-md {
+  height: 40px;
+  padding: 0 var(--spacing-md);
+  font-size: var(--font-size-md);
+  min-width: 96px;
+}
+
+.sb-button-lg {
+  height: 48px;
+  padding: 0 var(--spacing-lg);
+  font-size: var(--font-size-lg);
+  min-width: 128px;
+}
+
+/* Button variants */
+.sb-button-primary {
+  background-color: var(--color-primary);
+  color: white;
+  box-shadow: var(--shadow-sm);
+}
+
+.sb-button-primary:hover {
+  background-color: #e43771; /* Darker variant of primary */
+  box-shadow: var(--shadow-md);
+}
+
+.sb-button-primary:active {
+  background-color: #d1325f; /* Even darker variant of primary */
+  box-shadow: var(--shadow-sm);
+}
+
+.sb-button-secondary {
+  background-color: var(--color-secondary);
+  color: white;
+  box-shadow: var(--shadow-sm);
+}
+
+.sb-button-secondary:hover {
+  background-color: #1996e6; /* Darker variant of secondary */
+  box-shadow: var(--shadow-md);
+}
+
+.sb-button-secondary:active {
+  background-color: #1685cc; /* Even darker variant of secondary */
+  box-shadow: var(--shadow-sm);
+}
+
+.sb-button-tertiary {
+  background-color: var(--color-tertiary);
+  color: white;
+  box-shadow: var(--shadow-sm);
+}
+
+.sb-button-tertiary:hover {
+  background-color: #e7470c; /* Darker variant of tertiary */
+  box-shadow: var(--shadow-md);
+}
+
+.sb-button-tertiary:active {
+  background-color: #c93e0b; /* Even darker variant of tertiary */
+  box-shadow: var(--shadow-sm);
+}
+
+.sb-button-outline {
+  background-color: transparent;
+  color: var(--color-text-primary);
+  border: 1px solid var(--color-border);
+}
+
+.sb-button-outline:hover {
+  background-color: var(--color-bg-secondary);
+  border-color: var(--color-text-secondary);
+}
+
+.sb-button-outline:active {
+  background-color: var(--color-bg-tertiary);
+}
+
+.sb-button-link {
+  background-color: transparent;
+  color: var(--color-secondary);
+  padding: 0;
+  height: auto;
+  min-width: auto;
+}
+
+.sb-button-link:hover {
+  color: var(--color-primary);
+  text-decoration: underline;
+}
+
+.sb-button-icon {
+  background-color: transparent;
+  color: var(--color-text-primary);
+  border: 1px solid var(--color-border);
+  min-width: auto;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--border-radius-full);
+  padding: 0;
+}
+
+.sb-button-icon.sb-button-sm {
+  width: 32px;
+  height: 32px;
+}
+
+.sb-button-icon.sb-button-lg {
+  width: 48px;
+  height: 48px;
+}
+
+.sb-button-icon:hover {
+  background-color: var(--color-bg-secondary);
+}
+
+/* Full width button */
+.sb-button-full-width {
+  width: 100%;
+}
+
+/* Disabled state */
+.sb-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Button with icons */
+.sb-button-icon-left {
+  margin-right: var(--spacing-xs);
+}
+
+.sb-button-icon-right {
+  margin-left: var(--spacing-xs);
+}
+
+/* Loading state */
+.sb-button-loading {
+  cursor: wait;
+}
+
+.sb-button-loader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: var(--spacing-sm);
+}
+
+.sb-button-loader-dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background-color: currentColor;
+  margin: 0 2px;
+  animation: loader-dot-pulse 1.4s infinite ease-in-out;
+}
+
+.sb-button-loader-dot:nth-child(1) {
+  animation-delay: -0.32s;
+}
+
+.sb-button-loader-dot:nth-child(2) {
+  animation-delay: -0.16s;
+}
+
+@keyframes loader-dot-pulse {
+  0%,
+  80%,
+  100% {
+    transform: scale(0);
+  }
+  40% {
+    transform: scale(1);
+  }
+}
+
+/* Dark mode overrides */
+[data-theme='dark'] .sb-button-outline {
+  color: var(--color-dark-text-primary);
+  border-color: var(--color-dark-border);
+}
+
+[data-theme='dark'] .sb-button-outline:hover {
+  background-color: var(--color-dark-bg-secondary);
+}
+
+[data-theme='dark'] .sb-button-link {
+  color: var(--color-secondary);
+}
+
+[data-theme='dark'] .sb-button-link:hover {
+  color: var(--color-primary);
+}
+
+[data-theme='dark'] .sb-button-icon {
+  color: var(--color-dark-text-primary);
+  border-color: var(--color-dark-border);
+}
+
+[data-theme='dark'] .sb-button-icon:hover {
+  background-color: var(--color-dark-bg-secondary);
+}

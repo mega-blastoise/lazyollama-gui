@@ -1,0 +1,114 @@
+/* Sidebar */
+.lazyollama-gui__sidebar {
+  width: 250px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  border-right-width: 1px;
+  border-right-style: solid;
+
+  .lazyollama-gui__sidebar-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 32px;
+  }
+
+  .lazyollama-gui__logo-icon {
+    height: 32px;
+    width: 32px;
+    margin-right: 8px;
+  }
+
+  .lazyollama-gui__title {
+    font-size: 1.25rem;
+    font-weight: bold;
+  }
+
+  .lazyollama-gui__nav {
+    flex: 1;
+  }
+
+  .lazyollama-gui__nav-list {
+    list-style: none;
+  }
+
+  .lazyollama-gui__nav-item {
+    margin-bottom: 8px;
+    border-radius: 4px;
+  }
+
+  .lazyollama-gui--light .lazyollama-gui__nav-item--active {
+    background-color: #e0e0e0;
+  }
+
+  .lazyollama-gui--dark .lazyollama-gui__nav-item--active {
+    background-color: #444444;
+  }
+
+  .lazyollama-gui__nav-button {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 8px;
+    border: none;
+    background: none;
+    text-align: left;
+    cursor: pointer;
+    border-radius: 4px;
+    color: inherit;
+    font-family: 'Inter', sans-serif;
+  }
+
+  .lazyollama-gui--light .lazyollama-gui__nav-button:hover {
+    background-color: #f0f0f0;
+  }
+
+  .lazyollama-gui--dark .lazyollama-gui__nav-button:hover {
+    background-color: #3a3a3a;
+  }
+
+  .lazyollama-gui__nav-icon {
+    margin-right: 8px;
+    height: 20px;
+    width: 20px;
+  }
+
+  .lazyollama-gui__theme-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px;
+    margin-top: 16px;
+    border-top-width: 1px;
+    border-top-style: solid;
+    cursor: pointer;
+    background: none;
+    border: none;
+    width: 100%;
+    color: inherit;
+    font-family: 'Inter', sans-serif;
+  }
+
+  .lazyollama-gui--light .lazyollama-gui__theme-toggle {
+    border-top-color: #e0e0e0;
+  }
+
+  .lazyollama-gui--dark .lazyollama-gui__theme-toggle {
+    border-top-color: #444444;
+  }
+
+  .lazyollama-gui__theme-icon {
+    height: 20px;
+    width: 20px;
+  }
+}
+
+.lazyollama-gui--light .lazyollama-gui__sidebar {
+  background-color: #ffffff;
+  border-right-color: #e0e0e0;
+}
+
+.lazyollama-gui--dark .lazyollama-gui__sidebar {
+  background-color: #2a2a2a;
+  border-right-color: #444444;
+}

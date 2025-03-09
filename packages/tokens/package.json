@@ -1,0 +1,57 @@
+{
+  "name": "@lazyollama-gui/design-tokens",
+  "type": "module",
+  "packageManager": "bun@1.34.0",
+  "version": "0.0.1-alpha.0.1",
+  "private": true,
+  "engines": {
+    "bun": ">=1.0.0"
+  },
+  "exports": {
+    ".": {
+      "import": "./out/lib/index.js",
+      "types": "./out/lib/index.d.ts",
+      "default": "./out/lib/index.js"
+    },
+    "./esm": {
+      "import": "./out/tokens/index.js",
+      "types": "./out/tokens/index.d.ts",
+      "default": "./out/tokens/index.js"
+    },
+    "./cjs": {
+      "import": "./out/tokens/index.cjs",
+      "types": "./out/tokens/index.cjs.d.ts",
+      "default": "./out/tokens/index.cjs"
+    }
+  },
+  "files": ["out"],
+  "scripts": {
+    "check-types": "tsc -p tsconfig.json && tsc-alias -p tsconfig.json",
+    "style-dictionary": "tsx lib/build-tokens.ts",
+    "bundle": "bun run build.ts",
+    "cp-sass": "cp out/tokens/css/paldea-theme.css lib/styles/vendor/paldea-theme.scss",
+    "sass": "sass --style=expanded --charset --quiet --no-source-map --color lib/styles:out/css",
+    "postcss": "postcss out/css/paldea.css --no-map --use autoprefixer cssnano --output out/css/paldea.min.css",
+    "del:css": "rm -rf out/css/vendor && rm -rf out/css/modern-reset.css && rm -rf out/css/font.css",
+    "#build": "run-s clean style-dictionary bundle cp-sass sass del:css postcss",
+    "clean": "rm -rf out",
+    "docs-css": "cp out/css/paldea.min.css public/paldea.min.css",
+    "docs": "bunx serve ./public -p 8080",
+    "test": "echo \"Skipping testing!\""
+  },
+  "devDependencies": {
+    "@lazyollama-gui/typescript-configs": "workspace:*",
+    "@types/bun": "latest",
+    "autoprefixer": "^10.4.20",
+    "cssnano": "^7.0.6",
+    "npm-run-all": "^4.1.5",
+    "postcss": "^8.5.3",
+    "postcss-cli": "^11.0.0",
+    "sass": "^1.85.0"
+  },
+  "peerDependencies": {},
+  "dependencies": {
+    "style-dictionary": "3",
+    "tsx": "^4.19.3"
+  }
+}

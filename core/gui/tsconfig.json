@@ -1,0 +1,13 @@
+{
+    "extends": "@lazyollama-gui/typescript-configs/typescript/jsx.tsconfig.json",
+    "compilerOptions": {
+        "esModuleInterop": true,
+        "jsx": "react",
+        "paths": {
+            "@/gui/*": ["./public/app/*"],
+            "@/server/*": ["./src/*"]
+        }
+    },
+    "include": ["src", "public/app"],
+    "exclude": ["node_modules"]
+}

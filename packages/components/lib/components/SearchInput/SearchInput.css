@@ -1,0 +1,66 @@
+.sb-search-input-container {
+  display: flex;
+  width: 100%;
+  gap: var(--spacing-sm);
+}
+
+.sb-search-input {
+  flex: 1;
+}
+
+.sb-search-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  padding: 0 var(--spacing-md);
+  background-color: var(--color-secondary);
+  color: white;
+  border: none;
+  border-radius: var(--border-radius-md);
+  font-family: var(--font-primary);
+  font-weight: 600;
+  font-size: var(--font-size-md);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  white-space: nowrap;
+}
+
+.sb-search-button:hover {
+  background-color: #1996e6; /* Darker variant of secondary */
+  box-shadow: var(--shadow-md);
+}
+
+.sb-search-button:active {
+  background-color: #1685cc; /* Even darker variant of secondary */
+  box-shadow: var(--shadow-sm);
+}
+
+.sb-search-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Adjust for input sizes */
+.sb-search-input .sb-input-sm ~ .sb-search-button {
+  height: 32px;
+  font-size: var(--font-size-sm);
+}
+
+.sb-search-input .sb-input-lg ~ .sb-search-button {
+  height: 48px;
+  font-size: var(--font-size-lg);
+}
+
+/* Dark mode overrides */
+[data-theme='dark'] .sb-search-button {
+  background-color: var(--color-secondary);
+}
+
+[data-theme='dark'] .sb-search-button:hover {
+  background-color: #0d8cd8; /* Darker variant for dark mode */
+}
+
+[data-theme='dark'] .sb-search-button:active {
+  background-color: #0b7bc0; /* Even darker variant for dark mode */
+}

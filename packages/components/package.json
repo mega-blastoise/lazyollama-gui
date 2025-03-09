@@ -1,0 +1,83 @@
+{
+  "name": "@lazyollama-gui/typescript-react-components",
+  "type": "module",
+  "version": "0.0.1-alpha.0.1",
+  "private": true,
+  "types": "./out/lib/index.d.ts",
+  "module": "./out/lib/index.js",
+  "files": [
+    "out",
+    "package.json"
+  ],
+  "exports": {
+    ".": {
+      "import": "./out/lib/index.js",
+      "types": "./out/lib/index.d.ts",
+      "default": "./out/lib/index.js"
+    },
+    "./main.css": "./out/lib/index.css",
+    "./css/*": "./out/css/*",
+    "./package.json": "./package.json"
+  },
+  "browser": "./out/lib/index.js",
+  "packageManager": "bun@1.2.3",
+  "engines": {
+    "bun": ">=1.2.3"
+  },
+  "scripts": {
+    "check-types": "tsc -p tsconfig.json",
+    "bundle": "bun run build.ts",
+    "clean": "rm -rf out",
+    "test": "bun test",
+    "build": "run-p clean bundle copy-styles",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build",
+    "copy-styles": "DEBUG=* bun run bin/copy-styles.ts"
+  },
+  "devDependencies": {
+    "@chromatic-com/storybook": "^3.2.5",
+    "@lazyollama-gui/typescript-common": "workspace:*",
+    "@lazyollama-gui/typescript-configs": "workspace:*",
+    "@storybook/addon-essentials": "^8.6.4",
+    "@storybook/addon-interactions": "^8.6.4",
+    "@storybook/addon-onboarding": "^8.6.4",
+    "@storybook/addon-webpack5-compiler-swc": "^2.1.0",
+    "@storybook/blocks": "^8.6.4",
+    "@storybook/react": "^8.6.4",
+    "@storybook/react-webpack5": "^8.6.4",
+    "@storybook/test": "^8.6.4",
+    "@types/bun": "latest",
+    "@types/react": "^19.0.10",
+    "@types/react-dom": "^19.0.4",
+    "@types/react-syntax-highlighter": "^15.5.13",
+    "autoprefixer": "^10.4.20",
+    "classnames": "^2.5.1",
+    "cssnano": "^7.0.6",
+    "glob": "^11.0.1",
+    "npm-run-all": "^4.1.5",
+    "postcss": "^8.5.3",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-syntax-highlighter": "^15.6.1",
+    "sass": "^1.85.1",
+    "sleepydogs": "1.0.8-alpha.2",
+    "storybook": "^8.6.4",
+    "supports-color": "^10.0.0",
+    "typescript": "^5.0.0"
+  },
+  "peerDependencies": {
+    "@lazyollama-gui/typescript-common": "workspace:*",
+    "classnames": "^2.5.1",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-syntax-highlighter": "^15.6.1",
+    "sleepydogs": "1.0.8-alpha.2",
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "chalk": "^5.4.1",
+    "debug": "^4.4.0",
+    "node-emoji": "^2.2.0",
+    "postcss-cli": "^11.0.0"
+  }
+}

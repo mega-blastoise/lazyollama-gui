@@ -1,0 +1,36 @@
+{
+  "extends": "@lazyollama-gui/typescript-configs/typescript/jsx.tsconfig.json",
+  "compilerOptions": {
+    "lib": [
+      "ESNext",
+      "DOM"
+    ],
+    "jsx": "react",
+    "rootDir": "./",
+    "baseUrl": "./",
+    "paths": {
+      "@/*": [
+        "./lib/*"
+      ]
+    },
+    "noEmit": false,
+    "listEmittedFiles": true,
+    "allowArbitraryExtensions": true,
+    "declaration": true,
+    "emitDeclarationOnly": true,
+    "outDir": "./out",
+    "removeComments": false,
+    "resolveJsonModule": true,
+    "noEmitOnError": true,
+    "preserveSymlinks": true,
+  },
+  "include": [
+    "lib"
+  ],
+  "exclude": [
+    "node_modules",
+    "out",
+    "**/*.stories.tsx",
+    "**/*.test.tsx"
+  ]
+}

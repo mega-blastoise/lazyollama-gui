@@ -1,0 +1,5 @@
+{
+    "extends": "@lazyollama-gui/typescript-configs/typescript/bun.tsconfig.json",
+    "include": ["src"],
+    "exclude": ["node_modules"]
+}

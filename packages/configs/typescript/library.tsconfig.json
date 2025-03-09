@@ -1,0 +1,13 @@
+{
+  "extends": "./bun.tsconfig.json",
+  "compilerOptions": {
+    "rootDir": "./",
+    "resolveJsonModule": true,
+    "declaration": true,
+    "emitDeclarationOnly": true,
+    "outDir": "./out",
+    "removeComments": false,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true
+  }
+}
