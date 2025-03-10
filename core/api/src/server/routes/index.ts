@@ -2,7 +2,7 @@ import { type RouterTypes } from 'bun';
 import { pipeline } from '@lazyollama-gui/typescript-common';
 
 import { middleware } from '../middleware';
-import { createHTTPMethodHandlerObject } from './base';
+import { createHTTPMethodHandlerObject, handleOPTIONSPreflightRequest } from './base';
 import { handleGETAPIStatusRequest } from './api-status';
 import { handlePOSTAPIRPCMethodRequest } from './api-rpc';
 
@@ -13,13 +13,12 @@ type APIRoutes = {
 export function getApiServerRoutes(): APIRoutes {
   return {
     '/api/status': createHTTPMethodHandlerObject({
+      OPTIONS: pipeline<Request, Response>(middleware, handleOPTIONSPreflightRequest),
       GET: pipeline<Request, Response>(middleware, handleGETAPIStatusRequest)
     }),
     '/api/rpc/controller': createHTTPMethodHandlerObject({
-      POST: pipeline<Request, Response>(
-        middleware,
-        handlePOSTAPIRPCMethodRequest
-      )
+      OPTIONS: pipeline<Request, Response>(middleware, handleOPTIONSPreflightRequest),
+      POST: pipeline<Request, Response>(middleware, handlePOSTAPIRPCMethodRequest)
     })
   };
 }

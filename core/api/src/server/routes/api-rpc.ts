@@ -1,5 +1,6 @@
 import logger from '../../log';
 import RPCController, { type RPCControllerMethods } from '../controller';
+import { CORS_HEADERS } from './base';
 
 type RPCRequestBody = {
   method: string;
@@ -34,6 +35,7 @@ export async function handlePOSTAPIRPCMethodRequest(r: Request | Response): Prom
       headers: {
         'Content-Type': 'application/json',
         'Content-Length': JSON.stringify(response).length.toString(),
+        ...CORS_HEADERS.headers
       }
     });
   }

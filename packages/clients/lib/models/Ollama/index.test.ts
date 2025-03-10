@@ -94,4 +94,10 @@ describe('OllamaClient', () => {
     const response = await client.cleanupMemory();
     expect(response).toEqual([mockResponse]);
   });
+
+  it('should get all remote models from the remote registry', async () => {
+    await client.indexRemoteRegistryModels();
+    console.log(client['remote'].registry.models);
+    expect(client['remote'].registry.models.length).toBeGreaterThan(0);
+  })
 });

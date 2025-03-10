@@ -1,4 +1,5 @@
 import { LazySingleton as SuperLazySingletonFactory } from 'sleepydogs';
+import { parse as parseHtml } from 'node-html-parser';
 import { createLogger } from '@lazyollama-gui/typescript-common';
 
 export enum OllamaClientCacheType {
@@ -73,10 +74,29 @@ export type ChatPromptFinalResponse = {
   response: string;
 };
 
+/**
+ * What flows do we need to support?
+ *
+ * - Querying the remote model registry
+ * - Pulling a model into memory from the remote model registry
+ */
+
 export class OllamaClient {
   private baseUrl = process.env.DOCKER_NETWORK_OLLAMA_API_URL;
   private cache = new Map<string, Set<string>>();
   private logger = createLogger('lazyollama:typescript:common:ollama:client');
+
+  private remote: {
+    registry: {
+      url: string;
+      models: Array<{ model: string; tags: Array<string> }>;
+    };
+  } = {
+    registry: {
+      url: 'https://ollama.com/library',
+      models: []
+    }
+  };
 
   constructor() {
     this.cache.set(OllamaClientCacheType.PullQueued, new Set());
@@ -87,8 +107,16 @@ export class OllamaClient {
     this.cache.set(OllamaClientCacheType.PullCancelled, new Set());
   }
 
+  async init() {
+    const ollamaIsRunning = await this.checkOllamaIsRunning();
+    if (!ollamaIsRunning) throw new Error('Ollama is not running');
+
+    await this.indexRemoteRegistryModels();
+    await this.indexRunningModels();
+  }
+
   async checkOllamaIsRunning() {
-    return await this._get(this.baseUrl!);
+    return (await this._get<string>(this.baseUrl!, 'text')) === 'Ollama is running';
   }
 
   /**
@@ -162,7 +190,7 @@ export class OllamaClient {
         }
       });
       return responseType === 'json'
-        ? (response.json() as T)
+        ? (response.json() as Promise<T>)
         : (response.text() as Promise<string>);
     } catch (error) {
       this.logger.error(`Error in GET request to ${endpoint}: ${error}`);
@@ -317,6 +345,43 @@ export class OllamaClient {
       return Promise.all(unloadPromises);
     }
     return null;
+  }
+
+  async indexRemoteRegistryModels(): Promise<void> {
+    try {
+      const response = await Bun.fetch(this.remote.registry.url);
+      const text = await response.text();
+      const html = parseHtml(text);
+      const modelListItems = html.querySelectorAll('li[x-test-model]');
+      let modelDtos = modelListItems.map((item) => {
+        const titleElement = item.querySelector('[x-test-model-title]');
+        const title = titleElement?.getAttribute('title');
+
+        if (!title) return null;
+
+        const tagsElements = item.querySelectorAll('span[x-test-size]');
+        const tags = Array.from(tagsElements).map((e) => e.textContent);
+
+        if (!tags || tags.length === 0) return null;
+
+        return {
+          model: title,
+          tags
+        };
+      });
+
+      modelDtos = modelDtos.filter((dto) => dto !== null);
+
+      this.remote.registry.models = modelDtos as { model: string; tags: string[] }[];
+    } catch (e) {
+      if (e instanceof Error) {
+        this.logger.error(`Error indexing remote registry models: ${e.message}`);
+      }
+    }
+  }
+
+  getRemoteRegistryModels(): { model: string; tags: string[] }[] {
+    return this.remote.registry.models;
   }
 }
 

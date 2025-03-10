@@ -21,7 +21,12 @@
 
   .lazyollama-gui__title {
     font-size: 1.25rem;
-    font-weight: bold;
+    font-weight: 700;
+
+    background: var(--gradient-background);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
   }
 
   .lazyollama-gui__nav {
@@ -37,14 +42,6 @@
     border-radius: 4px;
   }
 
-  .lazyollama-gui--light .lazyollama-gui__nav-item--active {
-    background-color: #e0e0e0;
-  }
-
-  .lazyollama-gui--dark .lazyollama-gui__nav-item--active {
-    background-color: #444444;
-  }
-
   .lazyollama-gui__nav-button {
     display: flex;
     align-items: center;
@@ -56,15 +53,7 @@
     cursor: pointer;
     border-radius: 4px;
     color: inherit;
-    font-family: 'Inter', sans-serif;
-  }
-
-  .lazyollama-gui--light .lazyollama-gui__nav-button:hover {
-    background-color: #f0f0f0;
-  }
-
-  .lazyollama-gui--dark .lazyollama-gui__nav-button:hover {
-    background-color: #3a3a3a;
+    font-family: 'Fira Sans', sans-serif;
   }
 
   .lazyollama-gui__nav-icon {
@@ -86,15 +75,7 @@
     border: none;
     width: 100%;
     color: inherit;
-    font-family: 'Inter', sans-serif;
-  }
-
-  .lazyollama-gui--light .lazyollama-gui__theme-toggle {
-    border-top-color: #e0e0e0;
-  }
-
-  .lazyollama-gui--dark .lazyollama-gui__theme-toggle {
-    border-top-color: #444444;
+    font-family: 'Fira Sans', sans-serif;
   }
 
   .lazyollama-gui__theme-icon {
@@ -111,4 +92,28 @@
 .lazyollama-gui--dark .lazyollama-gui__sidebar {
   background-color: #2a2a2a;
   border-right-color: #444444;
+}
+
+.lazyollama-gui--light .lazyollama-gui__nav-item--active {
+  background-color: #e0e0e0;
+}
+
+.lazyollama-gui--dark .lazyollama-gui__nav-item--active {
+  background-color: #444444;
+}
+
+.lazyollama-gui--light .lazyollama-gui__theme-toggle {
+  border-top-color: #e0e0e0;
+}
+
+.lazyollama-gui--dark .lazyollama-gui__theme-toggle {
+  border-top-color: #444444;
+}
+
+.lazyollama-gui--light .lazyollama-gui__nav-button:hover {
+  background-color: #f0f0f0;
+}
+
+.lazyollama-gui--dark .lazyollama-gui__nav-button:hover {
+  background-color: #3a3a3a;
 }

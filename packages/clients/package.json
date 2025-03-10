@@ -35,6 +35,7 @@
         "typescript": "^5.0.0"
     },
     "dependencies": {
+        "node-html-parser": "^7.0.1",
         "sleepydogs": "1.0.8-alpha.2"
     }
 }

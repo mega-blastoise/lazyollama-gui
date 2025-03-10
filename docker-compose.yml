@@ -22,11 +22,6 @@ services:
       dockerfile: Dockerfile.API
     image: lazyollama/api:latest
     container_name: lazyollama-api
-    healthcheck:
-      test: ["CMD-SHELL", "curl -f http://localhost:3000/api/status"]
-      interval: 5s
-      timeout: 5s
-      retries: 5
     restart: unless-stopped
     ports:
       - "3000:3000"
@@ -40,26 +35,22 @@ services:
       - ./core/api/.env
     networks:
       - lazyollama-backend
-  web:
+  gui:
     build:
       context: .
-      dockerfile: Dockerfile.WEB
-    image: lazyollama/web:latest
-    container_name: lazyollama-web
-    healthcheck:
-      test: ["CMD-SHELL", "curl -f http://localhost:4040"]
-      interval: 5s
-      timeout: 5s
-      retries: 5
+      dockerfile: Dockerfile.GUI
+    image: lazyollama/gui:latest
+    container_name: lazyollama-gui
     restart: unless-stopped
+    env_file:
+      - ./core/gui/.env
     ports:
       - "4040:4040"
     expose:
-      - '3000'
+      - '4040'
     depends_on:
-      api:
-        condition: service_healthy
-        restart: true
+      - ollama
+      - api
 
 networks:
   lazyollama-backend:
