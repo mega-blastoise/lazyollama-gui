@@ -183,6 +183,9 @@ export class RPCController {
       response_time_ms: timer.elapsed() || 0
     };
   }
+  queryRemoteModelRegistry() {
+    return LazyOllama.getInstance().getRemoteRegistryModels();
+  }
 }
 
 export default RPCController;

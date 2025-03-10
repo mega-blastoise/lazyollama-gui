@@ -15,7 +15,7 @@ import { createRunningBunServer } from './server';
  * This is a tradeoff that we have to make for now, but in the future,
  * I'll just generally be better and wiser and know how to patch this.
  */
-await LazyOllama.getInstance().indexRunningModels();
+await LazyOllama.getInstance().init();
 
 const server = createRunningBunServer();
 logger.info('Server running @ %s', server.url);

@@ -89,7 +89,14 @@ export class OllamaClient {
   private remote: {
     registry: {
       url: string;
-      models: Array<{ model: string; tags: Array<string> }>;
+      models: Array<{
+        model: string;
+        tags: {
+          href: string | undefined;
+          label: string | undefined;
+          description: string;
+        }[];
+      }>;
     };
   } = {
     registry: {
@@ -353,26 +360,48 @@ export class OllamaClient {
       const text = await response.text();
       const html = parseHtml(text);
       const modelListItems = html.querySelectorAll('li[x-test-model]');
-      let modelDtos = modelListItems.map((item) => {
+      let modelDtos = modelListItems.map(async (item) => {
         const titleElement = item.querySelector('[x-test-model-title]');
         const title = titleElement?.getAttribute('title');
 
         if (!title) return null;
+        const tagsUrl = this.remote.registry.url + `/${title}/tags`;
+        const tagsResponse = await Bun.fetch(tagsUrl);
+        const tagsText = await tagsResponse.text();
+        const tagsHtml = parseHtml(tagsText);
+        const tagListItems = tagsHtml.querySelectorAll('div.flex.px-4.py-3');
+        let tagDtos = tagListItems.map((div) => {
+          const a = div.querySelector('a.group');
+          const href = a?.getAttribute('href');
+          const label = a?.firstChild?.textContent;
+          const span = div.querySelector('span');
+          const spanText = span?.firstChild?.textContent + ',' + span?.textContent;
+          return {
+            href,
+            label,
+            description: spanText
+          };
+        });
 
-        const tagsElements = item.querySelectorAll('span[x-test-size]');
-        const tags = Array.from(tagsElements).map((e) => e.textContent);
-
-        if (!tags || tags.length === 0) return null;
+        if (!tagDtos || tagDtos.length === 0) return null;
 
         return {
           model: title,
-          tags
+          tags: tagDtos
         };
       });
 
-      modelDtos = modelDtos.filter((dto) => dto !== null);
+      const resolved = await Promise.all([...modelDtos]);
+      const filtered = resolved.filter((dto) => dto !== null);
 
-      this.remote.registry.models = modelDtos as { model: string; tags: string[] }[];
+      this.remote.registry.models = filtered as {
+        model: string;
+        tags: {
+          href: string | undefined;
+          label: string | undefined;
+          description: string;
+        }[];
+      }[];
     } catch (e) {
       if (e instanceof Error) {
         this.logger.error(`Error indexing remote registry models: ${e.message}`);
@@ -380,7 +409,14 @@ export class OllamaClient {
     }
   }
 
-  getRemoteRegistryModels(): { model: string; tags: string[] }[] {
+  getRemoteRegistryModels(): {
+    model: string;
+    tags: {
+      href: string | undefined;
+      label: string | undefined;
+      description: string;
+    }[];
+  }[] {
     return this.remote.registry.models;
   }
 }
