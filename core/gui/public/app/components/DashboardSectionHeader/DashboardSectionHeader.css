@@ -4,7 +4,7 @@
     padding: 16px;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: flex-start;
     border-bottom-width: 1px;
     border-bottom-style: solid;
   }
@@ -20,13 +20,15 @@
   }
   
   .lazyollama-gui__header-title {
-    font-size: 1.25rem;
-    font-weight: 600;
+    font-size: 2rem;
+    font-weight: 700;
+    font-family: "Nunito Sans", "Fira Sans", sans-serif;
   }
   
   .lazyollama-gui__search-container {
     position: relative;
     margin-right: 16px;
+    margin-left: auto;
   }
   
   .lazyollama-gui__search-icon {

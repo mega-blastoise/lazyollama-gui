@@ -1,11 +1,7 @@
 import React from 'react';
 import { Box, Square } from 'lucide-react';
 import { useApplicationStore } from '@/gui/store';
-import { OllamaModel } from '@/gui/types';
-
-interface LazyOllamaDashboardRunningModelsViewProps {
-  running_models: OllamaModel[];
-}
+import { type LazyOllamaDashboardRunningModelsViewProps } from './types';
 
 function LazyOllamaDashboardRunningModelsView({
   running_models

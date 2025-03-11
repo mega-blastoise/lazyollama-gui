@@ -1,1 +1,3 @@
-export { default as LazyOllamaDashboardStatsView } from './DashboardStatsView';
+import LazyOllamaDashboardStatsView from './DashboardStatsView';
+export { LazyOllamaDashboardStatsView };
+export default LazyOllamaDashboardStatsView;

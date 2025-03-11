@@ -1,6 +1,5 @@
 /* Sidebar */
 .lazyollama-gui__sidebar {
-  width: 250px;
   padding: 16px;
   display: flex;
   flex-direction: column;
@@ -53,7 +52,8 @@
     cursor: pointer;
     border-radius: 4px;
     color: inherit;
-    font-family: 'Fira Sans', sans-serif;
+    font-weight: 700;
+    font-family: 'Nunito Sans', 'Fira Sans', sans-serif;
   }
 
   .lazyollama-gui__nav-icon {
@@ -62,7 +62,7 @@
     width: 20px;
   }
 
-  .lazyollama-gui__theme-toggle {
+  .lazyollama-gui__sidebar-expansion-toggle {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -75,12 +75,64 @@
     border: none;
     width: 100%;
     color: inherit;
-    font-family: 'Fira Sans', sans-serif;
+    font-weight: 700;
+    font-family: 'Nunito Sans', 'Fira Sans', sans-serif;
   }
 
   .lazyollama-gui__theme-icon {
     height: 20px;
     width: 20px;
+  }
+}
+
+@keyframes lazyollama-gui__fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.lazyollama-gui__nav-label {
+  opacity: 0;
+  transition: opacity 400ms;
+  animation: lazyollama-gui__fade-in 400ms forwards;
+}
+
+.lazyollama-gui__sidebar[data-expanded="expanded"] {
+  width: 256px;
+  padding: 16px;
+  transition: width 400ms;
+}
+
+.lazyollama-gui__sidebar[data-expanded="collapsed"] {
+  width: 48px;
+  padding: 8px;
+  padding-top: 16px;
+  transition: width 400ms;
+
+  .lazyollama-gui__logo-icon {
+    height: 32px;
+    width: 32px;
+    margin: 0px;
+  }
+
+  .lazyollama-gui__nav-icon {
+    margin-right: 0px;
+    height: 20px;
+    width: 20px;
+  }
+
+  .lazyollama-gui__nav-button {
+    padding-top: 8px;
+    padding-bottom: 8px;
+    padding-left: 0px;
+    padding-right: 0px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
   }
 }
 

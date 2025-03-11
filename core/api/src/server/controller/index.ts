@@ -49,7 +49,7 @@ export class RPCController {
     return this[name].bind(this);
   }
 
-  async pullModel(model: string): Promise<RPCAPIResponse<any>> {
+  async pullModel(model: string, ..._params: any[]): Promise<RPCAPIResponse<any>> {
     const requestTimestamp = performance.now();
     const timer = new Timer();
     timer.start();
@@ -105,7 +105,7 @@ export class RPCController {
     };
   }
 
-  async preheatModel(model: string): Promise<RPCAPIResponse<any>> {
+  async preheatModel(model: string, ..._params: any[]): Promise<RPCAPIResponse<any>> {
     const requestTimestamp = performance.now();
     const timer = new Timer();
     timer.start();
@@ -164,7 +164,7 @@ export class RPCController {
     };
   }
 
-  async showModelStates(): Promise<RPCAPIResponse<any>> {
+  async showModelStates(..._params: any[]): Promise<RPCAPIResponse<any>> {
     const requestTimestamp = performance.now();
     const timer = new Timer();
     timer.start();
@@ -183,8 +183,18 @@ export class RPCController {
       response_time_ms: timer.elapsed() || 0
     };
   }
-  queryRemoteModelRegistry() {
-    return LazyOllama.getInstance().getRemoteRegistryModels();
+  
+  async queryRemoteModelRegistry(..._params: any[]): Promise<RPCAPIResponse<any>> {
+    return {
+      requested_method: 'queryRemoteModelRegistry',
+      request_accepted: true,
+      request_timestamp: performance.now(),
+      response_timestamp: performance.now(),
+      response_time_ms: 0,
+      response_data: {
+        models: LazyOllama.getInstance().getRemoteRegistryModels()
+      }
+    };
   }
 }
 

@@ -1,17 +1,22 @@
 import React from 'react';
-import { Moon, Sun } from 'lucide-react';
-import { useTheme } from '@lazyollama-gui/typescript-react-components';
+import { ChevronsRight, ChevronsLeft } from 'lucide-react';
+import { useApplicationStore } from '@/gui/store';
 
 function LazyOllamaDashboardSidebarFooter() {
-  const { theme, toggleTheme } = useTheme();
+  const {
+    ui: {
+      sidebar: { expanded }
+    },
+    expandSidebar,
+    collapseSidebar
+  } = useApplicationStore();
   return (
-    <button className="lazyollama-gui__theme-toggle" onClick={toggleTheme}>
-      <span>Theme</span>
-      {theme === 'dark' ? (
-        <Sun className="lazyollama-gui__theme-icon" />
-      ) : (
-        <Moon className="lazyollama-gui__theme-icon" />
-      )}
+    <button
+      className="lazyollama-gui__sidebar-expansion-toggle"
+      onClick={expanded ? collapseSidebar : expandSidebar}
+    >
+      {expanded ? <ChevronsLeft className="lazyollama-gui__nav-icon" /> : <ChevronsRight className="lazyollama-gui__nav-icon" />}
+      {expanded && <span>LazyOllama </span>}
     </button>
   );
 }

@@ -4,32 +4,51 @@ import { OllamaModel } from '../types';
 import { Home, Box, Play, BarChart2, Settings, Bolt } from 'lucide-react';
 import React from 'react';
 
-export type ViewState = 'home' | 'models' | 'running' | 'modelfile-builder' | 'stats' | 'settings';
+export type ViewState =
+  | 'home'
+  | 'models'
+  | 'running'
+  | 'modelfile-builder'
+  | 'stats'
+  | 'settings';
 
 export type ApplicationStoreState = {
   ui: {
     view: ViewState;
     expanded_model: OllamaModel | null;
-    sidebar: { items: LazyOllamaDashboardSidebarNavigationItemProps[] };
+    sidebar: { items: LazyOllamaDashboardSidebarNavigationItemProps[]; expanded: boolean };
   };
   api: {
-    available_models: OllamaModel[];
-    running_models: OllamaModel[];
+    models: {
+      available: OllamaModel[];
+      running: OllamaModel[];
+      remote: {
+        model: string;
+        tags: {
+          href: string | undefined;
+          label: string | undefined;
+          description: string;
+        }[];
+      }[];
+    };
   };
 };
 
 export type ApplicationStoreActions = {
   updateUiViewState(view: ViewState): void;
   setExpandedModel(model: OllamaModel | null): void;
+  expandSidebar(): void;
+  collapseSidebar(): void;
 };
 
 export type ApplicationStore = ApplicationStoreActions & ApplicationStoreState;
 
 export const useApplicationStore = create<ApplicationStore>(($set) => ({
-  ui: { 
-    view: 'home', 
+  ui: {
+    view: 'home',
     expanded_model: null,
     sidebar: {
+      expanded: true,
       items: [
         {
           icon: <Home className="lazyollama-gui__nav-icon" />,
@@ -67,6 +86,19 @@ export const useApplicationStore = create<ApplicationStore>(($set) => ({
   updateUiViewState(view) {
     $set((state) => ({ ui: { ...state.ui, view } }));
   },
+
+  expandSidebar() {
+    $set((state) => {
+      return { ui: { ...state.ui, sidebar: { ...state.ui.sidebar, expanded: true } } };
+    });
+  },
+
+  collapseSidebar() {
+    $set((state) => {
+      return { ui: { ...state.ui, sidebar: { ...state.ui.sidebar, expanded: false } } };
+    });
+  },
+
   setExpandedModel(model) {
     $set((state) => {
       if (state.ui.expanded_model === model) {
@@ -78,7 +110,10 @@ export const useApplicationStore = create<ApplicationStore>(($set) => ({
   },
 
   api: {
-    available_models: [],
-    running_models: []
+    models: {
+      available: [],
+      running: [],
+      remote: []
+    }
   }
 }));

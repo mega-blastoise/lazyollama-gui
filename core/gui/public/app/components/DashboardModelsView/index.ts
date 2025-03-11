@@ -1,2 +1,4 @@
-export { default as LazyOllamaDashboardModelsView } from './DashboardModelsView';
+import LazyOllamaDashboardModelsView from './DashboardModelsView';
 export * from './types';
+export { LazyOllamaDashboardModelsView };
+export default LazyOllamaDashboardModelsView;

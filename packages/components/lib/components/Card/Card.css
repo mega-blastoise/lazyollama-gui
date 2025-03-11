@@ -1,0 +1,102 @@
+/* GlassCard.css */
+.sb-glass-card {
+  position: relative;
+  border-radius: var(--border-radius-lg);
+  padding: var(--spacing-lg);
+  width: 100%;
+  transition: all var(--transition-normal);
+  overflow: hidden;
+}
+
+/* Glass Effect */
+.sb-glass-card-blur {
+  background-color: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+}
+
+/* Elevation Variants */
+.sb-glass-card-elevation-none {
+  box-shadow: none;
+}
+
+.sb-glass-card-elevation-xs {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.sb-glass-card-elevation-sm {
+  box-shadow: var(--shadow-sm);
+}
+
+.sb-glass-card-elevation-md {
+  box-shadow: var(--shadow-md);
+}
+
+.sb-glass-card-elevation-lg {
+  box-shadow: var(--shadow-lg);
+}
+
+.sb-glass-card-elevation-xl {
+  box-shadow:
+    0 20px 25px -5px rgba(0, 0, 0, 0.1),
+    0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+/* Border */
+.sb-glass-card-border {
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Interactive Card */
+.sb-glass-card-interactive {
+  cursor: pointer;
+}
+
+.sb-glass-card-interactive:hover {
+  transform: translateY(-4px);
+  box-shadow:
+    0 20px 25px -5px rgba(0, 0, 0, 0.1),
+    0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+.sb-glass-card-interactive:active {
+  transform: translateY(-2px);
+}
+
+/* Content Alignment */
+.sb-glass-card-content {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.sb-glass-card-align-start .sb-glass-card-content {
+  align-items: flex-start;
+  justify-content: flex-start;
+  text-align: left;
+}
+
+.sb-glass-card-align-center .sb-glass-card-content {
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.sb-glass-card-align-end .sb-glass-card-content {
+  align-items: flex-end;
+  justify-content: flex-end;
+  text-align: right;
+}
+
+.sb-glass-card-align-stretch .sb-glass-card-content {
+  align-items: stretch;
+  justify-content: flex-start;
+}
+
+/* Dark mode overrides */
+[data-theme='dark'] .sb-glass-card-blur {
+  background-color: rgba(30, 30, 40, 0.3);
+}
+
+[data-theme='dark'] .sb-glass-card-border {
+  border-color: rgba(80, 80, 90, 0.2);
+}

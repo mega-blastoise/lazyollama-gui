@@ -1,1 +1,3 @@
-export { default as LazyOllamaDashboardSettingsView } from './DashboardSettingsView';
+import LazyOllamaDashboardSettingsView from './DashboardSettingsView';
+export { LazyOllamaDashboardSettingsView };
+export default LazyOllamaDashboardSettingsView;

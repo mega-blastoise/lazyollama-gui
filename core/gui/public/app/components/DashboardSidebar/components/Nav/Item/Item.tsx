@@ -8,7 +8,7 @@ function LazyOllamaDashboardSidebarNavigationItem({
   icon
 }: LazyOllamaDashboardSidebarNavigationItemProps) {
   const {
-    ui: { view },
+    ui: { view, sidebar: { expanded } },
     updateUiViewState
   } = useApplicationStore();
   return (
@@ -17,7 +17,7 @@ function LazyOllamaDashboardSidebarNavigationItem({
     >
       <button className="lazyollama-gui__nav-button" onClick={() => updateUiViewState(to)}>
         {icon}
-        <span>{label}</span>
+        {expanded && <span className="lazyollama-gui__nav-label">{label}</span>}
       </button>
     </li>
   );

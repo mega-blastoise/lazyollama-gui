@@ -1,4 +1,5 @@
 import DashboardHtml from '../public/dashboard.html';
+import asyncAPIRPCProxyHandler from './rpc-proxy';
 import { BunRoutes } from './types';
 
 /** 
@@ -12,7 +13,8 @@ import { BunRoutes } from './types';
  * my personal suggestion is [Actix-Web](https://actix.rs/)
  * */
 const routes: BunRoutes = {
-    "/": DashboardHtml
+    "/": DashboardHtml,
+    "/api/rpc/proxy": asyncAPIRPCProxyHandler
 };
 
 export default routes;

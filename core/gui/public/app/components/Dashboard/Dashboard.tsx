@@ -1,62 +1,31 @@
 import './Dashboard.css';
 
-import React, { Suspense } from 'react';
+import React, { useEffect } from 'react';
 import { useTheme } from '@lazyollama-gui/typescript-react-components';
 import { LazyOllamaDashboardSidebar } from '@/gui/components/DashboardSidebar';
 import { LazyOllamaDashboardSectionHeader } from '@/gui/components/DashboardSectionHeader';
-import { useApplicationStore } from '@/gui/store';
-
-const LazyOllamaDashboardModelsView = React.lazy(() =>
-  import('../DashboardModelsView').then(({ LazyOllamaDashboardModelsView }) => ({
-    default: LazyOllamaDashboardModelsView
-  }))
-);
-
-const LazyOllamaDashboardRunningModelsView = React.lazy(() =>
-  import('../DashboardRunningModelsView').then(({ LazyOllamaDashboardRunningModelsView }) => ({
-    default: LazyOllamaDashboardRunningModelsView
-  }))
-);
-
-const LazyOllamaDashboardStatsView = React.lazy(() =>
-  import('../DashboardStatsView').then(({ LazyOllamaDashboardStatsView }) => ({
-    default: LazyOllamaDashboardStatsView
-  }))
-);
-
-const LazyOllamaDashboardSettingsView = React.lazy(() =>
-  import('../DashboardSettingsView').then(({ LazyOllamaDashboardSettingsView }) => ({
-    default: LazyOllamaDashboardSettingsView
-  }))
-);
-
-function LazyOllamaDashboardMainContent() {
-  const {
-    ui: { view },
-    api
-  } = useApplicationStore();
-
-  return (
-    <main className="lazyollama-gui__content">
-      <Suspense fallback="TODO(Nick): Add a loader">
-        {view === 'models' && (
-          <LazyOllamaDashboardModelsView
-            models={{ available: api.available_models, running: api.running_models }}
-          />
-        )}
-        {view === 'running' && (
-          <LazyOllamaDashboardRunningModelsView running_models={api.running_models} />
-        )}
-        {view === 'stats' && <LazyOllamaDashboardStatsView />}
-        {view === 'settings' && <LazyOllamaDashboardSettingsView />}
-      </Suspense>
-    </main>
-  );
-}
+import { LazyOllamaDashboardMainContent } from '../DashboardMainContent';
+import useGetLocalModelStates from '@/gui/hooks/useGetLocalModelStates';
+import useGetRemoteModels from '@/gui/hooks/useGetRemoteModels';
 
 const LazyOllamaDashboard = () => {
   const { theme } = useTheme();
   const darkMode = theme === 'dark';
+
+  const localModelsStatesQuery = useGetLocalModelStates();
+  const remoteModelsQuery = useGetRemoteModels();
+
+  useEffect(() => {}, [
+    localModelsStatesQuery.data,
+    localModelsStatesQuery.isError,
+    localModelsStatesQuery.isLoading
+  ]);
+
+  useEffect(() => {}, [
+    remoteModelsQuery.data,
+    remoteModelsQuery.isError,
+    remoteModelsQuery.isLoading
+  ]);
 
   return (
     <div
