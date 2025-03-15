@@ -1,17 +1,18 @@
 services:
   ollama:
-    image: ollama/ollama:latest
+    image: ollama/ollama:0.6.0
     container_name: lazyollama
-    healthcheck:
-      test: ["CMD-SHELL", "apt-get update && apt-get install -y curl && curl -f http://localhost:11434/ && apt-get clean && rm -rf /var/lib/apt/lists/*"]
-      interval: 5s
-      timeout: 5s
-      retries: 10
     restart: unless-stopped
+    healthcheck:
+      test:  [ "CMD-SHELL", "bash", "-c", "{ printf >&3 'GET / HTTP/1.0\\r\\n\\r\\n'; cat <&3; } 3<>/dev/tcp/localhost/11434 | grep 'Ollama is running' || exit 1"  ]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
     ports:
       - "11435:11434" # Remap external port in case user is already running Ollama 
     expose:
-      - '11434' # Expose container port 11434 (internal, optional)
+      - '11434'
     volumes:
       - ollama:/root/.ollama
     networks:
@@ -28,9 +29,7 @@ services:
     expose:
       - '3000'
     depends_on:
-      ollama:
-        condition: service_healthy
-        restart: true
+      - ollama
     env_file:
       - ./core/api/.env
     networks:
@@ -51,6 +50,8 @@ services:
     depends_on:
       - ollama
       - api
+    networks:
+      - lazyollama-backend
 
 networks:
   lazyollama-backend:
