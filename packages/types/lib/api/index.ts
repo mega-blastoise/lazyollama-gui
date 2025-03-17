@@ -1,1 +1,1 @@
-export { type IOllamaRPCAPI } from './ollama';
+export * from './ollama';

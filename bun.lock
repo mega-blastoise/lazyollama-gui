@@ -83,6 +83,7 @@
         "sleepydogs": "1.0.8-alpha.2",
       },
       "devDependencies": {
+        "@lazyollama-gui/typescript-common": "workspace:*",
         "@lazyollama-gui/typescript-common-types": "workspace:*",
         "@lazyollama-gui/typescript-configs": "workspace:*",
         "@types/bun": "latest",
