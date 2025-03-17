@@ -21,7 +21,8 @@
         "dependsOn": ["prettier"] 
       },
       "clean": {
-        "dependsOn": ["^clean"]
+        "dependsOn": ["^clean"],
+        "cache": false
       },
       "start": {
         "cache": false,

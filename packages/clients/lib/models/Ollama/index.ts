@@ -5,10 +5,11 @@ import {
   OllamaClientCacheType,
   type ChatPromptConfiguration,
   type ChatPromptFinalResponse,
-  type RunningModelResponse,
   type RemoteModelStub,
-  type NodeHtmlParserHTMLElement
-} from './types';
+  type RunningModelResponse,
+} from '@lazyollama-gui/typescript-common-types';
+import { type NodeHtmlParserHTMLElement } from './types';
+
 /**
  * What flows do we need to support?
  *
@@ -69,10 +70,10 @@ export class OllamaClient {
   }
 
   async checkOllamaIsRunning() {
-    return (await this._get<string>(this.baseUrl!, 'text')) === 'Ollama is running';
+    return ((await this._get<string>(this.baseUrl!, 'text')).includes('Ollama is running'));
   }
 
-  checkModelStateInCaches(model: string) {
+  getLocalModelState(model: string) {
     const state: Record<string, Array<string>> = {};
     for (const [key, value] of this.cache) {
       if (value.has(model)) {
@@ -84,7 +85,7 @@ export class OllamaClient {
     return state;
   }
 
-  getStateOfCaches() {
+  getLocalCacheStates() {
     const state: Record<string, Array<string>> = {};
     for (const [key, value] of this.cache) {
       for (const model of value) {
@@ -97,7 +98,7 @@ export class OllamaClient {
     return state;
   }
 
-  getRemoteRegistryModels(): {
+  getRemoteModelTags(): {
     model: string;
     tags: {
       href: string | undefined;
