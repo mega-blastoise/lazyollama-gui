@@ -7,5 +7,5 @@ Bun.build({
   sourcemap: 'linked',
   minify: false, // Change to true to make the code fucking unreadable for almost no performance boost
   root: '.',
-  external: ['react', 'react-dom']
+  external: []
 });
