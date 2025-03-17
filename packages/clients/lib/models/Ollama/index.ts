@@ -1,84 +1,26 @@
 import { LazySingleton as SuperLazySingletonFactory } from 'sleepydogs';
 import { parse as parseHtml } from 'node-html-parser';
 import { createLogger } from '@lazyollama-gui/typescript-common';
-
-export enum OllamaClientCacheType {
-  PullQueued = 'pull-queued',
-  PullCompleted = 'pull-completed',
-  Running = 'running',
-  Stopped = 'stopped',
-  Available = 'available',
-  PullCancelled = 'pull-cancelled' /** This currently will be synonymous with failure */
-}
-
-export type AdHocJsonSchema = {
-  [key: string]: string | Array<string> | AdHocJsonSchema;
-};
-
-export type RunningModelConfiguration = {
-  name: string;
-  model: number;
-  size: string;
-  digest: string;
-  details: Record<string, string | string[]>;
-  expires_at: string;
-  size_vram: number | BigInt;
-};
-
-export type RunningModelResponse = {
-  models: RunningModelConfiguration[];
-};
-
-export type ChatPromptConfiguration = {
-  model: string;
-  prompt?: string;
-  suffix?: string;
-  images?: Array<Base64URLString>;
-  /** the format to return a response in. Format can be json or a JSON schema */
-  format?: 'json' | AdHocJsonSchema;
-  /** additional model parameters listed in the documentation for the Modelfile such as temperature */
-  options?: Record<string, any>;
-  /** system message to (overrides what is defined in the Modelfile) */
-  system?: string;
-  /** the prompt template to use (overrides what is defined in the Modelfile) */
-  template?: string;
-  /** if false the response will be returned as a single response object, rather than a stream of objects */
-  stream?: boolean;
-  /** if true no formatting will be applied to the prompt. You may choose to use the raw parameter if you are specifying a full templated prompt in your request to the API */
-  raw?: boolean;
-  /** controls how long the model will stay loaded into memory following the request (default: 5m) */
-  keep_alive?: number;
-  /** @deprecated the context parameter returned from a previous request to /generate, this can be used to keep a short conversational memory */
-  context?: string;
-};
-
-export type ChatPromptFinalResponse = {
-  model: string;
-  created_at?: string;
-  done?: boolean;
-  /** time spent generating the response */
-  total_duration: string | number | BigInt;
-  /** time spent in nanoseconds loading the model */
-  load_duration: string | number | BigInt;
-  /** number of tokens in the prompt */
-  prompt_eval_count: number | BigInt;
-  /** time spent in nanoseconds evaluating the prompt */
-  prompt_eval_duration: number | BigInt;
-  /** number of tokens in the response */
-  eval_count: number | BigInt;
-  /** time in nanoseconds spent generating the response */
-  eval_duration: number | BigInt;
-  /** an encoding of the conversation used in this response, this can be sent in the next request to keep a conversational memory */
-  context: string | Record<string, unknown> | Array<any> | any;
-  /** empty if the response was streamed, if not streamed, this will contain the full response */
-  response: string;
-};
-
+import {
+  OllamaClientCacheType,
+  type ChatPromptConfiguration,
+  type ChatPromptFinalResponse,
+  type RunningModelResponse,
+  type RemoteModelStub,
+  type NodeHtmlParserHTMLElement
+} from './types';
 /**
  * What flows do we need to support?
  *
  * - Querying the remote model registry
  * - Pulling a model into memory from the remote model registry
+ * - Starting a model
+ * - Stopping a model
+ * - Unloading a model
+ * - Prompting a model
+ * - Getting usage insights into memory and space usage of a model
+ * - Get a state of all local models
+ * 
  */
 
 export class OllamaClient {
@@ -89,14 +31,7 @@ export class OllamaClient {
   private remote: {
     registry: {
       url: string;
-      models: Array<{
-        model: string;
-        tags: {
-          href: string | undefined;
-          label: string | undefined;
-          description: string;
-        }[];
-      }>;
+      models: Array<RemoteModelStub>;
     };
   } = {
     registry: {
@@ -126,11 +61,6 @@ export class OllamaClient {
     return (await this._get<string>(this.baseUrl!, 'text')) === 'Ollama is running';
   }
 
-  /**
-   * Check the state of the model in the cache.
-   * @param model The model to check.
-   * @returns A map from the model to an array of cache types it belongs to.
-   */
   checkModelStateInCaches(model: string) {
     const state: Record<string, Array<string>> = {};
     for (const [key, value] of this.cache) {
@@ -154,6 +84,17 @@ export class OllamaClient {
       }
     }
     return state;
+  }
+
+  getRemoteRegistryModels(): {
+    model: string;
+    tags: {
+      href: string | undefined;
+      label: string | undefined;
+      description: string;
+    }[];
+  }[] {
+    return this.remote.registry.models;
   }
 
   /**
@@ -208,7 +149,7 @@ export class OllamaClient {
   async indexRunningModels(): Promise<void> {
     const running = await this.getRunningModels();
     if (running && running?.models && Array.isArray(running)) {
-      const runningModels = running.models.map((m) => m.name);
+      const runningModels = running.models.map((m) => m.name!);
       this.cache.set(OllamaClientCacheType.Running, new Set(runningModels));
     }
   }
@@ -236,41 +177,9 @@ export class OllamaClient {
         return;
       }
 
-      const onSuccess = ({ status }: { status: string }) => {
-        if (status === 'success') {
-          this.cache.get(OllamaClientCacheType.PullQueued)!.delete(model);
-          this.cache.get(OllamaClientCacheType.PullCompleted)!.add(model);
-          this.cache.get(OllamaClientCacheType.Available)!.add(model);
-          this.logger.info(`Pulled model ${model}`);
-
-          /** Preload the model into memory pre-emptively */
-          if (prestart) this.startModel(model);
-        } else {
-          this.logger.error(`Error pulling model ${model}: ${status}`);
-          this.cache.get(OllamaClientCacheType.PullCancelled)!.add(model);
-          setTimeout(
-            () => {
-              this.cache.get(OllamaClientCacheType.PullCancelled)!.delete(model);
-            },
-            60 * 60 * 1000
-          ); // 1 hour
-          this.cache.get(OllamaClientCacheType.PullQueued)!.delete(model);
-        }
-      };
-
-      const onError = (e: unknown) => {
-        if (e instanceof Error) {
-          this.logger.error(`Error pulling model ${model}: ${e.message}`);
-        } else {
-          this.logger.error(`Error pulling model ${model}: ${e}`);
-        }
-
-        this.cache.get(OllamaClientCacheType.PullQueued)!.delete(model);
-      };
-
       this._post<{ status: string }, typeof payload>('/api/pull', payload)
-        .then(onSuccess)
-        .catch(onError);
+        .then(this.getPullModelOnSuccessCallback(model, prestart).bind(this))
+        .catch(this.getPullModelOnErrorCallback(model).bind(this));
     } catch (e) {
       if (e instanceof Error) {
         this.logger.error(`Error pulling model ${model}: ${e.message}`);
@@ -278,6 +187,45 @@ export class OllamaClient {
         this.logger.error(`Error pulling model ${model}: ${e}`);
       }
     }
+  }
+
+  private getPullModelOnSuccessCallback(
+    model: string,
+    prestart = true
+  ): ({ status }: { status: string }) => void {
+    return ({ status }) => {
+      if (status === 'success') {
+        this.cache.get(OllamaClientCacheType.PullQueued)!.delete(model);
+        this.cache.get(OllamaClientCacheType.PullCompleted)!.add(model);
+        this.cache.get(OllamaClientCacheType.Available)!.add(model);
+        this.logger.info(`Pulled model ${model}`);
+
+        /** Preload the model into memory pre-emptively */
+        if (prestart) this.startModel(model);
+      } else {
+        this.logger.error(`Error pulling model ${model}: ${status}`);
+        this.cache.get(OllamaClientCacheType.PullCancelled)!.add(model);
+        setTimeout(
+          () => {
+            this.cache.get(OllamaClientCacheType.PullCancelled)!.delete(model);
+          },
+          60 * 60 * 1000
+        ); // 1 hour
+        this.cache.get(OllamaClientCacheType.PullQueued)!.delete(model);
+      }
+    };
+  }
+
+  private getPullModelOnErrorCallback(model: string) {
+    return (e: unknown) => {
+      if (e instanceof Error) {
+        this.logger.error(`Error pulling model ${model}: ${e.message}`);
+      } else {
+        this.logger.error(`Error pulling model ${model}: ${e}`);
+      }
+
+      this.cache.get(OllamaClientCacheType.PullQueued)!.delete(model);
+    };
   }
 
   /**
@@ -359,49 +307,46 @@ export class OllamaClient {
       const response = await Bun.fetch(this.remote.registry.url);
       const text = await response.text();
       const html = parseHtml(text);
-      const modelListItems = html.querySelectorAll('li[x-test-model]');
-      let modelDtos = modelListItems.map(async (item) => {
-        const titleElement = item.querySelector('[x-test-model-title]');
-        const title = titleElement?.getAttribute('title');
+      const modelListItems = this.parseModelListItemsFromHtml(html);
+      const modelNames = modelListItems
+        .map(this.getModelTitleFromListItemMarkup)
+        .filter(Boolean);
+      const modelPromises = modelNames.map(this.fetchRemoteModelMetadata.bind(this));
 
-        if (!title) return null;
-        const tagsUrl = this.remote.registry.url + `/${title}/tags`;
-        const tagsResponse = await Bun.fetch(tagsUrl);
-        const tagsText = await tagsResponse.text();
-        const tagsHtml = parseHtml(tagsText);
-        const tagListItems = tagsHtml.querySelectorAll('div.flex.px-4.py-3');
-        let tagDtos = tagListItems.map((div) => {
-          const a = div.querySelector('a.group');
-          const href = a?.getAttribute('href');
-          const label = a?.firstChild?.textContent;
-          const span = div.querySelector('span');
-          const spanText = span?.firstChild?.textContent + ',' + span?.textContent;
-          return {
-            href,
-            label,
-            description: spanText
-          };
-        });
-
-        if (!tagDtos || tagDtos.length === 0) return null;
-
-        return {
-          model: title,
-          tags: tagDtos
-        };
+      const modelMarkupObjects = await Promise.all(modelPromises).catch((e) => {
+        throw e;
       });
 
-      const resolved = await Promise.all([...modelDtos]);
-      const filtered = resolved.filter((dto) => dto !== null);
+      let modelDTOs = modelMarkupObjects
+        .map(this.getTagsFromModelPageMarkup.bind(this))
+        .flat()
+        .filter(Boolean);
 
-      this.remote.registry.models = filtered as {
-        model: string;
-        tags: {
-          href: string | undefined;
-          label: string | undefined;
-          description: string;
-        }[];
-      }[];
+      modelDTOs.forEach((dto) => {
+        if (!dto) return;
+        const { model, description, href, label } = dto;
+        const mappedIndex = this.remote.registry.models.find(
+          (mapped) => mapped.model === model
+        );
+        if (!mappedIndex) {
+          this.remote.registry.models.push({
+            model,
+            tags: [
+              {
+                href,
+                label,
+                description
+              }
+            ]
+          });
+        } else {
+          mappedIndex.tags.push({
+            description,
+            href,
+            label
+          });
+        }
+      });
     } catch (e) {
       if (e instanceof Error) {
         this.logger.error(`Error indexing remote registry models: ${e.message}`);
@@ -409,15 +354,52 @@ export class OllamaClient {
     }
   }
 
-  getRemoteRegistryModels(): {
+  private parseModelListItemsFromHtml(
+    html: NodeHtmlParserHTMLElement
+  ): NodeHtmlParserHTMLElement[] {
+    return html.querySelectorAll('li[x-test-model]');
+  }
+
+  private getModelTitleFromListItemMarkup(li: NodeHtmlParserHTMLElement): string {
+    const titleElement = li.querySelector('[x-test-model-title]');
+    return titleElement?.getAttribute('title') || '';
+  }
+
+  private async fetchRemoteModelMetadata(modelName: string) {
+    const tagsUrl = this.remote.registry.url + `/${modelName}/tags`;
+    const tagsResponse = await Bun.fetch(tagsUrl);
+    const tagsText = await tagsResponse.text();
+    const tagsHtml = parseHtml(tagsText);
+    return {
+      model: modelName,
+      markup: tagsHtml
+    };
+  }
+
+  private getTagsFromModelPageMarkup({
+    model,
+    markup
+  }: {
     model: string;
-    tags: {
-      href: string | undefined;
-      label: string | undefined;
-      description: string;
-    }[];
-  }[] {
-    return this.remote.registry.models;
+    markup: NodeHtmlParserHTMLElement;
+  }) {
+    const tagListItems = markup.querySelectorAll('div.flex.px-4.py-3');
+    return tagListItems.map((div) => {
+      const a = div.querySelector('a.group');
+      const href = a?.getAttribute('href');
+      const label = a?.firstChild?.textContent;
+      const span = div.querySelector('span');
+      const spanText = span?.firstChild?.textContent + ',' + span?.textContent;
+
+      if (!href || !label || !spanText) return null;
+
+      return {
+        model,
+        href,
+        label,
+        description: spanText
+      };
+    });
   }
 }
 
