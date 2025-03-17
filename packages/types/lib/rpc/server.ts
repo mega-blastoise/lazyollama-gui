@@ -1,25 +1,19 @@
-import { type Server } from 'bun';
-import { type BunServerConfig } from '../bun';
-import { type XDebugger } from '../logger';
-import { type RPCMethod } from './index';
+import { type BunServerConfig, type BunMiddleware } from '../bun';
+import { type MinimalLogger } from '../logger';
+
+import { type RPCMethod, type RPCRequestBody } from './index';
 
 export type RPCHandlers = Map<string, RPCMethod>;
 
-export abstract class ILazyOllamaRPCServer {
-  protected handlers: RPCHandlers = new Map();
-  protected server: Server | null = null;
-
-  protected logger: XDebugger;
-
-  constructor() {}
-
-  protected register(method: string, handler: RPCMethod, replace = false): void {
-    if (this.handlers.has(method)) {
-        if (replace) this.handlers.set(method, handler);
-        else 
-    }
-  }
-}
+export type LazyOllamaRPCServerOptions = {
+  logger: MinimalLogger;
+  port: BunServerConfig['port'];
+  host: BunServerConfig['hostname'];
+  path?: string;
+  middlewares?: Array<BunMiddleware>;
+  healthcheckPath?: string;
+  cors?: string | string[] | ((origin: string) => boolean);
+} & Omit<Partial<BunServerConfig>, 'port' | 'hostname' | 'fetch' | 'routes' | 'websocket'>;
 
 /**
  * Represents the structure of an RPC API response.

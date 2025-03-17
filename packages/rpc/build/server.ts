@@ -9,5 +9,5 @@ export default {
   sourcemap: 'linked',
   minify: true,
   root: '.',
-  external: []
+  external: ['chalk', 'debug', 'node-emoji', 'node-html-parser', 'sleepydogs']
 } as BuildConfig;

@@ -21,6 +21,7 @@
     },
     "devDependencies": {
         "@lazyollama-gui/typescript-configs": "workspace:*",
+        "@lazyollama-gui/typescript-common-types": "workspace:*",
         "@types/bun": "latest",
         "@types/debug": "^4.1.12",
         "chalk": "^5.4.1",

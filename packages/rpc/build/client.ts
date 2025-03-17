@@ -9,5 +9,6 @@ export default {
   sourcemap: 'linked',
   minify: true,
   root: '.',
-  external: []
+  external: [],
+  packages: 'bundle'
 } as BuildConfig;
