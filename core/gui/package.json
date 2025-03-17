@@ -20,6 +20,7 @@
   "devDependencies": {
     "@chromatic-com/storybook": "^3.2.5",
     "@lazyollama-gui/typescript-configs": "workspace:*",
+    "@lazyollama-gui/typescript-common-types": "workspace:*",
     "@storybook/addon-essentials": "^8.6.4",
     "@storybook/addon-interactions": "^8.6.4",
     "@storybook/addon-onboarding": "^8.6.4",

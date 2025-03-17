@@ -26,6 +26,7 @@
         "sleepydogs": "1.0.8-alpha.2",
       },
       "devDependencies": {
+        "@lazyollama-gui/typescript-common-types": "workspace:*",
         "@lazyollama-gui/typescript-configs": "workspace:*",
         "@types/bun": "latest",
         "@types/debug": "^4.1.12",
@@ -55,6 +56,7 @@
       },
       "devDependencies": {
         "@chromatic-com/storybook": "^3.2.5",
+        "@lazyollama-gui/typescript-common-types": "workspace:*",
         "@lazyollama-gui/typescript-configs": "workspace:*",
         "@storybook/addon-essentials": "^8.6.4",
         "@storybook/addon-interactions": "^8.6.4",
@@ -80,6 +82,7 @@
         "sleepydogs": "1.0.8-alpha.2",
       },
       "devDependencies": {
+        "@lazyollama-gui/typescript-common-types": "workspace:*",
         "@lazyollama-gui/typescript-configs": "workspace:*",
         "@types/bun": "latest",
         "@types/debug": "^4.1.12",
@@ -99,6 +102,7 @@
       "name": "@lazyollama-gui/typescript-common",
       "version": "0.0.1-alpha.0.1",
       "devDependencies": {
+        "@lazyollama-gui/typescript-common-types": "workspace:*",
         "@lazyollama-gui/typescript-configs": "workspace:*",
         "@types/bun": "latest",
         "@types/debug": "^4.1.12",
@@ -167,18 +171,14 @@
       "name": "@lazyollama-gui/typescript-configs",
       "version": "0.0.0",
     },
-    "packages/react-toolkit": {
-      "name": "@lazyollama-gui/typescript-react-toolkit",
+    "packages/rpc": {
+      "name": "@lazyollama-gui/typescript-rpc-core",
       "version": "0.0.1-alpha.0.1",
-      "dependencies": {
-        "sleepydogs": "1.0.8-alpha.2",
-      },
       "devDependencies": {
+        "@lazyollama-gui/typescript-common-types": "workspace:*",
         "@lazyollama-gui/typescript-configs": "workspace:*",
         "@types/bun": "latest",
         "@types/debug": "^4.1.12",
-        "@types/react": "^19.0.10",
-        "@types/react-dom": "^19.0.4",
         "chalk": "^5.4.1",
         "debug": "^4.4.0",
         "node-emoji": "^2.2.0",
@@ -188,8 +188,8 @@
         "chalk": "^5.4.1",
         "debug": "^4.4.0",
         "node-emoji": "^2.2.0",
-        "react": "^19.0.0",
-        "react-dom": "^19.0.0",
+        "node-html-parser": "^7.0.1",
+        "sleepydogs": "1.0.8-alpha.2",
         "typescript": "^5.0.0",
       },
     },
@@ -209,6 +209,17 @@
         "postcss": "^8.5.3",
         "postcss-cli": "^11.0.0",
         "sass": "^1.85.0",
+      },
+    },
+    "packages/types": {
+      "name": "@lazyollama-gui/typescript-common-types",
+      "version": "0.0.1-alpha.0.1",
+      "devDependencies": {
+        "@lazyollama-gui/typescript-configs": "workspace:*",
+        "@types/bun": "latest",
+      },
+      "peerDependencies": {
+        "typescript": "^5.0.0",
       },
     },
   },
@@ -325,11 +336,13 @@
 
     "@lazyollama-gui/typescript-common": ["@lazyollama-gui/typescript-common@workspace:packages/common"],
 
+    "@lazyollama-gui/typescript-common-types": ["@lazyollama-gui/typescript-common-types@workspace:packages/types"],
+
     "@lazyollama-gui/typescript-configs": ["@lazyollama-gui/typescript-configs@workspace:packages/configs"],
 
     "@lazyollama-gui/typescript-react-components": ["@lazyollama-gui/typescript-react-components@workspace:packages/components"],
 
-    "@lazyollama-gui/typescript-react-toolkit": ["@lazyollama-gui/typescript-react-toolkit@workspace:packages/react-toolkit"],
+    "@lazyollama-gui/typescript-rpc-core": ["@lazyollama-gui/typescript-rpc-core@workspace:packages/rpc"],
 
     "@mdx-js/react": ["@mdx-js/react@3.1.0", "", { "dependencies": { "@types/mdx": "^2.0.0" }, "peerDependencies": { "@types/react": ">=16", "react": ">=16" } }, "sha512-QjHtSaoameoalGnKDT3FoIl4+9RwyTmo9ZJGBdLOks/YOiWHoRDI3PUwEzOE7kEmGcV3AFcp9K6dYu9rEuKLAQ=="],
 
@@ -1619,15 +1632,19 @@
 
     "@lazyollama-gui/api/@types/bun": ["@types/bun@1.2.5", "", { "dependencies": { "bun-types": "1.2.5" } }, "sha512-w2OZTzrZTVtbnJew1pdFmgV99H0/L+Pvw+z1P67HaR18MHOzYnTYOi6qzErhK8HyT+DB782ADVPPE92Xu2/Opg=="],
 
+    "@lazyollama-gui/browser-gui/@types/bun": ["@types/bun@1.2.5", "", { "dependencies": { "bun-types": "1.2.5" } }, "sha512-w2OZTzrZTVtbnJew1pdFmgV99H0/L+Pvw+z1P67HaR18MHOzYnTYOi6qzErhK8HyT+DB782ADVPPE92Xu2/Opg=="],
+
     "@lazyollama-gui/browser-gui/sleepydogs": ["sleepydogs@1.0.7", "", {}, "sha512-QL5tys2AlmODvTrsYvCZYPFcnNdM7O5Svp0YwJ4E+Ro8OC9XJNyPc2eZkqp25TNa8NMss8clCDI8UBRM8AlIsg=="],
 
     "@lazyollama-gui/typescript-clients/@types/bun": ["@types/bun@1.2.5", "", { "dependencies": { "bun-types": "1.2.5" } }, "sha512-w2OZTzrZTVtbnJew1pdFmgV99H0/L+Pvw+z1P67HaR18MHOzYnTYOi6qzErhK8HyT+DB782ADVPPE92Xu2/Opg=="],
 
     "@lazyollama-gui/typescript-common/@types/bun": ["@types/bun@1.2.5", "", { "dependencies": { "bun-types": "1.2.5" } }, "sha512-w2OZTzrZTVtbnJew1pdFmgV99H0/L+Pvw+z1P67HaR18MHOzYnTYOi6qzErhK8HyT+DB782ADVPPE92Xu2/Opg=="],
 
-    "@storybook/core/semver": ["semver@7.7.1", "", { "bin": { "semver": "bin/semver.js" } }, "sha512-hlq8tAfn0m/61p4BVRcPzIGr6LKiMwo4VM6dGi6pt4qcRkmNzTcWq6eCEjEh+qXjkMDvPlOFFSGwQjoEa6gyMA=="],
+    "@lazyollama-gui/typescript-common-types/@types/bun": ["@types/bun@1.2.5", "", { "dependencies": { "bun-types": "1.2.5" } }, "sha512-w2OZTzrZTVtbnJew1pdFmgV99H0/L+Pvw+z1P67HaR18MHOzYnTYOi6qzErhK8HyT+DB782ADVPPE92Xu2/Opg=="],
 
-    "@storybook/preset-react-webpack/semver": ["semver@7.7.1", "", { "bin": { "semver": "bin/semver.js" } }, "sha512-hlq8tAfn0m/61p4BVRcPzIGr6LKiMwo4VM6dGi6pt4qcRkmNzTcWq6eCEjEh+qXjkMDvPlOFFSGwQjoEa6gyMA=="],
+    "@lazyollama-gui/typescript-react-components/@types/bun": ["@types/bun@1.2.5", "", { "dependencies": { "bun-types": "1.2.5" } }, "sha512-w2OZTzrZTVtbnJew1pdFmgV99H0/L+Pvw+z1P67HaR18MHOzYnTYOi6qzErhK8HyT+DB782ADVPPE92Xu2/Opg=="],
+
+    "@lazyollama-gui/typescript-rpc-core/@types/bun": ["@types/bun@1.2.5", "", { "dependencies": { "bun-types": "1.2.5" } }, "sha512-w2OZTzrZTVtbnJew1pdFmgV99H0/L+Pvw+z1P67HaR18MHOzYnTYOi6qzErhK8HyT+DB782ADVPPE92Xu2/Opg=="],
 
     "@testing-library/dom/chalk": ["chalk@4.1.2", "", { "dependencies": { "ansi-styles": "^4.1.0", "supports-color": "^7.1.0" } }, "sha512-oKnbhFyRIXpUuez8iBMmyEa4nbj4IOQyuhc/wy9kY7/WVPcwIO9VA668Pu8RkO7+0G76SLROeyw9CpQ061i4mA=="],
 
@@ -1647,8 +1664,6 @@
 
     "cross-spawn/semver": ["semver@5.7.2", "", { "bin": { "semver": "bin/semver" } }, "sha512-cBznnQ9KjJqU67B52RMC65CMarK2600WFnbkcaiwWq3xy/5haFJlshgnpjovMVJ+Hff49d8GEn0b87C5pDQ10g=="],
 
-    "css-loader/semver": ["semver@7.7.1", "", { "bin": { "semver": "bin/semver.js" } }, "sha512-hlq8tAfn0m/61p4BVRcPzIGr6LKiMwo4VM6dGi6pt4qcRkmNzTcWq6eCEjEh+qXjkMDvPlOFFSGwQjoEa6gyMA=="],
-
     "csso/css-tree": ["css-tree@2.2.1", "", { "dependencies": { "mdn-data": "2.0.28", "source-map-js": "^1.0.1" } }, "sha512-OA0mILzGc1kCOCSJerOeqDxDQ4HOh+G8NbOJFOTgOCzpw7fCBubk0fEyxp8AgOL/jvLgYA/uV0cMbe43ElF1JA=="],
 
     "dir-glob/path-type": ["path-type@4.0.0", "", {}, "sha512-gDKb8aZMDeD/tZWs9P6+q0J9Mwkdl6xMV8TjnGP3qJVJ06bdMgkbBlLU8IdfOsIsFz2BW1rNVT3XuNEl8zPAvw=="],
@@ -1662,8 +1677,6 @@
     "fork-ts-checker-webpack-plugin/fs-extra": ["fs-extra@10.1.0", "", { "dependencies": { "graceful-fs": "^4.2.0", "jsonfile": "^6.0.1", "universalify": "^2.0.0" } }, "sha512-oRXApq54ETRj4eMiFzGnHWGy+zo5raudjuxN0b8H7s/RU2oW0Wvsx9O0ACRN/kRq9E8Vu/ReskGB5o3ji+FzHQ=="],
 
     "fork-ts-checker-webpack-plugin/schema-utils": ["schema-utils@3.3.0", "", { "dependencies": { "@types/json-schema": "^7.0.8", "ajv": "^6.12.5", "ajv-keywords": "^3.5.2" } }, "sha512-pN/yOAvcC+5rQ5nERGuwrjLlYvLTbCibnZ1I7B1LaiAz9BRBlE9GMgE/eqV30P7aJQUf7Ddimy/RsbYO/GrVGg=="],
-
-    "fork-ts-checker-webpack-plugin/semver": ["semver@7.7.1", "", { "bin": { "semver": "bin/semver.js" } }, "sha512-hlq8tAfn0m/61p4BVRcPzIGr6LKiMwo4VM6dGi6pt4qcRkmNzTcWq6eCEjEh+qXjkMDvPlOFFSGwQjoEa6gyMA=="],
 
     "glob/minimatch": ["minimatch@10.0.1", "", { "dependencies": { "brace-expansion": "^2.0.1" } }, "sha512-ethXTt3SGGR+95gudmqJ1eNhRO7eGEGIgYA9vnPatK4/etz2MEVDno5GMCibdMTuBMyElzIlgxMna3K94XDIDQ=="],
 
@@ -1755,9 +1768,17 @@
 
     "@lazyollama-gui/api/@types/bun/bun-types": ["bun-types@1.2.5", "", { "dependencies": { "@types/node": "*", "@types/ws": "~8.5.10" } }, "sha512-3oO6LVGGRRKI4kHINx5PIdIgnLRb7l/SprhzqXapmoYkFl5m4j6EvALvbDVuuBFaamB46Ap6HCUxIXNLCGy+tg=="],
 
+    "@lazyollama-gui/browser-gui/@types/bun/bun-types": ["bun-types@1.2.5", "", { "dependencies": { "@types/node": "*", "@types/ws": "~8.5.10" } }, "sha512-3oO6LVGGRRKI4kHINx5PIdIgnLRb7l/SprhzqXapmoYkFl5m4j6EvALvbDVuuBFaamB46Ap6HCUxIXNLCGy+tg=="],
+
     "@lazyollama-gui/typescript-clients/@types/bun/bun-types": ["bun-types@1.2.5", "", { "dependencies": { "@types/node": "*", "@types/ws": "~8.5.10" } }, "sha512-3oO6LVGGRRKI4kHINx5PIdIgnLRb7l/SprhzqXapmoYkFl5m4j6EvALvbDVuuBFaamB46Ap6HCUxIXNLCGy+tg=="],
 
+    "@lazyollama-gui/typescript-common-types/@types/bun/bun-types": ["bun-types@1.2.5", "", { "dependencies": { "@types/node": "*", "@types/ws": "~8.5.10" } }, "sha512-3oO6LVGGRRKI4kHINx5PIdIgnLRb7l/SprhzqXapmoYkFl5m4j6EvALvbDVuuBFaamB46Ap6HCUxIXNLCGy+tg=="],
+
     "@lazyollama-gui/typescript-common/@types/bun/bun-types": ["bun-types@1.2.5", "", { "dependencies": { "@types/node": "*", "@types/ws": "~8.5.10" } }, "sha512-3oO6LVGGRRKI4kHINx5PIdIgnLRb7l/SprhzqXapmoYkFl5m4j6EvALvbDVuuBFaamB46Ap6HCUxIXNLCGy+tg=="],
+
+    "@lazyollama-gui/typescript-react-components/@types/bun/bun-types": ["bun-types@1.2.5", "", { "dependencies": { "@types/node": "*", "@types/ws": "~8.5.10" } }, "sha512-3oO6LVGGRRKI4kHINx5PIdIgnLRb7l/SprhzqXapmoYkFl5m4j6EvALvbDVuuBFaamB46Ap6HCUxIXNLCGy+tg=="],
+
+    "@lazyollama-gui/typescript-rpc-core/@types/bun/bun-types": ["bun-types@1.2.5", "", { "dependencies": { "@types/node": "*", "@types/ws": "~8.5.10" } }, "sha512-3oO6LVGGRRKI4kHINx5PIdIgnLRb7l/SprhzqXapmoYkFl5m4j6EvALvbDVuuBFaamB46Ap6HCUxIXNLCGy+tg=="],
 
     "@testing-library/dom/chalk/ansi-styles": ["ansi-styles@4.3.0", "", { "dependencies": { "color-convert": "^2.0.1" } }, "sha512-zbB9rCJAT1rbjiVDb2hqKFHNYLxgtk8NURxZ3IZwD3F6NtxbXZQCnnSi1Lkx+IDohdPlFp222wVALIheZJQSEg=="],
 

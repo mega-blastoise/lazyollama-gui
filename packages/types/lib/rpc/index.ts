@@ -17,4 +17,17 @@ export type ExcludeMethods<T, OmitKeys extends keyof T> = {
 export type RPCControllerMethods<RPCController extends Record<string, RPCMethod>> =
   ExcludeMethods<RPCController, 'hasMethod' | 'getMethod'>;
 
+export type RPCAPISpec = {
+  [method: string]: {
+    params: any[];
+    result: any;
+  }
+};
+
+export type RPCRequestBody<T extends RPCAPISpec, M extends keyof T & string> = {
+  method: M;
+  params: T[M]['params'];
+};
+
+export * from './client';
 export * from './server';
