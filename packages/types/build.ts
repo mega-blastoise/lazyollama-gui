@@ -3,9 +3,9 @@ Bun.build({
   outdir: './out',
   target: 'bun',
   format: 'esm',
-  splitting: false, // Change to true to enable splitting
+  splitting: false,
   sourcemap: 'linked',
-  minify: false, // Change to true to make the code fucking unreadable for almost no performance boost
+  minify: false,
   root: '.',
   external: []
 });

@@ -2,33 +2,41 @@ import { type RPCAPIResponse } from '../rpc';
 
 type OllamaModelStatusUpdate = { model: string; status: string };
 
+export enum OllamaRPCAPIAction {
+  ModelPull = 'model.pull',
+  ModelPreheat = 'model.preheat',
+  ModelStart = 'model.start',
+  ModelStop = 'model.stop',
+  ModelsStatus = 'models.status'
+}
+
 export interface IOllamaRPCAPI {
   [k: string]: {
     params: any[];
     result: any;
   },
 
-  'model.pull': {
+  [OllamaRPCAPIAction.ModelPull]: {
     params: [model: string];
     result: RPCAPIResponse<OllamaModelStatusUpdate, IOllamaRPCAPI>;
   };
 
-  'model.preheat': {
+  [OllamaRPCAPIAction.ModelPreheat]: {
     params: [model: string];
     result: RPCAPIResponse<OllamaModelStatusUpdate, IOllamaRPCAPI>;
   };
 
-  'model.start': {
+  [OllamaRPCAPIAction.ModelStart]: {
     params: [model: string];
     result: RPCAPIResponse<OllamaModelStatusUpdate, IOllamaRPCAPI>;
   };
 
-  'model.stop': {
+  [OllamaRPCAPIAction.ModelStop]: {
     params: [model: string];
     result: RPCAPIResponse<OllamaModelStatusUpdate, IOllamaRPCAPI>;
   };
 
-  'models.status': {
+  [OllamaRPCAPIAction.ModelsStatus]: {
     params: [];
     result: RPCAPIResponse<Array<Record<string, string[]>>, IOllamaRPCAPI>;
   };

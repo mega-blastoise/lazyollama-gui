@@ -23,6 +23,7 @@
   "dependencies": {
     "@lazyollama-gui/typescript-clients": "workspace:*",
     "@lazyollama-gui/typescript-common": "workspace:*",
+    "@lazyollama-gui/typescript-rpc-core": "workspace:*",
     "debug": "^4.4.0",
     "node-schedule": "^2.1.1",
     "sleepydogs": "1.0.8-alpha.2"

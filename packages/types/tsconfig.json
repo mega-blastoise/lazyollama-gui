@@ -1,7 +1,6 @@
 {
     "extends": "@lazyollama-gui/typescript-configs/typescript/library.tsconfig.json",
     "compilerOptions": {
-
         "lib": ["ESNext", "DOM"],
         "rootDir": "./",
         "baseUrl": "./",
