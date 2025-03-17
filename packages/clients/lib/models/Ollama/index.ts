@@ -20,12 +20,11 @@ import {
  * - Prompting a model
  * - Getting usage insights into memory and space usage of a model
  * - Get a state of all local models
- * 
  */
 
 export class OllamaClient {
   private baseUrl = process.env.DOCKER_NETWORK_OLLAMA_API_URL;
-  private cache = new Map<string, Set<string>>();
+  private cache = new Map<OllamaClientCacheType, Set<string>>();
   private logger = createLogger('lazyollama:typescript:common:ollama:client');
 
   private remote: {
@@ -49,12 +48,24 @@ export class OllamaClient {
     this.cache.set(OllamaClientCacheType.PullCancelled, new Set());
   }
 
-  async init() {
-    const ollamaIsRunning = await this.checkOllamaIsRunning();
-    if (!ollamaIsRunning) throw new Error('Ollama is not running');
+  async updateInternalIndexes() {
+    try {
+      const ollamaIsRunning = await this.checkOllamaIsRunning();
+      if (!ollamaIsRunning) throw new Error('Ollama is not running');
 
-    await this.indexRemoteRegistryModels();
-    await this.indexRunningModels();
+      await this.indexRemoteRegistryModels();
+      await this.indexAvailableModels();
+      await this.indexRunningModels();
+    } catch (e) {
+      if (e instanceof Error && e.message === 'Ollama is not running') {
+        throw e;
+      }
+
+      this.logger.error(e);
+      /**
+       * @todo: Attempt to remediate
+       */
+    }
   }
 
   async checkOllamaIsRunning() {
@@ -148,7 +159,7 @@ export class OllamaClient {
 
   async indexRunningModels(): Promise<void> {
     const running = await this.getRunningModels();
-    if (running && running?.models && Array.isArray(running)) {
+    if (running?.models?.length) {
       const runningModels = running.models.map((m) => m.name!);
       this.cache.set(OllamaClientCacheType.Running, new Set(runningModels));
     }
@@ -160,6 +171,18 @@ export class OllamaClient {
    */
   async getRunningModels(): Promise<RunningModelResponse> {
     return this._get('/api/ps') as Promise<RunningModelResponse>;
+  }
+
+  async indexAvailableModels(): Promise<void> {
+    const available = await this.getAvailableModels();
+    if (available?.models?.length) {
+      const availableModels = available.models.map((m) => m.name!);
+      this.cache.set(OllamaClientCacheType.Available, new Set(availableModels));
+    }
+  }
+
+  async getAvailableModels(): Promise<RunningModelResponse> {
+    return this._get('/api/tags·') as Promise<RunningModelResponse>;
   }
 
   /**
@@ -406,3 +429,5 @@ export class OllamaClient {
 export default SuperLazySingletonFactory(OllamaClient) as ReturnType<
   typeof SuperLazySingletonFactory<OllamaClient>
 >;
+
+export * from './types';
