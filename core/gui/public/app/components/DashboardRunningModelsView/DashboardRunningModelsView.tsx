@@ -2,6 +2,7 @@ import React from 'react';
 import { Box, Square } from 'lucide-react';
 import { useApplicationStore } from '@/gui/store';
 import { type LazyOllamaDashboardRunningModelsViewProps } from './types';
+import { Button, GlassCard, Typography } from '@lazyollama-gui/typescript-react-components';
 
 function LazyOllamaDashboardRunningModelsView({
   running_models
@@ -9,7 +10,9 @@ function LazyOllamaDashboardRunningModelsView({
   const { updateUiViewState } = useApplicationStore();
   return (
     <div className="lazyollama-gui__running-tab">
-      <h3 className="lazyollama-gui__section-title">Running Models</h3>
+      <Typography variant="h4" weight="semibold" className="lazyollama-gui__section-title">
+        Running Models
+      </Typography>
 
       {running_models.length > 0 ? (
         <div className="lazyollama-gui__running-grid">
@@ -56,19 +59,34 @@ function LazyOllamaDashboardRunningModelsView({
           ))}
         </div>
       ) : (
-        <div className="lazyollama-gui__empty-state">
+
+          <GlassCard className='lazyollama-gui__empty-state' elevation='md'>
           <Box className="lazyollama-gui__empty-icon" />
-          <h3 className="lazyollama-gui__empty-title">No Models Running</h3>
-          <p className="lazyollama-gui__empty-text">
+          <Typography
+            variant="h4"
+            weight="medium"
+            className="lazyollama-gui__empty-title"
+            style={{ marginBottom: '8px' }}
+            >
+            No Models Running
+          </Typography>
+          <Typography
+            variant="body1"
+            weight="normal"
+            color="brand"
+            className="lazyollama-gui__empty-text"
+            >
             Start a model from the Models tab to see it here.
-          </p>
-          <button
+          </Typography>
+          <Button
+            variant="primary"
+            size="sm"
             className="lazyollama-gui__button lazyollama-gui__button--primary"
             onClick={() => updateUiViewState('models')}
-          >
+            >
             Go to Models
-          </button>
-        </div>
+          </Button>
+            </GlassCard>
       )}
     </div>
   );

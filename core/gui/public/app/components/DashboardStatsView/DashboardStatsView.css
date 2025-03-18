@@ -71,6 +71,7 @@
   display: flex;
   align-items: flex-end;
   justify-content: space-around;
+  width: 100%;
 }
 
 .lazyollama-gui__chart-bar {
@@ -78,7 +79,7 @@
   margin: 0 4px;
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
-  background-color: #2563eb;
+  background-color: var(--color-primary);
 }
 
 .lazyollama-gui__chart-labels {
@@ -87,4 +88,5 @@
   margin-top: 8px;
   font-size: 0.75rem;
   color: #888888;
+  width: 100%;
 }

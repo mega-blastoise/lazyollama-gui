@@ -34,6 +34,25 @@
   padding: 24px;
   overflow-y: auto;
 }
+/* Apply mint light theme gradient */
+[data-theme='mint-light'] .lazyollama-gui__content {
+  background: var(--gradient-mint-background);
+}
+
+/* Apply mint dark theme gradient */
+[data-theme='mint-dark'] .lazyollama-gui__content {
+  background: var(--gradient-dark-mint-background);
+}
+
+/* Apply purple light theme gradient */
+[data-theme='purple-light'] .lazyollama-gui__content {
+  background: var(--gradient-purple-background);
+}
+
+/* Apply purple dark theme gradient */
+[data-theme='purple-dark'] .lazyollama-gui__content {
+  background: var(--gradient-dark-purple-background);
+}
 
 .lazyollama-gui__section-header {
   display: flex;
@@ -84,14 +103,24 @@
 }
 
 .lazyollama-gui__empty-state {
-  text-align: center;
   padding: 32px;
   border-radius: 8px;
   border-width: 1px;
   border-style: solid;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
 }
 
-.lazyollama-gui--light .lazyollama-gui__empty-state {
+.lazyollama-gui__empty-state .sb-glass-card-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center !important;
+  width: 100%;
+}
+
+/* .lazyollama-gui--light .lazyollama-gui__empty-state {
   background-color: #ffffff;
   border-color: #e0e0e0;
 }
@@ -99,7 +128,7 @@
 .lazyollama-gui--dark .lazyollama-gui__empty-state {
   background-color: #2a2a2a;
   border-color: #444444;
-}
+} */
 
 .lazyollama-gui__empty-icon {
   height: 48px;
@@ -109,19 +138,11 @@
 }
 
 .lazyollama-gui__empty-title {
-  font-size: 1.125rem;
-  font-weight: 500;
+  text-align: center;
   margin-bottom: 8px;
 }
 
 .lazyollama-gui__empty-text {
+  text-align: center;
   margin-bottom: 16px;
-}
-
-.lazyollama-gui--light .lazyollama-gui__empty-text {
-  color: #666666;
-}
-
-.lazyollama-gui--dark .lazyollama-gui__empty-text {
-  color: #bbbbbb;
 }

@@ -117,7 +117,7 @@
   min-height: 1.5em;
 }
 
-/* Syntax highlighting tokens */
+/* Syntax highlighting tokens - Default */
 .sb-token-keyword {
   color: #569cd6; /* Blue */
 }
@@ -150,84 +150,290 @@
   color: #d4d4d4; /* Light gray */
 }
 
-/* Theme variants */
-.sb-code-block-dark,
-[data-theme='dark'] .sb-code-block-auto {
-  background-color: #1e1e1e;
-  border-color: #333333;
+/* Mint Light Theme */
+[data-theme='mint-light'] .sb-code-block {
+  background-color: var(--color-mint-bg-tertiary);
+  border-color: var(--color-mint-border);
 }
 
-.sb-code-block-dark .sb-code-block-header,
-[data-theme='dark'] .sb-code-block-auto .sb-code-block-header {
-  background-color: #252525;
-  border-color: #333333;
+[data-theme='mint-light'] .sb-code-block-header {
+  background-color: var(--color-mint-bg-secondary);
+  border-color: var(--color-mint-border);
 }
 
-.sb-code-block-dark .sb-code-block-title,
-[data-theme='dark'] .sb-code-block-auto .sb-code-block-title {
-  color: #e9e9e9;
+[data-theme='mint-light'] .sb-code-block-title {
+  color: var(--color-mint-text-primary);
 }
 
-.sb-code-block-dark .sb-code-block-language,
-[data-theme='dark'] .sb-code-block-auto .sb-code-block-language {
-  background-color: #333333;
-  color: #aaaaaa;
+[data-theme='mint-light'] .sb-code-block-language {
+  background-color: var(--color-mint-bg-tertiary);
+  color: var(--color-mint-text-tertiary);
 }
 
-.sb-code-block-dark .sb-code-block-code,
-[data-theme='dark'] .sb-code-block-auto .sb-code-block-code {
-  color: #d4d4d4;
+[data-theme='mint-light'] .sb-code-block-copy-button {
+  background-color: rgba(16, 185, 129, 0.1);
+  color: var(--color-mint-text-secondary);
 }
 
-.sb-code-block-dark .sb-code-block-line-numbers,
-[data-theme='dark'] .sb-code-block-auto .sb-code-block-line-numbers {
-  border-color: #333333;
+[data-theme='mint-light'] .sb-code-block-copy-button:hover {
+  background-color: rgba(16, 185, 129, 0.2);
+  color: var(--color-mint-text-primary);
 }
 
-.sb-code-block-dark .sb-code-block-line-number,
-[data-theme='dark'] .sb-code-block-auto .sb-code-block-line-number {
-  color: #858585;
+[data-theme='mint-light'] .sb-code-block-code {
+  color: var(--color-mint-text-primary);
 }
 
-/* Light theme specific */
-.sb-code-block-light,
-[data-theme='light'] .sb-code-block-auto {
-  background-color: #f5f5f5;
-  border-color: #e0e0e0;
+[data-theme='mint-light'] .sb-code-block-line-numbers {
+  border-color: var(--color-mint-border);
 }
 
-.sb-code-block-light .sb-code-block-header,
-[data-theme='light'] .sb-code-block-auto .sb-code-block-header {
-  background-color: #ffffff;
-  border-color: #e0e0e0;
+[data-theme='mint-light'] .sb-code-block-line-number {
+  color: var(--color-mint-text-tertiary);
 }
 
-.sb-code-block-light .sb-token-keyword,
-[data-theme='light'] .sb-code-block-auto .sb-token-keyword {
-  color: #0000ff; /* Blue */
+/* Syntax highlighting for Mint Light */
+[data-theme='mint-light'] .sb-token-keyword {
+  color: #047857; /* Darker mint */
 }
 
-.sb-code-block-light .sb-token-string,
-[data-theme='light'] .sb-code-block-auto .sb-token-string {
-  color: #a31515; /* Red */
+[data-theme='mint-light'] .sb-token-string {
+  color: #b45309; /* Amber/Brown */
 }
 
-.sb-code-block-light .sb-token-number,
-[data-theme='light'] .sb-code-block-auto .sb-token-number {
-  color: #098658; /* Green */
+[data-theme='mint-light'] .sb-token-number {
+  color: #047857; /* Darker mint */
 }
 
-.sb-code-block-light .sb-token-comment,
-[data-theme='light'] .sb-code-block-auto .sb-token-comment {
-  color: #008000; /* Green */
+[data-theme='mint-light'] .sb-token-comment {
+  color: #65a30d; /* Green */
 }
 
-.sb-code-block-light .sb-token-function,
-[data-theme='light'] .sb-code-block-auto .sb-token-function {
-  color: #795e26; /* Brown */
+[data-theme='mint-light'] .sb-token-function {
+  color: #0369a1; /* Blue */
 }
 
-.sb-code-block-light .sb-token-class-name,
-[data-theme='light'] .sb-code-block-auto .sb-token-class-name {
-  color: #267f99; /* Teal */
+[data-theme='mint-light'] .sb-token-class-name {
+  color: #0891b2; /* Cyan */
+}
+
+[data-theme='mint-light'] .sb-token-operator,
+[data-theme='mint-light'] .sb-token-punctuation {
+  color: var(--color-mint-text-secondary);
+}
+
+/* Mint Dark Theme */
+[data-theme='mint-dark'] .sb-code-block {
+  background-color: var(--color-dark-mint-bg-tertiary);
+  border-color: var(--color-dark-mint-border);
+}
+
+[data-theme='mint-dark'] .sb-code-block-header {
+  background-color: var(--color-dark-mint-bg-secondary);
+  border-color: var(--color-dark-mint-border);
+}
+
+[data-theme='mint-dark'] .sb-code-block-title {
+  color: var(--color-dark-mint-text-primary);
+}
+
+[data-theme='mint-dark'] .sb-code-block-language {
+  background-color: rgba(16, 185, 129, 0.1);
+  color: var(--color-dark-mint-text-tertiary);
+}
+
+[data-theme='mint-dark'] .sb-code-block-copy-button {
+  background-color: rgba(16, 185, 129, 0.1);
+  color: var(--color-dark-mint-text-secondary);
+}
+
+[data-theme='mint-dark'] .sb-code-block-copy-button:hover {
+  background-color: rgba(16, 185, 129, 0.2);
+  color: var(--color-dark-mint-text-primary);
+}
+
+[data-theme='mint-dark'] .sb-code-block-code {
+  color: var(--color-dark-mint-text-primary);
+}
+
+[data-theme='mint-dark'] .sb-code-block-line-numbers {
+  border-color: var(--color-dark-mint-border);
+}
+
+[data-theme='mint-dark'] .sb-code-block-line-number {
+  color: var(--color-dark-mint-text-tertiary);
+}
+
+/* Syntax highlighting for Mint Dark */
+[data-theme='mint-dark'] .sb-token-keyword {
+  color: #6ee7b7; /* Light mint */
+}
+
+[data-theme='mint-dark'] .sb-token-string {
+  color: #fbbf24; /* Yellow */
+}
+
+[data-theme='mint-dark'] .sb-token-number {
+  color: #a7f3d0; /* Pale mint */
+}
+
+[data-theme='mint-dark'] .sb-token-comment {
+  color: #84cc16; /* Lime */
+}
+
+[data-theme='mint-dark'] .sb-token-function {
+  color: #38bdf8; /* Sky blue */
+}
+
+[data-theme='mint-dark'] .sb-token-class-name {
+  color: #22d3ee; /* Cyan */
+}
+
+[data-theme='mint-dark'] .sb-token-operator,
+[data-theme='mint-dark'] .sb-token-punctuation {
+  color: var(--color-dark-mint-text-secondary);
+}
+
+/* Purple Light Theme */
+[data-theme='purple-light'] .sb-code-block {
+  background-color: var(--color-purple-bg-tertiary);
+  border-color: var(--color-purple-border);
+}
+
+[data-theme='purple-light'] .sb-code-block-header {
+  background-color: var(--color-purple-bg-secondary);
+  border-color: var(--color-purple-border);
+}
+
+[data-theme='purple-light'] .sb-code-block-title {
+  color: var(--color-purple-text-primary);
+}
+
+[data-theme='purple-light'] .sb-code-block-language {
+  background-color: var(--color-purple-bg-tertiary);
+  color: var(--color-purple-text-tertiary);
+}
+
+[data-theme='purple-light'] .sb-code-block-copy-button {
+  background-color: rgba(124, 58, 237, 0.1);
+  color: var(--color-purple-text-secondary);
+}
+
+[data-theme='purple-light'] .sb-code-block-copy-button:hover {
+  background-color: rgba(124, 58, 237, 0.2);
+  color: var(--color-purple-text-primary);
+}
+
+[data-theme='purple-light'] .sb-code-block-code {
+  color: var(--color-purple-text-primary);
+}
+
+[data-theme='purple-light'] .sb-code-block-line-numbers {
+  border-color: var(--color-purple-border);
+}
+
+[data-theme='purple-light'] .sb-code-block-line-number {
+  color: var(--color-purple-text-tertiary);
+}
+
+/* Syntax highlighting for Purple Light */
+[data-theme='purple-light'] .sb-token-keyword {
+  color: #6d28d9; /* Violet */
+}
+
+[data-theme='purple-light'] .sb-token-string {
+  color: #b45309; /* Amber */
+}
+
+[data-theme='purple-light'] .sb-token-number {
+  color: #047857; /* Green */
+}
+
+[data-theme='purple-light'] .sb-token-comment {
+  color: #65a30d; /* Lime */
+}
+
+[data-theme='purple-light'] .sb-token-function {
+  color: #0369a1; /* Blue */
+}
+
+[data-theme='purple-light'] .sb-token-class-name {
+  color: #7c3aed; /* Purple */
+}
+
+[data-theme='purple-light'] .sb-token-operator,
+[data-theme='purple-light'] .sb-token-punctuation {
+  color: var(--color-purple-text-secondary);
+}
+
+/* Purple Dark Theme */
+[data-theme='purple-dark'] .sb-code-block {
+  background-color: var(--color-dark-purple-bg-tertiary);
+  border-color: var(--color-dark-purple-border);
+}
+
+[data-theme='purple-dark'] .sb-code-block-header {
+  background-color: var(--color-dark-purple-bg-secondary);
+  border-color: var(--color-dark-purple-border);
+}
+
+[data-theme='purple-dark'] .sb-code-block-title {
+  color: var(--color-dark-purple-text-primary);
+}
+
+[data-theme='purple-dark'] .sb-code-block-language {
+  background-color: rgba(124, 58, 237, 0.1);
+  color: var(--color-dark-purple-text-tertiary);
+}
+
+[data-theme='purple-dark'] .sb-code-block-copy-button {
+  background-color: rgba(124, 58, 237, 0.1);
+  color: var(--color-dark-purple-text-secondary);
+}
+
+[data-theme='purple-dark'] .sb-code-block-copy-button:hover {
+  background-color: rgba(124, 58, 237, 0.2);
+  color: var(--color-dark-purple-text-primary);
+}
+
+[data-theme='purple-dark'] .sb-code-block-code {
+  color: var(--color-dark-purple-text-primary);
+}
+
+[data-theme='purple-dark'] .sb-code-block-line-numbers {
+  border-color: var(--color-dark-purple-border);
+}
+
+[data-theme='purple-dark'] .sb-code-block-line-number {
+  color: var(--color-dark-purple-text-tertiary);
+}
+
+/* Syntax highlighting for Purple Dark */
+[data-theme='purple-dark'] .sb-token-keyword {
+  color: #a78bfa; /* Light purple */
+}
+
+[data-theme='purple-dark'] .sb-token-string {
+  color: #fbbf24; /* Yellow */
+}
+
+[data-theme='purple-dark'] .sb-token-number {
+  color: #a7f3d0; /* Mint */
+}
+
+[data-theme='purple-dark'] .sb-token-comment {
+  color: #84cc16; /* Lime */
+}
+
+[data-theme='purple-dark'] .sb-token-function {
+  color: #38bdf8; /* Sky blue */
+}
+
+[data-theme='purple-dark'] .sb-token-class-name {
+  color: #c4b5fd; /* Lavender */
+}
+
+[data-theme='purple-dark'] .sb-token-operator,
+[data-theme='purple-dark'] .sb-token-punctuation {
+  color: var(--color-dark-purple-text-secondary);
 }

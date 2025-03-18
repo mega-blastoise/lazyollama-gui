@@ -1,8 +1,9 @@
-import React, { JSX, useState } from 'react';
+import React, { useState, useContext } from 'react';
 import './CodeBlock.css';
 import { CodeBlockProps } from './types';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-import { dark } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import { useTheme } from '../../contexts/theme/ThemeContext';
 
 export const CodeBlock: React.FC<CodeBlockProps> = ({
   code,
@@ -10,10 +11,10 @@ export const CodeBlock: React.FC<CodeBlockProps> = ({
   showLineNumbers = true,
   showCopyButton = true,
   title,
-  theme = 'auto',
   className = ''
 }) => {
   const [isCopied, setIsCopied] = useState(false);
+  const { theme } = useTheme();
 
   const handleCopyClick = async () => {
     try {
@@ -25,9 +26,29 @@ export const CodeBlock: React.FC<CodeBlockProps> = ({
     }
   };
 
-  const codeBlockClasses = ['sb-code-block', `sb-code-block-${theme}`, className]
+  const codeBlockClasses = ['sb-code-block', className]
     .filter(Boolean)
     .join(' ');
+
+  // Customize syntax highlighter theme based on our theme
+  const getCustomStyle = () => {
+    // Base style with minimal customizations
+    const baseStyle = {
+      ...vscDarkPlus,
+      'pre[class*="language-"]': {
+        ...vscDarkPlus['pre[class*="language-"]'],
+        background: 'transparent',
+        margin: 0,
+        padding: 0
+      },
+      'code[class*="language-"]': {
+        ...vscDarkPlus['code[class*="language-"]'],
+        background: 'transparent'
+      }
+    };
+
+    return baseStyle;
+  };
 
   return (
     <div className={codeBlockClasses}>
@@ -89,10 +110,10 @@ export const CodeBlock: React.FC<CodeBlockProps> = ({
           <code className={`sb-code-block-code language-${language}`}>
             <SyntaxHighlighter
               language={language}
-              style={dark}
+              style={getCustomStyle()}
               showLineNumbers={showLineNumbers}
               wrapLines
-              customStyle={{ marginTop: '1.5rem' }}
+              customStyle={{ background: 'transparent', margin: 0 }}
             >
               {code}
             </SyntaxHighlighter>

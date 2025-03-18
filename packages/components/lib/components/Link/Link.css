@@ -8,7 +8,7 @@
   cursor: pointer;
 }
 
-/* Link variants */
+/* Link variants - Default Theme */
 .sb-link-default {
   color: var(--color-secondary);
 }
@@ -23,7 +23,7 @@
 }
 
 .sb-link-primary:hover {
-  color: #e43771; /* Darker variant of primary */
+  color: var(--color-secondary);
   text-decoration: underline;
 }
 
@@ -99,31 +99,219 @@
   outline-offset: 2px;
 }
 
-/* Dark mode overrides */
-[data-theme='dark'] .sb-link-default {
-  color: #3db2ff; /* Brighter blue for dark mode */
+/* Mint Light Theme */
+[data-theme='mint-light'] .sb-link-default {
+  color: var(--color-mint-secondary);
 }
 
-[data-theme='dark'] .sb-link-secondary {
-  color: var(--color-dark-text-secondary);
+[data-theme='mint-light'] .sb-link-default:hover {
+  color: var(--color-mint-primary);
+  text-decoration: underline;
 }
 
-[data-theme='dark'] .sb-link-secondary:hover {
-  color: var(--color-dark-text-primary);
+[data-theme='mint-light'] .sb-link-primary {
+  color: var(--color-mint-primary);
 }
 
-[data-theme='dark'] .sb-link-subtle {
-  color: var(--color-dark-text-tertiary);
+[data-theme='mint-light'] .sb-link-primary:hover {
+  color: var(--color-mint-tertiary);
+  text-decoration: underline;
 }
 
-[data-theme='dark'] .sb-link-subtle:hover {
-  color: var(--color-dark-text-secondary);
+[data-theme='mint-light'] .sb-link-secondary {
+  color: var(--color-mint-text-secondary);
 }
 
-[data-theme='dark'] .sb-link-nav {
-  color: var(--color-dark-text-primary);
+[data-theme='mint-light'] .sb-link-secondary:hover {
+  color: var(--color-mint-text-primary);
+  text-decoration: underline;
 }
 
-[data-theme='dark'] .sb-link-nav:hover {
-  background-color: var(--color-dark-bg-secondary);
+[data-theme='mint-light'] .sb-link-subtle {
+  color: var(--color-mint-text-tertiary);
+}
+
+[data-theme='mint-light'] .sb-link-subtle:hover {
+  color: var(--color-mint-text-secondary);
+  text-decoration: underline;
+}
+
+[data-theme='mint-light'] .sb-link-nav {
+  color: var(--color-mint-text-primary);
+  font-weight: 600;
+}
+
+[data-theme='mint-light'] .sb-link-nav:hover {
+  background-color: var(--color-mint-bg-secondary);
+}
+
+[data-theme='mint-light'] .sb-link-nav.active {
+  color: var(--color-mint-primary);
+  background-color: rgba(16, 185, 129, 0.1);
+}
+
+[data-theme='mint-light'] .sb-link:focus-visible {
+  outline: 2px solid var(--color-mint-secondary);
+}
+
+/* Mint Dark Theme */
+[data-theme='mint-dark'] .sb-link-default {
+  color: var(--color-dark-mint-light);
+}
+
+[data-theme='mint-dark'] .sb-link-default:hover {
+  color: var(--color-dark-mint-primary);
+  text-decoration: underline;
+}
+
+[data-theme='mint-dark'] .sb-link-primary {
+  color: var(--color-dark-mint-primary);
+}
+
+[data-theme='mint-dark'] .sb-link-primary:hover {
+  color: var(--color-dark-mint-light);
+  text-decoration: underline;
+}
+
+[data-theme='mint-dark'] .sb-link-secondary {
+  color: var(--color-dark-mint-text-secondary);
+}
+
+[data-theme='mint-dark'] .sb-link-secondary:hover {
+  color: var(--color-dark-mint-text-primary);
+  text-decoration: underline;
+}
+
+[data-theme='mint-dark'] .sb-link-subtle {
+  color: var(--color-dark-mint-text-tertiary);
+}
+
+[data-theme='mint-dark'] .sb-link-subtle:hover {
+  color: var(--color-dark-mint-text-secondary);
+  text-decoration: underline;
+}
+
+[data-theme='mint-dark'] .sb-link-nav {
+  color: var(--color-dark-mint-text-primary);
+}
+
+[data-theme='mint-dark'] .sb-link-nav:hover {
+  background-color: var(--color-dark-mint-bg-secondary);
+}
+
+[data-theme='mint-dark'] .sb-link-nav.active {
+  color: var(--color-dark-mint-primary);
+  background-color: rgba(16, 185, 129, 0.2);
+}
+
+[data-theme='mint-dark'] .sb-link:focus-visible {
+  outline: 2px solid var(--color-dark-mint-primary);
+}
+
+/* Purple Light Theme */
+[data-theme='purple-light'] .sb-link-default {
+  color: var(--color-purple-secondary);
+}
+
+[data-theme='purple-light'] .sb-link-default:hover {
+  color: var(--color-purple-primary);
+  text-decoration: underline;
+}
+
+[data-theme='purple-light'] .sb-link-primary {
+  color: var(--color-purple-primary);
+}
+
+[data-theme='purple-light'] .sb-link-primary:hover {
+  color: var(--color-purple-tertiary);
+  text-decoration: underline;
+}
+
+[data-theme='purple-light'] .sb-link-secondary {
+  color: var(--color-purple-text-secondary);
+}
+
+[data-theme='purple-light'] .sb-link-secondary:hover {
+  color: var(--color-purple-text-primary);
+  text-decoration: underline;
+}
+
+[data-theme='purple-light'] .sb-link-subtle {
+  color: var(--color-purple-text-tertiary);
+}
+
+[data-theme='purple-light'] .sb-link-subtle:hover {
+  color: var(--color-purple-text-secondary);
+  text-decoration: underline;
+}
+
+[data-theme='purple-light'] .sb-link-nav {
+  color: var(--color-purple-text-primary);
+}
+
+[data-theme='purple-light'] .sb-link-nav:hover {
+  background-color: var(--color-purple-bg-secondary);
+}
+
+[data-theme='purple-light'] .sb-link-nav.active {
+  color: var(--color-purple-primary);
+  background-color: rgba(124, 58, 237, 0.1);
+}
+
+[data-theme='purple-light'] .sb-link:focus-visible {
+  outline: 2px solid var(--color-purple-secondary);
+}
+
+/* Purple Dark Theme */
+[data-theme='purple-dark'] .sb-link-default {
+  color: var(--color-dark-purple-light);
+}
+
+[data-theme='purple-dark'] .sb-link-default:hover {
+  color: var(--color-dark-purple-primary);
+  text-decoration: underline;
+}
+
+[data-theme='purple-dark'] .sb-link-primary {
+  color: var(--color-dark-purple-primary);
+}
+
+[data-theme='purple-dark'] .sb-link-primary:hover {
+  color: var(--color-dark-purple-light);
+  text-decoration: underline;
+}
+
+[data-theme='purple-dark'] .sb-link-secondary {
+  color: var(--color-dark-purple-text-secondary);
+}
+
+[data-theme='purple-dark'] .sb-link-secondary:hover {
+  color: var(--color-dark-purple-text-primary);
+  text-decoration: underline;
+}
+
+[data-theme='purple-dark'] .sb-link-subtle {
+  color: var(--color-dark-purple-text-tertiary);
+}
+
+[data-theme='purple-dark'] .sb-link-subtle:hover {
+  color: var(--color-dark-purple-text-secondary);
+  text-decoration: underline;
+}
+
+[data-theme='purple-dark'] .sb-link-nav {
+  color: var(--color-dark-purple-text-primary);
+}
+
+[data-theme='purple-dark'] .sb-link-nav:hover {
+  background-color: var(--color-dark-purple-bg-secondary);
+}
+
+[data-theme='purple-dark'] .sb-link-nav.active {
+  color: var(--color-dark-purple-primary);
+  background-color: rgba(124, 58, 237, 0.2);
+}
+
+[data-theme='purple-dark'] .sb-link:focus-visible {
+  outline: 2px solid var(--color-dark-purple-primary);
 }

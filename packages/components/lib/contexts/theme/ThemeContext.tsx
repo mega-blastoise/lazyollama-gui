@@ -1,11 +1,16 @@
 import { createContext, useContext } from 'react';
-import { ThemeContextType } from './types';
+import { Theme, ThemeContextType } from './types';
 
-export const ThemeContext = createContext<ThemeContextType>({
-  theme: 'light',
-  toggleTheme() {
-    this.theme = this.theme === 'dark' ? 'light' : 'dark';
-  },
-});
+const defaultContext: ThemeContextType = {
+  theme: 'mint-light',
+  setTheme: () => {},
+  toggleTheme: () => {},
+  toggleMode: () => {},
+  isDark: false,
+  isLight: true,
+  colorScheme: 'mint'
+};
+
+export const ThemeContext = createContext<ThemeContextType>(defaultContext);
 
 export const useTheme = (): ThemeContextType => useContext(ThemeContext);

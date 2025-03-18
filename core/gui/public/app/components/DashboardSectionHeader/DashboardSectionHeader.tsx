@@ -1,16 +1,18 @@
 import React from 'react';
 import { Moon, Search, Sun } from 'lucide-react';
-import { Typography, useTheme } from '@lazyollama-gui/typescript-react-components';
+
 import { useApplicationStore } from '@/gui/store';
+import { Button, Typography, useTheme } from '@lazyollama-gui/typescript-react-components';
 
 function LazyOllamaDashboardSectionHeader() {
-  const { theme, toggleTheme } = useTheme();
+  const { theme, toggleMode, colorScheme, isDark, setTheme } = useTheme();
   const {
     ui: { view }
   } = useApplicationStore();
+  
   return (
-    <header className="lazyollama-gui__header nunito-sans">
-      <Typography variant="h2" component={'h2'} className="lazyollama-gui__header-title">
+    <header className="lazyollama-gui__header">
+      <Typography variant="h2" className="lazyollama-gui__header-title">
         {view === 'home' && 'Home'}
         {view === 'models' && 'Models'}
         {view === 'running' && 'Running Models'}
@@ -24,8 +26,42 @@ function LazyOllamaDashboardSectionHeader() {
       </div>
 
       <div className="theme-selection">
-        <Moon />
-        <Sun />
+        {theme.includes('dark') ? (
+          <Button 
+            variant="link"
+            onClick={toggleMode} 
+            className="theme-toggle" 
+            aria-label="Switch to light mode"
+          >
+            <Moon />
+          </Button>
+        ) : (
+          <Button 
+            variant="link"
+            onClick={toggleMode} 
+            className="theme-toggle" 
+            aria-label="Switch to dark mode"
+          >
+            <Sun />
+          </Button>
+        )}
+        <div className="color-scheme-selection">
+          <Button 
+            variant="icon"
+            onClick={() => setTheme(isDark ? 'mint-dark' : 'mint-light')}
+            className={`color-option ${colorScheme === 'mint' ? 'active' : ''}`}
+            aria-label="Use mint theme"
+            // style={{backgroundColor: "#10b981", backgroundSize: ""}}
+          >
+          </Button>
+          <Button 
+            variant="icon"
+            onClick={() => setTheme(isDark ? 'purple-dark' : 'purple-light')}
+            className={`color-option purple-theme ${colorScheme === 'purple' ? 'active' : ''}`}
+            aria-label="Use purple theme"
+          >
+          </Button>
+        </div>
       </div>
     </header>
   );

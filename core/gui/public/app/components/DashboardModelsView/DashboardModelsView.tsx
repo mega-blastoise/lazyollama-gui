@@ -2,6 +2,7 @@ import React from 'react';
 import { Box, ChevronDown, Download, Play, Square, X } from 'lucide-react';
 import { useApplicationStore } from '@/gui/store';
 import { LazyOllamaDashboardModelsViewProps } from './types';
+import { Button, Typography } from '@lazyollama-gui/typescript-react-components';
 
 function LazyOllamaDashboardModelsView({ models }: LazyOllamaDashboardModelsViewProps) {
   const {
@@ -11,13 +12,16 @@ function LazyOllamaDashboardModelsView({ models }: LazyOllamaDashboardModelsView
   return (
     <div className="lazyollama-gui__models-tab">
       <div className="lazyollama-gui__section-header">
-        <h3 className="lazyollama-gui__section-title">Available Models</h3>
+        <Typography variant='h3' weight='semibold' className='lazyollama-gui__section-title'>
+        Available Models
+        </Typography>
         <div className="lazyollama-gui__filter-buttons">
-          <button className="lazyollama-gui__filter-button lazyollama-gui__filter-button--active">
+          <Button variant='outline' size='sm'>
             All
-          </button>
-          <button className="lazyollama-gui__filter-button">Downloaded</button>
-          <button className="lazyollama-gui__filter-button">Running</button>
+          </Button>
+          <Button variant='outline' size='sm'>
+            Downloaded
+          </Button>
         </div>
       </div>
 
