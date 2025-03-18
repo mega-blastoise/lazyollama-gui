@@ -1,4 +1,3 @@
-import './Dashboard.css';
 
 import React, { Suspense } from 'react';
 import { useApplicationStore } from '@/gui/store';

@@ -1,18 +1,20 @@
 import './Card.css';
-
 import React from 'react';
 import { GlassCardProps } from './types';
+import { useTheme } from '../../contexts/theme/ThemeContext';
 
 export const GlassCard: React.FC<GlassCardProps> = ({
   children,
   elevation = 'md',
-  hasBorder = false,
+  hasBorder = true,
   hasBlur = true,
   isInteractive = false,
-  alignment = 'center',
+  alignment = 'start',
   className = '',
   ...rest
 }) => {
+  const { theme } = useTheme();
+
   const cardClasses = [
     'sb-glass-card',
     `sb-glass-card-elevation-${elevation}`,

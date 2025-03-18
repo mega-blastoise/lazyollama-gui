@@ -4,6 +4,5 @@ export interface CodeBlockProps {
   showLineNumbers?: boolean;
   showCopyButton?: boolean;
   title?: string;
-  theme?: 'light' | 'dark' | 'auto';
   className?: string;
 }

@@ -27,12 +27,12 @@
 }
 
 .sb-search-button:hover {
-  background-color: #1996e6; /* Darker variant of secondary */
+  background-color: var(--color-tertiary);
   box-shadow: var(--shadow-md);
 }
 
 .sb-search-button:active {
-  background-color: #1685cc; /* Even darker variant of secondary */
+  background-color: var(--color-primary);
   box-shadow: var(--shadow-sm);
 }
 
@@ -52,15 +52,114 @@
   font-size: var(--font-size-lg);
 }
 
-/* Dark mode overrides */
-[data-theme='dark'] .sb-search-button {
-  background-color: var(--color-secondary);
+/* Mint Light Theme */
+[data-theme='mint-light'] .sb-search-button {
+  background-color: var(--color-mint-primary);
+  color: white;
 }
 
-[data-theme='dark'] .sb-search-button:hover {
-  background-color: #0d8cd8; /* Darker variant for dark mode */
+[data-theme='mint-light'] .sb-search-button:hover {
+  background-color: var(--color-mint-secondary);
 }
 
-[data-theme='dark'] .sb-search-button:active {
-  background-color: #0b7bc0; /* Even darker variant for dark mode */
+[data-theme='mint-light'] .sb-search-button:active {
+  background-color: var(--color-mint-tertiary);
+}
+
+/* Glass effect for Mint Light */
+[data-theme='mint-light'] .sb-search-input-container .sb-input {
+  backdrop-filter: blur(var(--glass-blur));
+  background-color: rgba(255, 255, 255, var(--glass-opacity-light));
+  border: var(--glass-border-light);
+  box-shadow: var(--glass-shadow-light);
+  transition: all var(--transition-normal);
+}
+
+[data-theme='mint-light'] .sb-search-input-container .sb-input:focus {
+  box-shadow: var(--glass-shadow-light), 0 0 0 3px rgba(16, 185, 129, 0.2);
+  border-color: var(--color-mint-primary);
+}
+
+/* Mint Dark Theme */
+[data-theme='mint-dark'] .sb-search-button {
+  background-color: var(--color-dark-mint-primary);
+  color: white;
+}
+
+[data-theme='mint-dark'] .sb-search-button:hover {
+  background-color: var(--color-dark-mint-secondary);
+}
+
+[data-theme='mint-dark'] .sb-search-button:active {
+  background-color: var(--color-dark-mint-tertiary);
+}
+
+/* Glass effect for Mint Dark */
+[data-theme='mint-dark'] .sb-search-input-container .sb-input {
+  backdrop-filter: blur(var(--glass-blur));
+  background-color: rgba(30, 30, 30, var(--glass-opacity-dark));
+  border: var(--glass-border-dark);
+  box-shadow: var(--glass-shadow-dark);
+  color: var(--color-dark-mint-text-primary);
+}
+
+[data-theme='mint-dark'] .sb-search-input-container .sb-input:focus {
+  box-shadow: var(--glass-shadow-dark), 0 0 0 3px rgba(16, 185, 129, 0.3);
+  border-color: var(--color-dark-mint-primary);
+}
+
+/* Purple Light Theme */
+[data-theme='purple-light'] .sb-search-button {
+  background-color: var(--color-purple-primary);
+  color: white;
+}
+
+[data-theme='purple-light'] .sb-search-button:hover {
+  background-color: var(--color-purple-secondary);
+}
+
+[data-theme='purple-light'] .sb-search-button:active {
+  background-color: var(--color-purple-tertiary);
+}
+
+/* Glass effect for Purple Light */
+[data-theme='purple-light'] .sb-search-input-container .sb-input {
+  backdrop-filter: blur(var(--glass-blur));
+  background-color: rgba(255, 255, 255, var(--glass-opacity-light));
+  border: var(--glass-border-light);
+  box-shadow: var(--glass-shadow-light);
+  transition: all var(--transition-normal);
+}
+
+[data-theme='purple-light'] .sb-search-input-container .sb-input:focus {
+  box-shadow: var(--glass-shadow-light), 0 0 0 3px rgba(124, 58, 237, 0.2);
+  border-color: var(--color-purple-primary);
+}
+
+/* Purple Dark Theme */
+[data-theme='purple-dark'] .sb-search-button {
+  background-color: var(--color-dark-purple-primary);
+  color: white;
+}
+
+[data-theme='purple-dark'] .sb-search-button:hover {
+  background-color: var(--color-dark-purple-secondary);
+}
+
+[data-theme='purple-dark'] .sb-search-button:active {
+  background-color: var(--color-dark-purple-tertiary);
+}
+
+/* Glass effect for Purple Dark */
+[data-theme='purple-dark'] .sb-search-input-container .sb-input {
+  backdrop-filter: blur(var(--glass-blur));
+  background-color: rgba(30, 30, 30, var(--glass-opacity-dark));
+  border: var(--glass-border-dark);
+  box-shadow: var(--glass-shadow-dark);
+  color: var(--color-dark-purple-text-primary);
+}
+
+[data-theme='purple-dark'] .sb-search-input-container .sb-input:focus {
+  box-shadow: var(--glass-shadow-dark), 0 0 0 3px rgba(124, 58, 237, 0.3);
+  border-color: var(--color-dark-purple-primary);
 }

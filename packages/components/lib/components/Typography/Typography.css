@@ -127,7 +127,7 @@
   font-weight: 700;
 }
 
-/* Colors */
+/* Colors - Default Theme */
 .sb-typography-color-primary {
   color: var(--color-text-primary);
 }
@@ -160,19 +160,86 @@
   max-width: 100%;
 }
 
-/* Dark mode overrides */
-[data-theme='dark'] .sb-typography-color-primary {
-  color: var(--color-dark-text-primary);
+/* Mint Light Theme */
+[data-theme='mint-light'] .sb-typography-color-primary {
+  color: var(--color-mint-text-primary);
 }
 
-[data-theme='dark'] .sb-typography-color-secondary {
-  color: var(--color-dark-text-secondary);
+[data-theme='mint-light'] .sb-typography-color-secondary {
+  color: var(--color-mint-text-secondary);
 }
 
-[data-theme='dark'] .sb-typography-color-tertiary {
-  color: var(--color-dark-text-tertiary);
+[data-theme='mint-light'] .sb-typography-color-tertiary {
+  color: var(--color-mint-text-tertiary);
 }
 
-[data-theme='dark'] .sb-typography-code {
-  background-color: var(--color-dark-bg-tertiary);
+[data-theme='mint-light'] .sb-typography-color-brand {
+  color: var(--color-mint-primary);
+}
+
+[data-theme='mint-light'] .sb-typography-code {
+  background-color: var(--color-mint-bg-tertiary);
+}
+
+/* Mint Dark Theme */
+[data-theme='mint-dark'] .sb-typography-color-primary {
+  color: var(--color-dark-mint-text-primary);
+}
+
+[data-theme='mint-dark'] .sb-typography-color-secondary {
+  color: var(--color-dark-mint-text-secondary);
+}
+
+[data-theme='mint-dark'] .sb-typography-color-tertiary {
+  color: var(--color-dark-mint-text-tertiary);
+}
+
+[data-theme='mint-dark'] .sb-typography-color-brand {
+  color: var(--color-dark-mint-primary);
+}
+
+[data-theme='mint-dark'] .sb-typography-code {
+  background-color: var(--color-dark-mint-bg-tertiary);
+}
+
+/* Purple Light Theme */
+[data-theme='purple-light'] .sb-typography-color-primary {
+  color: var(--color-purple-text-primary);
+}
+
+[data-theme='purple-light'] .sb-typography-color-secondary {
+  color: var(--color-purple-text-secondary);
+}
+
+[data-theme='purple-light'] .sb-typography-color-tertiary {
+  color: var(--color-purple-text-tertiary);
+}
+
+[data-theme='purple-light'] .sb-typography-color-brand {
+  color: var(--color-purple-primary);
+}
+
+[data-theme='purple-light'] .sb-typography-code {
+  background-color: var(--color-purple-bg-tertiary);
+}
+
+/* Purple Dark Theme */
+[data-theme='purple-dark'] .sb-typography-color-primary {
+  color: var(--color-dark-purple-text-primary);
+}
+
+[data-theme='purple-dark'] .sb-typography-color-secondary {
+  color: var(--color-dark-purple-text-secondary);
+}
+
+[data-theme='purple-dark'] .sb-typography-color-tertiary {
+  color: var(--color-dark-purple-text-tertiary);
+}
+
+[data-theme='purple-dark'] .sb-typography-color-brand {
+  color: var(--color-dark-purple-primary);
+}
+
+[data-theme='purple-dark'] .sb-typography-code {
+  background-color: var(--color-dark-purple-bg-tertiary);
 }

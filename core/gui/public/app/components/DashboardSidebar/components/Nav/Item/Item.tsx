@@ -1,6 +1,8 @@
 import React from 'react';
 import { useApplicationStore } from '@/gui/store';
+
 import { LazyOllamaDashboardSidebarNavigationItemProps } from './types';
+import { Button, Typography } from '@lazyollama-gui/typescript-react-components';
 
 function LazyOllamaDashboardSidebarNavigationItem({
   to,
@@ -11,14 +13,26 @@ function LazyOllamaDashboardSidebarNavigationItem({
     ui: { view, sidebar: { expanded } },
     updateUiViewState
   } = useApplicationStore();
+  
   return (
     <li
       className={`lazyollama-gui__nav-item ${view === to ? 'lazyollama-gui__nav-item--active' : ''}`}
     >
-      <button className="lazyollama-gui__nav-button" onClick={() => updateUiViewState(to)}>
+      <Button 
+        variant="link" 
+        className="lazyollama-gui__nav-button" 
+        onClick={() => updateUiViewState(to)}
+      >
         {icon}
-        {expanded && <span className="lazyollama-gui__nav-label">{label}</span>}
-      </button>
+        {expanded && (
+          <Typography 
+            variant="body2" 
+            className="lazyollama-gui__nav-label"
+          >
+            {label}
+          </Typography>
+        )}
+      </Button>
     </li>
   );
 }
