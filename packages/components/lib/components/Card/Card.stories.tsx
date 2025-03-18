@@ -8,20 +8,22 @@ const meta: Meta<typeof GlassCard> = {
   component: GlassCard,
   decorators: [
     (Story) => (
-      <div style={{ 
-        padding: '2rem', 
-        background: 'linear-gradient(135deg, #2a0481 0%, #fc521f 100%)',
-        height: '300px',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center'
-      }}>
+      <div
+        style={{
+          padding: '2rem',
+          background: 'linear-gradient(135deg, #2a0481 0%, #fc521f 100%)',
+          height: '300px',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center'
+        }}
+      >
         <div style={{ width: '300px' }}>
           <Story />
         </div>
       </div>
-    ),
-  ],
+    )
+  ]
 };
 
 export default meta;

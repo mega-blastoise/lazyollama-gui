@@ -2,10 +2,7 @@ import { type ServeOptions, type RouterTypes, type Server } from 'bun';
 
 export type BunRoutes = { [k: string]: RouterTypes.RouteValue<string> };
 
-export type BunServerConfig<R = BunRoutes> = Omit<
-  ServeOptions,
-  'fetch'
-> & {
+export type BunServerConfig<R = BunRoutes> = Omit<ServeOptions, 'fetch'> & {
   fetch: (this: Server, request: Request, server: Server) => Response | Promise<Response>;
   routes: R;
 } & {

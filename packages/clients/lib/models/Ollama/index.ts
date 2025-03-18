@@ -6,7 +6,7 @@ import {
   type ChatPromptConfiguration,
   type ChatPromptFinalResponse,
   type RemoteModelStub,
-  type RunningModelResponse,
+  type RunningModelResponse
 } from '@lazyollama-gui/typescript-common-types';
 import { type NodeHtmlParserHTMLElement } from './types';
 
@@ -70,7 +70,7 @@ export class OllamaClient {
   }
 
   async checkOllamaIsRunning() {
-    return ((await this._get<string>(this.baseUrl!, 'text')).includes('Ollama is running'));
+    return (await this._get<string>(this.baseUrl!, 'text')).includes('Ollama is running');
   }
 
   getLocalModelState(model: string) {

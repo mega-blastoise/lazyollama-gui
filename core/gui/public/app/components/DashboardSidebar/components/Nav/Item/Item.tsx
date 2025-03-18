@@ -8,7 +8,10 @@ function LazyOllamaDashboardSidebarNavigationItem({
   icon
 }: LazyOllamaDashboardSidebarNavigationItemProps) {
   const {
-    ui: { view, sidebar: { expanded } },
+    ui: {
+      view,
+      sidebar: { expanded }
+    },
     updateUiViewState
   } = useApplicationStore();
   return (

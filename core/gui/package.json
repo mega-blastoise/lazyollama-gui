@@ -50,7 +50,7 @@
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-syntax-highlighter": "^15.6.1",
-    "sleepydogs": "^1.0.7",
+    "sleepydogs": "^1.0.8-alpha.4",
     "web-vitals": "^4.2.4",
     "zustand": "^5.0.3"
   }

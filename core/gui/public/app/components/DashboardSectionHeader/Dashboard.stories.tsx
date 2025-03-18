@@ -16,7 +16,6 @@ export const Default: DashboardSectionHeaderStory = {
   render: () => <DashboardSectionHeader />
 };
 
-
 export const DarkMode: DashboardSectionHeaderStory = {
   parameters: {
     backgrounds: { default: 'dark' }

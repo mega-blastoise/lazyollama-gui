@@ -4,11 +4,11 @@ import LazyOllamaDashboardSidebarHeader from './DashboardSidebarHeader';
 import StorybookDecorators from '@/gui/lib/StorybookDecorators';
 
 const meta: Meta<typeof LazyOllamaDashboardSidebarHeader> = {
-    title: 'Components/DashboardSidebarHeader',
-    component: LazyOllamaDashboardSidebarHeader,
-    decorators: [StorybookDecorators.withLazyOllamaWebThemeProvider],
-    tags: ['autodocs'],
-    argTypes: {}
+  title: 'Components/DashboardSidebarHeader',
+  component: LazyOllamaDashboardSidebarHeader,
+  decorators: [StorybookDecorators.withLazyOllamaWebThemeProvider],
+  tags: ['autodocs'],
+  argTypes: {}
 };
 
 export default meta;

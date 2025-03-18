@@ -15,7 +15,11 @@ function LazyOllamaDashboardSidebarFooter() {
       className="lazyollama-gui__sidebar-expansion-toggle"
       onClick={expanded ? collapseSidebar : expandSidebar}
     >
-      {expanded ? <ChevronsLeft className="lazyollama-gui__nav-icon" /> : <ChevronsRight className="lazyollama-gui__nav-icon" />}
+      {expanded ? (
+        <ChevronsLeft className="lazyollama-gui__nav-icon" />
+      ) : (
+        <ChevronsRight className="lazyollama-gui__nav-icon" />
+      )}
       {expanded && <span>LazyOllama </span>}
     </button>
   );

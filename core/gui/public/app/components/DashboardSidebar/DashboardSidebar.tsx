@@ -5,9 +5,16 @@ import { LazyOllamaDashboardSidebarNavigationList } from './components/Nav';
 import { LazyOllamaDashboardSidebarFooter } from './components/Footer';
 
 function LazyOllamaDashboardSidebar() {
-  const { ui: { sidebar: { expanded } } } = useApplicationStore();
+  const {
+    ui: {
+      sidebar: { expanded }
+    }
+  } = useApplicationStore();
   return (
-    <div className="lazyollama-gui__sidebar" data-expanded={expanded ? 'expanded' : 'collapsed'}>
+    <div
+      className="lazyollama-gui__sidebar"
+      data-expanded={expanded ? 'expanded' : 'collapsed'}
+    >
       <LazyOllamaDashboardSidebarHeader />
       <LazyOllamaDashboardSidebarNavigationList />
       <LazyOllamaDashboardSidebarFooter />

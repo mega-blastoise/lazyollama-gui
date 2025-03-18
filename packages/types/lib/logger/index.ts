@@ -1,6 +1,6 @@
 type MinimalLogger = {
-    [logfn in Level]: typeof console[logfn]
-}
+  [logfn in Level]: (typeof console)[logfn];
+};
 
 type Level = 'info' | 'debug' | 'warn' | 'error';
 

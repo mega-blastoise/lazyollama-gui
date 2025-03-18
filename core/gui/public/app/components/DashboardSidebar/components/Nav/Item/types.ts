@@ -1,5 +1,5 @@
-import React from "react";
-import { ViewState } from "@/gui/store";
+import React from 'react';
+import { ViewState } from '@/gui/store';
 
 export interface LazyOllamaDashboardSidebarNavigationItemProps {
   to: ViewState;

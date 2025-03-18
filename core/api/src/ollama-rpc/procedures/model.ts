@@ -14,7 +14,9 @@ export type PullModelRPCConfiguration = {
   result: IOllamaRPCAPI[OllamaRPCAPIAction.ModelPull]['result'];
 };
 
-export async function pullModel(...params: PullModelRPCConfiguration['params']): Promise<PullModelRPCConfiguration['result']> {
+export async function pullModel(
+  ...params: PullModelRPCConfiguration['params']
+): Promise<PullModelRPCConfiguration['result']> {
   const model = params[0] || arguments[0];
   const requestTimestamp = performance.now();
   const timer = new Timer();
@@ -70,7 +72,9 @@ export type StartModelRPCConfiguration = {
   result: IOllamaRPCAPI[OllamaRPCAPIAction.ModelStart]['result'];
 };
 
-export async function startModel(...params: StartModelRPCConfiguration['params']): Promise<StartModelRPCConfiguration['result']> {
+export async function startModel(
+  ...params: StartModelRPCConfiguration['params']
+): Promise<StartModelRPCConfiguration['result']> {
   const model = params[0] || arguments[0];
   const requestTimestamp = performance.now();
   const timer = new Timer();

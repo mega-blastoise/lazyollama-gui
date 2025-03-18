@@ -7,5 +7,12 @@ Bun.build({
   sourcemap: 'linked',
   minify: false,
   root: '.',
-  external: ['react', 'react-dom', 'react/jsx-runtime', 'react-syntax-highlighter', 'sleepydogs', 'classnames']
+  external: [
+    'react',
+    'react-dom',
+    'react/jsx-runtime',
+    'react-syntax-highlighter',
+    'sleepydogs',
+    'classnames'
+  ]
 });

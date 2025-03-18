@@ -17,7 +17,7 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({
 }) => {
   const [theme, setTheme] = useState<Theme>(() => {
     const savedTheme = localStorage.getItem('theme') as Theme | null;
-    if (!savedTheme && typeof window !== "undefined" && window?.matchMedia) {
+    if (!savedTheme && typeof window !== 'undefined' && window?.matchMedia) {
       const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
       return prefersDark ? 'dark' : 'light';
     }
@@ -28,7 +28,7 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({
     localStorage.setItem('theme', theme);
   }, [theme]);
 
-  const toggleTheme = () => setTheme(theme => theme === 'dark' ? 'light' : 'dark');
+  const toggleTheme = () => setTheme((theme) => (theme === 'dark' ? 'light' : 'dark'));
 
   const themeClassName = classnames({
     'lazyollama-theme': true,
