@@ -35,13 +35,12 @@ export type BunAPIRoutes = {
   [k: string]: RouterTypes.RouteValue<string>;
 };
 
-
 export type HTTPMethodKey = 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH' | 'OPTIONS';
 
-/** 
+/**
  * A function that has access to the request object for a given (request, response) cycle,
  * and is expected to return a valid Response object.
- * 
+ *
  * Can be sync or async.
  */
 export type HTTPMethodHandler = (request: Request) => Response | Promise<Response>;

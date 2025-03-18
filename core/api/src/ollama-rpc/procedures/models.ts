@@ -2,9 +2,12 @@ import { Timer } from 'sleepydogs';
 import {
   Ollama as LazyOllama,
   OllamaClientCacheType,
-  type RemoteModelStub,
+  type RemoteModelStub
 } from '@lazyollama-gui/typescript-clients';
-import { type IOllamaRPCAPI, OllamaRPCAPIAction } from '@lazyollama-gui/typescript-common-types';
+import {
+  type IOllamaRPCAPI,
+  OllamaRPCAPIAction
+} from '@lazyollama-gui/typescript-common-types';
 
 export type RemoteModelsBulkQuery = {
   method: OllamaRPCAPIAction.RemoteModels;
@@ -12,4 +15,4 @@ export type RemoteModelsBulkQuery = {
   result: IOllamaRPCAPI[OllamaRPCAPIAction.RemoteModels]['result'];
 };
 
-export async function 
+export async function getRemoteModels() {}

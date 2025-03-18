@@ -1,4 +1,4 @@
-import { LazySingleton as SuperLazySingletonFactory } from 'sleepydogs';
+import { default as SuperLazySingletonFactory } from 'sleepydogs/LazySingleton';
 
 import { createLogger } from '@lazyollama-gui/typescript-common';
 import { type IOllamaRPCAPI } from '@lazyollama-gui/typescript-common-types';
@@ -18,9 +18,9 @@ class LazyOllamaRPCServer extends ILazyOllamaRPCServer<IOllamaRPCAPI> {
 
     this.register('model.pull' as PullModelRPCConfiguration['method'], pullModel);
 
-    this.registerMiddleware(
-      (request: Request) => this.logger.info('%s %s', request.method, request.url)
-    )
+    this.registerMiddleware((request: Request) =>
+      this.logger.info('%s %s', request.method, request.url)
+    );
   }
 
   protected getDefaultPort(): number {

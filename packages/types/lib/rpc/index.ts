@@ -21,7 +21,7 @@ export type RPCAPISpec = {
   [method: string]: {
     params: any[];
     result: any;
-  }
+  };
 };
 
 export type RPCRequestBody<T extends RPCAPISpec, M extends keyof T & string> = {

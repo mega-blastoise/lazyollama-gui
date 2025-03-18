@@ -3,12 +3,12 @@ import { HTMLAttributes } from 'react';
 
 export type ToastVariant = 'info' | 'success' | 'warning' | 'error';
 
-export type ToastPosition = 
-  | 'top-right' 
-  | 'top-left' 
-  | 'bottom-right' 
-  | 'bottom-left' 
-  | 'top-center' 
+export type ToastPosition =
+  | 'top-right'
+  | 'top-left'
+  | 'bottom-right'
+  | 'bottom-left'
+  | 'top-center'
   | 'bottom-center';
 
 export interface ToastProps extends HTMLAttributes<HTMLDivElement> {

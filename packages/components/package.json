@@ -60,7 +60,7 @@
     "react-dom": "^19.0.0",
     "react-syntax-highlighter": "^15.6.1",
     "sass": "^1.85.1",
-    "sleepydogs": "1.0.8-alpha.2",
+    "sleepydogs": "1.0.8-alpha.4",
     "storybook": "^8.6.4",
     "supports-color": "^10.0.0",
     "typescript": "^5.0.0"
@@ -71,7 +71,7 @@
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-syntax-highlighter": "^15.6.1",
-    "sleepydogs": "1.0.8-alpha.2",
+    "sleepydogs": "1.0.8-alpha.4",
     "typescript": "^5.0.0"
   },
   "dependencies": {

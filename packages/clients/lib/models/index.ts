@@ -1,5 +1,5 @@
 export {
   default as Ollama,
   OllamaClient as BaseOllamaClient,
-  type NodeHtmlParserHTMLElement,
+  type NodeHtmlParserHTMLElement
 } from './Ollama';

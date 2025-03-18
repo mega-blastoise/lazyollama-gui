@@ -8,7 +8,7 @@ import {
   type RPCRequestBody,
   type RPCAPISpec,
   type BunServerConfig,
-  type IOllamaRPCAPI 
+  type IOllamaRPCAPI
 } from '@lazyollama-gui/typescript-common-types';
 
 import { cors } from './server/cors';

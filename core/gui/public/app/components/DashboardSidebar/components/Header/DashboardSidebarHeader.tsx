@@ -5,7 +5,11 @@ import { Typography } from '@lazyollama-gui/typescript-react-components';
 
 
 function LazyOllamaDashboardSidebarHeader() {
-  const { ui: { sidebar: { expanded } } } = useApplicationStore();
+  const {
+    ui: {
+      sidebar: { expanded }
+    }
+  } = useApplicationStore();
   return (
     <div className="lazyollama-gui__sidebar-header">
       <Box className="lazyollama-gui__logo-icon" />

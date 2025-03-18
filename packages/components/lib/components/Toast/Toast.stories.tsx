@@ -9,7 +9,7 @@ const meta: Meta<typeof Toast> = {
   title: 'Components/Toast',
   component: Toast,
   parameters: {
-    layout: 'centered',
+    layout: 'centered'
   }
 };
 
@@ -24,7 +24,7 @@ export const Info: ToastStory = {
     variant: 'info',
     isVisible: true,
     position: 'bottom-right',
-    duration: 0, // Set to 0 so it doesn't auto-dismiss in Storybook
+    duration: 0 // Set to 0 so it doesn't auto-dismiss in Storybook
   },
   render: (args) => <Toast {...args} />
 };
@@ -35,7 +35,7 @@ export const Success: ToastStory = {
     variant: 'success',
     isVisible: true,
     position: 'bottom-right',
-    duration: 0,
+    duration: 0
   },
   render: (args) => <Toast {...args} />
 };
@@ -46,7 +46,7 @@ export const Warning: ToastStory = {
     variant: 'warning',
     isVisible: true,
     position: 'bottom-right',
-    duration: 0,
+    duration: 0
   },
   render: (args) => <Toast {...args} />
 };
@@ -57,7 +57,7 @@ export const Error: ToastStory = {
     variant: 'error',
     isVisible: true,
     position: 'bottom-right',
-    duration: 0,
+    duration: 0
   },
   render: (args) => <Toast {...args} />
 };
@@ -77,7 +77,7 @@ const ToastDemo = () => {
     showToast({
       content: messages[variant],
       variant,
-      duration: 3000,
+      duration: 3000
     });
   };
 

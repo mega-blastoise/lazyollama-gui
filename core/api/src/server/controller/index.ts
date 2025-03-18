@@ -1,5 +1,6 @@
 import { Timer } from 'sleepydogs';
-import { Ollama as LazyOllama, OllamaClientCacheType } from '@lazyollama-gui/typescript-clients';
+import { Ollama as LazyOllama } from '@lazyollama-gui/typescript-clients';
+import { OllamaClientCacheType } from '@lazyollama-gui/typescript-common-types';
 
 /**
  * Represents the structure of an RPC API response.
@@ -183,7 +184,7 @@ export class RPCController {
       response_time_ms: timer.elapsed() || 0
     };
   }
-  
+
   async queryRemoteModelRegistry(..._params: any[]): Promise<RPCAPIResponse<any>> {
     return {
       requested_method: 'queryRemoteModelRegistry',

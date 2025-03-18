@@ -45,4 +45,4 @@ interface LazyOllamaDashboardModelsViewProps {
   };
 }
 
-export { type LazyOllamaDashboardModelsViewProps }
+export { type LazyOllamaDashboardModelsViewProps };

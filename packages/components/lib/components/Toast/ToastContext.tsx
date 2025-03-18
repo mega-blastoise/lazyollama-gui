@@ -1,19 +1,21 @@
 // ToastContext.tsx
 import React, { createContext, useContext, useReducer } from 'react';
 import Toast from './Toast';
-import { 
-  ToastContextProps, 
-  ToastProviderProps, 
-  ToastProps, 
-  ToastState 
-} from './types';
+import { ToastContextProps, ToastProviderProps, ToastProps, ToastState } from './types';
 
 // Create context
 const ToastContext = createContext<ToastContextProps | undefined>(undefined);
 
 // Action types
-type ToastAction = 
-  | { type: 'ADD_TOAST'; payload: { id: string; content: React.ReactNode; props: Omit<ToastProps, 'isVisible' | 'children'> } }
+type ToastAction =
+  | {
+      type: 'ADD_TOAST';
+      payload: {
+        id: string;
+        content: React.ReactNode;
+        props: Omit<ToastProps, 'isVisible' | 'children'>;
+      };
+    }
   | { type: 'REMOVE_TOAST'; payload: { id: string } }
   | { type: 'REMOVE_ALL_TOASTS' };
 
@@ -28,7 +30,7 @@ const toastReducer = (state: ToastState, action: ToastAction): ToastState => {
     case 'REMOVE_TOAST':
       return {
         ...state,
-        toasts: state.toasts.filter(toast => toast.id !== action.payload.id)
+        toasts: state.toasts.filter((toast) => toast.id !== action.payload.id)
       };
     case 'REMOVE_ALL_TOASTS':
       return {
@@ -41,13 +43,12 @@ const toastReducer = (state: ToastState, action: ToastAction): ToastState => {
 };
 
 // Provider component
-export const ToastProvider: React.FC<ToastProviderProps> = ({ 
-  children, 
-  maxToasts = 5 
-}) => {
+export const ToastProvider: React.FC<ToastProviderProps> = ({ children, maxToasts = 5 }) => {
   const [state, dispatch] = useReducer(toastReducer, { toasts: [] });
 
-  const showToast = (props: Omit<ToastProps, 'isVisible'> & { content: React.ReactNode }): string => {
+  const showToast = (
+    props: Omit<ToastProps, 'isVisible'> & { content: React.ReactNode }
+  ): string => {
     const { content, ...toastProps } = props;
     const id = `toast-${Date.now()}`;
 
@@ -83,12 +84,7 @@ export const ToastProvider: React.FC<ToastProviderProps> = ({
       {children}
       <div className="sb-toast-container">
         {state.toasts.map(({ id, content, props }) => (
-          <Toast
-            key={id}
-            isVisible={true}
-            onClose={() => closeToast(id)}
-            {...props}
-          >
+          <Toast key={id} isVisible={true} onClose={() => closeToast(id)} {...props}>
             {content}
           </Toast>
         ))}
