@@ -1,11 +1,9 @@
 import { Timer } from 'sleepydogs';
-import {
-  Ollama as LazyOllama,
-  OllamaClientCacheType
-} from '@lazyollama-gui/typescript-clients';
+import { Ollama as LazyOllama } from '@lazyollama-gui/typescript-clients';
 import {
   type IOllamaRPCAPI,
-  OllamaRPCAPIAction
+  OllamaRPCAPIAction,
+  OllamaClientCacheType
 } from '@lazyollama-gui/typescript-common-types';
 
 export type PullModelRPCConfiguration = {
@@ -23,7 +21,7 @@ export async function pullModel(
   timer.start();
 
   const ollama = LazyOllama.getInstance();
-  const state = ollama.checkModelStateInCaches(model);
+  const state = ollama.getLocalModelState(model);
 
   if (state[model]?.includes(OllamaClientCacheType.Running)) {
     timer.stop();
@@ -81,7 +79,7 @@ export async function startModel(
   timer.start();
 
   const ollama = LazyOllama.getInstance();
-  const state = ollama.checkModelStateInCaches(model);
+  const state = ollama.getLocalModelState(model);
 
   if (state[model]?.includes(OllamaClientCacheType.Running)) {
     timer.stop();
@@ -132,6 +130,166 @@ export async function startModel(
     timer.stop();
     return {
       requested_method: 'startModel',
+      response_data: {
+        model,
+        status: 'start-failed',
+        error: e instanceof Error ? e.message : String(e)
+      },
+      request_accepted: true,
+      request_timestamp: requestTimestamp,
+      response_timestamp: performance.now(),
+      response_time_ms: timer.elapsed() || 0
+    };
+  }
+}
+
+export type StopModelRPCConfiguration = {
+  method: OllamaRPCAPIAction.ModelStop;
+  params: IOllamaRPCAPI[OllamaRPCAPIAction.ModelStop]['params'];
+  result: IOllamaRPCAPI[OllamaRPCAPIAction.ModelStop]['result'];
+};
+
+export async function stopModel(
+  ...params: StopModelRPCConfiguration['params']
+): Promise<StopModelRPCConfiguration['result']> {
+  const model: string | undefined = params[0] || arguments[0];
+  const requestTimestamp = performance.now();
+  const timer = new Timer();
+  timer.start();
+
+  if (!model) {
+    timer.stop();
+    return {
+      requested_method: 'stopModel',
+      response_data: { model: 'undefined', status: 'no-model' },
+      request_accepted: true,
+      request_timestamp: requestTimestamp,
+      response_timestamp: performance.now(),
+      response_time_ms: timer.elapsed() || 0
+    };
+  }
+
+  const ollama = LazyOllama.getInstance();
+  const state = ollama.getLocalModelState(model!);
+
+  if (!state[model]?.includes(OllamaClientCacheType.Running)) {
+    timer.stop();
+    return {
+      requested_method: 'stopModel',
+      response_data: { model, status: 'not-running' },
+      request_accepted: true,
+      request_timestamp: requestTimestamp,
+      response_timestamp: performance.now(),
+      response_time_ms: timer.elapsed() || 0
+    };
+  }
+
+  try {
+    await ollama.stopModel(model);
+    timer.stop();
+    return {
+      requested_method: 'stopModel',
+      response_data: { model, status: 'stopped' },
+      request_accepted: true,
+      request_timestamp: requestTimestamp,
+      response_timestamp: performance.now(),
+      response_time_ms: timer.elapsed() || 0
+    };
+  } catch (e) {
+    timer.stop();
+    return {
+      requested_method: 'stopModel',
+      response_data: {
+        model,
+        status: 'stop-failed',
+        error: e instanceof Error ? e.message : String(e)
+      },
+      request_accepted: true,
+      request_timestamp: requestTimestamp,
+      response_timestamp: performance.now(),
+      response_time_ms: timer.elapsed() || 0
+    };
+  }
+}
+
+export type PreheatModelRPCConfiguration = {
+  method: OllamaRPCAPIAction.ModelPreheat;
+  params: IOllamaRPCAPI[OllamaRPCAPIAction.ModelPreheat]['params'];
+  result: IOllamaRPCAPI[OllamaRPCAPIAction.ModelPreheat]['result'];
+};
+
+export async function preheatModel(
+  ...params: PreheatModelRPCConfiguration['params']
+): Promise<PreheatModelRPCConfiguration['result']> {
+  const model: string | undefined = params[0] || arguments[0];
+  const requestTimestamp = performance.now();
+  const timer = new Timer();
+  timer.start();
+
+  if (!model) {
+    timer.stop();
+    return {
+      requested_method: 'preheatModel',
+      response_data: { model: 'undefined', status: 'no-model' },
+      request_accepted: true,
+      request_timestamp: requestTimestamp,
+      response_timestamp: performance.now(),
+      response_time_ms: timer.elapsed() || 0
+    };
+  }
+
+  const ollama = LazyOllama.getInstance();
+  const state = ollama.getLocalModelState(model!);
+
+  if (state[model]?.includes(OllamaClientCacheType.Running)) {
+    timer.stop();
+    return {
+      requested_method: 'preheatModel',
+      response_data: { model, status: 'already-running' },
+      request_accepted: true,
+      request_timestamp: requestTimestamp,
+      response_timestamp: performance.now(),
+      response_time_ms: timer.elapsed() || 0
+    };
+  }
+
+  if (!state[model]?.includes(OllamaClientCacheType.Available)) {
+    // Need to pull model
+
+    try {
+      await ollama.pullModel(model);
+    } catch (e) {
+      timer.stop();
+      return {
+        requested_method: 'preheatModel',
+        response_data: {
+          model,
+          status: 'pull-failed',
+          error: e instanceof Error ? e.message : String(e)
+        },
+        request_accepted: true,
+        request_timestamp: requestTimestamp,
+        response_timestamp: performance.now(),
+        response_time_ms: timer.elapsed() || 0
+      };
+    }
+  }
+
+  try {
+    await ollama.startModel(model);
+    timer.stop();
+    return {
+      requested_method: 'preheatModel',
+      response_data: { model, status: 'started' },
+      request_accepted: true,
+      request_timestamp: requestTimestamp,
+      response_timestamp: performance.now(),
+      response_time_ms: timer.elapsed() || 0
+    };
+  } catch (e) {
+    timer.stop();
+    return {
+      requested_method: 'preheatModel',
       response_data: {
         model,
         status: 'start-failed',

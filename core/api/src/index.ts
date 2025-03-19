@@ -1,10 +1,15 @@
-import { scheduleJob } from 'node-schedule';
-import { Ollama as LazyOllama } from '@lazyollama-gui/typescript-clients';
+import initOllama from './init';
+import setupRecurringOllamaIndexUpdate from './refresh';
 
 import logger from './log';
-import { createRunningBunServer } from './server';
+import LazyOllamaRPCServerProvider from './ollama-rpc/server';
 
-const refresh = scheduleJob('LazyOllama:recurringIndexUpdate', '', async () => {});
+await initOllama();
 
-const server = createRunningBunServer();
-logger.info('Server running @ %s', server.url);
+setupRecurringOllamaIndexUpdate();
+
+const rpc = LazyOllamaRPCServerProvider.getInstance();
+
+rpc.start();
+
+logger.info('Server running @ %s', rpc.server!.url);

@@ -16,22 +16,19 @@ function LazyOllamaDashboardSidebarNavigationItem({
     },
     updateUiViewState
   } = useApplicationStore();
-  
+
   return (
     <li
       className={`lazyollama-gui__nav-item ${view === to ? 'lazyollama-gui__nav-item--active' : ''}`}
     >
-      <Button 
-        variant="link" 
-        className="lazyollama-gui__nav-button" 
+      <Button
+        variant="link"
+        className="lazyollama-gui__nav-button"
         onClick={() => updateUiViewState(to)}
       >
         {icon}
         {expanded && (
-          <Typography 
-            variant="body2" 
-            className="lazyollama-gui__nav-label"
-          >
+          <Typography variant="body2" className="lazyollama-gui__nav-label">
             {label}
           </Typography>
         )}

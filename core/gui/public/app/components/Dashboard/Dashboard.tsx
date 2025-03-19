@@ -10,7 +10,7 @@ import useGetRemoteModels from '@/gui/hooks/useGetRemoteModels';
 
 const LazyOllamaDashboard = () => {
   const { theme } = useTheme();
-  const darkMode = theme === 'dark';
+  const darkMode = theme.includes('dark');
 
   const localModelsStatesQuery = useGetLocalModelStates();
   const remoteModelsQuery = useGetRemoteModels();

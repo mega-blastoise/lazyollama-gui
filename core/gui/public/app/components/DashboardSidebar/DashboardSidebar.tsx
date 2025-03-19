@@ -6,11 +6,19 @@ import { LazyOllamaDashboardSidebarFooter } from './components/Footer';
 import { useTheme } from '@lazyollama-gui/typescript-react-components';
 
 function LazyOllamaDashboardSidebar() {
-  const { ui: { sidebar: { expanded } } } = useApplicationStore();
+  const {
+    ui: {
+      sidebar: { expanded }
+    }
+  } = useApplicationStore();
   const { theme } = useTheme();
-  
+
   return (
-    <div className="lazyollama-gui__sidebar" data-expanded={expanded ? 'expanded' : 'collapsed'} data-theme={theme}>
+    <div
+      className="lazyollama-gui__sidebar"
+      data-expanded={expanded ? 'expanded' : 'collapsed'}
+      data-theme={theme}
+    >
       <LazyOllamaDashboardSidebarHeader />
       <LazyOllamaDashboardSidebarNavigationList />
       <LazyOllamaDashboardSidebarFooter />

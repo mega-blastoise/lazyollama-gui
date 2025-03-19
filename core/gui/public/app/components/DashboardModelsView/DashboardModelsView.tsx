@@ -12,14 +12,14 @@ function LazyOllamaDashboardModelsView({ models }: LazyOllamaDashboardModelsView
   return (
     <div className="lazyollama-gui__models-tab">
       <div className="lazyollama-gui__section-header">
-        <Typography variant='h3' weight='semibold' className='lazyollama-gui__section-title'>
-        Available Models
+        <Typography variant="h3" weight="semibold" className="lazyollama-gui__section-title">
+          Available Models
         </Typography>
         <div className="lazyollama-gui__filter-buttons">
-          <Button variant='outline' size='sm'>
+          <Button variant="outline" size="sm">
             All
           </Button>
-          <Button variant='outline' size='sm'>
+          <Button variant="outline" size="sm">
             Downloaded
           </Button>
         </div>

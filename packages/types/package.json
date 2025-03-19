@@ -1,10 +1,14 @@
 {
   "name": "@lazyollama-gui/typescript-common-types",
   "type": "module",
-  "packageManager": "bun@1.34.0",
   "version": "0.0.1-alpha.0.1",
   "private": true,
   "types": "./out/lib/index.d.ts",
+  "module": "./out/lib/index.js",
+  "files": [
+    "out",
+    "package.json"
+  ],
   "exports": {
     ".": {
       "import": "./out/lib/index.js",
@@ -12,6 +16,10 @@
       "default": "./out/lib/index.js"
     },
     "./package.json": "./package.json"
+  },
+  "packageManager": "bun@1.2.5",
+  "engines": {
+    "bun": ">=1.2.5"
   },
   "scripts": {
     "check-types": "tsc -p tsconfig.json",

@@ -39,6 +39,7 @@
   "dependencies": {
     "@lazyollama-gui/typescript-clients": "workspace:*",
     "@lazyollama-gui/typescript-common": "workspace:*",
+    "@lazyollama-gui/typescript-common-types": "workspace:*",
     "@lazyollama-gui/typescript-react-components": "workspace:*",
     "@tanstack/react-query": "^5.67.2",
     "chalk": "^5.4.1",

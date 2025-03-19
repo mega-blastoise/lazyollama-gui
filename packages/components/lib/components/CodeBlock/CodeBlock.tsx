@@ -26,9 +26,7 @@ export const CodeBlock: React.FC<CodeBlockProps> = ({
     }
   };
 
-  const codeBlockClasses = ['sb-code-block', className]
-    .filter(Boolean)
-    .join(' ');
+  const codeBlockClasses = ['sb-code-block', className].filter(Boolean).join(' ');
 
   // Customize syntax highlighter theme based on our theme
   const getCustomStyle = () => {

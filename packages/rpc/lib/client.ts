@@ -20,13 +20,7 @@ export type RPCClientConfig = {
   /**
    * The base URL of the RPC server
    */
-  baseUrl: string;
-
-  /**
-   * The path of the RPC server
-   * [Optional] Defaults to '/'
-   */
-  path?: string;
+  rpcUrl: string;
 
   /**
    * The timeout in milliseconds for the request
@@ -46,11 +40,10 @@ class LazyOllamaRPCCLient<APISpec extends RPCAPISpec>
   constructor(options: RPCClientConfig) {
     this.config = options;
 
-    while (this.config.baseUrl.endsWith('/')) {
-      this.config.baseUrl = this.config.baseUrl.slice(0, -1);
+    while (this.config.rpcUrl.endsWith('/')) {
+      this.config.rpcUrl = this.config.rpcUrl.slice(0, -1);
     }
 
-    this.config.path ||= '/';
     this.config.timeout ||= 10000;
     this.config.headers ||= { 'Content-Type': 'application/json', Accept: 'application/json' };
   }
@@ -62,7 +55,7 @@ class LazyOllamaRPCCLient<APISpec extends RPCAPISpec>
     }, this.config.timeout);
 
     try {
-      const response = await fetch(this.config.baseUrl, {
+      const response = await fetch(this.config.rpcUrl, {
         method: 'POST',
         headers: this.config.headers,
         body: JSON.stringify({ method, params }),

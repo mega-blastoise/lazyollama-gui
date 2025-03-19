@@ -7,15 +7,15 @@ import {
   type RPCMethod,
   type RPCRequestBody,
   type RPCAPISpec,
-  type BunServerConfig,
-  type IOllamaRPCAPI
+  type BunServerConfig
 } from '@lazyollama-gui/typescript-common-types';
 
 import { cors } from './server/cors';
 
 export abstract class ILazyOllamaRPCServer<T extends RPCAPISpec> {
+  public server: Server | null = null;
+
   protected handlers: RPCHandlers = new Map();
-  protected server: Server | null = null;
   protected middlewares: Array<BunMiddleware> = [];
   protected logger: MinimalLogger;
 
@@ -58,7 +58,7 @@ export abstract class ILazyOllamaRPCServer<T extends RPCAPISpec> {
     return () => this.middlewares.splice(this.middlewares.indexOf(middleware), 1);
   }
 
-  protected start(): void {
+  public start(): void {
     this.server = Bun.serve({
       hostname: this.host,
       port: this.port,
@@ -70,7 +70,10 @@ export abstract class ILazyOllamaRPCServer<T extends RPCAPISpec> {
             } catch (error) {
               this.logger.error('Error in server middleware');
               this.logger.error(error);
-              return new Response('Internal Server Error', { status: 500 });
+              return Response.json(
+                { error: ['Internal Server Error', 'Middleware Error', error] },
+                { status: 500 }
+              );
             }
           }
           return this.handleIncomingRequest(request);
@@ -83,7 +86,7 @@ export abstract class ILazyOllamaRPCServer<T extends RPCAPISpec> {
     } as BunServerConfig);
   }
 
-  protected async stop(): Promise<void> {
+  public async stop(): Promise<void> {
     if (this.server) {
       await this.server.stop();
       this.server = null;
@@ -125,11 +128,14 @@ export abstract class ILazyOllamaRPCServer<T extends RPCAPISpec> {
 
         const packet = { data: result };
 
-        return Response.json(packet);
+        return Response.json(packet, { status: 200 });
       } catch (e) {
         this.logger.error('Error handling incoming request');
         this.logger.error(e);
-        return new Response('Internal Server Error', { status: 500 });
+        return Response.json(
+          { error: ['Internal Server Error', 'Request Error', e] },
+          { status: 500 }
+        );
       }
     }
 
@@ -137,7 +143,10 @@ export abstract class ILazyOllamaRPCServer<T extends RPCAPISpec> {
   }
 
   private handleHealthCheckRequest(): Response {
-    return new Response('OK', { status: 200 });
+    return Response.json(
+      { server: { status: 'OK', endpoints: [this.path, this.healthcheckPath] } },
+      { status: 200 }
+    );
   }
 
   private validateIncomingRequestBody(

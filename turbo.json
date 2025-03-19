@@ -8,11 +8,12 @@
     "tasks": {
       "build": {
         "outputs": ["out/**"],
-        "dependsOn": ["^check-types", "^build"],
-        "cache": true
+        "dependsOn": ["^build"],
+        "cache": false
       },
       "check-types": {
-        "dependsOn": ["^check-types"]
+        "dependsOn": ["^check-types"],
+        "cache": false
       },
       "prettier": {
         "dependsOn": []

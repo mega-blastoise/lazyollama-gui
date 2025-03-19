@@ -51,12 +51,55 @@ export class OllamaClient {
 
   async updateInternalIndexes() {
     try {
+      this.logger.info('Updating internal indexes [%s]', new Date());
       const ollamaIsRunning = await this.checkOllamaIsRunning();
-      if (!ollamaIsRunning) throw new Error('Ollama is not running');
+      if (!ollamaIsRunning) {
+        this.logger.warn('Ollama is not running');
+        throw new Error('Ollama is not running');
+      }
 
-      await this.indexRemoteRegistryModels();
-      await this.indexAvailableModels();
-      await this.indexRunningModels();
+      this.logger.info('Ollama is running [%s]', new Date());
+
+      let isError = false;
+      let errors = [];
+
+      this.logger.info('Indexing remote registry models [%s]', new Date());
+      try {
+        await this.indexRemoteRegistryModels();
+        this.logger.info('Finished indexing remote registry models [%s]', new Date());
+      } catch (e) {
+        isError = true;
+        errors.push(e);
+        this.logger.warn('Error indexing remote registry models [%s]', new Date());
+        this.logger.error(e);
+      }
+      this.logger.info('Indexing available models [%s]', new Date());
+      try {
+        await this.indexAvailableModels();
+        this.logger.info('Finished indexing available models [%s]', new Date());
+      } catch (e) {
+        isError = true;
+        errors.push(e);
+        this.logger.warn('Error indexing available models [%s]', new Date());
+        this.logger.error(e);
+      }
+
+      this.logger.info('Indexing running models [%s]', new Date());
+      try {
+        await this.indexRunningModels();
+        this.logger.info('Finished indexing running models [%s]', new Date());
+      } catch (e) {
+        isError = true;
+        errors.push(e);
+        this.logger.warn('Error indexing running models [%s]', new Date());
+        this.logger.error(e);
+      }
+
+      if (isError) {
+        throw new Error(errors.join(' , '));
+      }
+
+      this.logger.info('Finished updating internal indexes [%s]', new Date());
     } catch (e) {
       if (e instanceof Error && e.message === 'Ollama is not running') {
         throw e;
@@ -70,7 +113,7 @@ export class OllamaClient {
   }
 
   async checkOllamaIsRunning() {
-    return (await this._get<string>(this.baseUrl!, 'text')).includes('Ollama is running');
+    return (await this._get<string>('', 'text')).includes('Ollama is running');
   }
 
   getLocalModelState(model: string) {
@@ -118,14 +161,11 @@ export class OllamaClient {
    */
   private async _post<T, P>(endpoint: string, payload: P): Promise<T> {
     try {
+      const url = new URL(endpoint, this.baseUrl);
       const body = JSON.stringify(payload);
-      const response = await Bun.fetch(`${this.baseUrl}${endpoint}`, {
+      const response = await Bun.fetch(url.href, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Accept: 'application/json',
-          'Content-Length': body.length.toString()
-        },
+        headers: this.getPostRequestHeaders(body.length),
         body
       });
       return response.json() as T;
@@ -142,12 +182,10 @@ export class OllamaClient {
    */
   private async _get<T>(endpoint: string, responseType: 'json' | 'text' = 'json') {
     try {
-      const response = await Bun.fetch(`${this.baseUrl}${endpoint}`, {
+      const url = new URL(endpoint, this.baseUrl);
+      const response = await Bun.fetch(url.href, {
         method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          Accept: 'application/json'
-        }
+        headers: this.getGetRequestHeaders()
       });
       return responseType === 'json'
         ? (response.json() as Promise<T>)
@@ -156,6 +194,21 @@ export class OllamaClient {
       this.logger.error(`Error in GET request to ${endpoint}: ${error}`);
       throw error;
     }
+  }
+
+  private getPostRequestHeaders(contentLength: number) {
+    return {
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
+      'Content-Length': contentLength.toString()
+    };
+  }
+
+  private getGetRequestHeaders() {
+    return {
+      'Content-Type': 'application/json',
+      Accept: 'application/json'
+    };
   }
 
   async indexRunningModels(): Promise<void> {
@@ -183,7 +236,7 @@ export class OllamaClient {
   }
 
   async getAvailableModels(): Promise<RunningModelResponse> {
-    return this._get('/api/tags·') as Promise<RunningModelResponse>;
+    return this._get('/api/tags') as Promise<RunningModelResponse>;
   }
 
   /**

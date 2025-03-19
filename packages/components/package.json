@@ -29,7 +29,7 @@
     "bundle": "bun run build.ts",
     "clean": "rm -rf out",
     "test": "bun test",
-    "build": "run-p clean bundle copy-styles check-types",
+    "build": "run-s clean bundle copy-styles check-types",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "copy-styles": "DEBUG=* bun run bin/copy-styles.ts"
