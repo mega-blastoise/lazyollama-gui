@@ -1,14 +1,12 @@
-import React, { useMemo } from 'react';
-import { Box, ChevronDown, Download, Play, Search, Square, X } from 'lucide-react';
+import React, { useMemo, useDeferredValue } from 'react';
+import { Search } from 'lucide-react';
 import { useApplicationStore } from '@/gui/store';
 import { Button, Typography } from '@lazyollama-gui/typescript-react-components';
-
+import { ModelsList } from './components/ModelsList';
 import {
   getComprehensiveModelsList,
-  filterEngine,
-  ComprehensiveModel
+  filterEngine
 } from './DashboardModelsView.utils';
-import { OllamaModel } from '@/gui/types';
 
 let pageCount = 50;
 
@@ -17,6 +15,9 @@ function LazyOllamaDashboardModelsView() {
   const [all, setAllActive] = React.useState(false);
   const [running, setRunningActive] = React.useState(false);
   const [downloaded, setDownloadedActive] = React.useState(false);
+
+  const [search, setSearch] = React.useState('');
+  const deferredSearchValue = useDeferredValue(search);
 
   const [page, setPage] = React.useState(1);
   const [range, setRange] = React.useState([0, pageCount]);
@@ -91,8 +92,15 @@ function LazyOllamaDashboardModelsView() {
 
   let models = useMemo(
     () =>
-      filterEngine(getComprehensiveModelsList(api) || [], popular, all, downloaded, running),
-    [popular, all, downloaded, running, api]
+      filterEngine(
+        getComprehensiveModelsList(api) || [],
+        deferredSearchValue,
+        popular,
+        all,
+        downloaded,
+        running
+      ),
+    [deferredSearchValue, popular, all, downloaded, running, api]
   );
 
   const numOfModels = models.length;
@@ -145,71 +153,21 @@ function LazyOllamaDashboardModelsView() {
             Downloaded
           </Button>
         </div>
-      </div>
 
-      <div className="lazyollama-gui__models-list">
-        {models.slice(range[0], range[1]).map((model) => (
-          <div key={model.id} className="lazyollama-gui__model-card">
-            <div
-              className="lazyollama-gui__model-header"
-              onClick={() =>
-                setExpandedModel({
-                  ...model,
-                  tags: [model.model_spec.replace(`${model.name}`, '')]
-                } as OllamaModel)
-              }
-            >
-              <div className="lazyollama-gui__model-info">
-                <Box
-                  className={`lazyollama-gui__model-icon ${model.running ? 'lazyollama-gui__model-icon--running' : ''}`}
-                />
-                <div>
-                  <h4 className="lazyollama-gui__model-name">{model.name}</h4>
-                  <p className="lazyollama-gui__model-description">{model.description}</p>
-                </div>
-              </div>
-
-              <div className="lazyollama-gui__model-meta">
-                <div className="lazyollama-gui__model-tags">
-                  <span key={model.model_parameters} className="lazyollama-gui__model-tag">
-                    {model.model_parameters}
-                  </span>
-                </div>
-                <ChevronDown
-                  className={`lazyollama-gui__chevron ${expanded_model?.id === model.id ? 'lazyollama-gui__chevron--expanded' : ''}`}
-                />
-              </div>
-            </div>
-
-            {expanded_model?.id === model.id && (
-              <div className="lazyollama-gui__model-actions">
-                {!model.downloaded && <Button variant="primary">Pull Model</Button>}
-
-                {model.downloaded && !model.running && (
-                  <button className="lazyollama-gui__button lazyollama-gui__button--success">
-                    <Play className="lazyollama-gui__button-icon" />
-                    Start Model
-                  </button>
-                )}
-
-                {model.running && (
-                  <button className="lazyollama-gui__button lazyollama-gui__button--danger">
-                    <Square className="lazyollama-gui__button-icon" />
-                    Stop Model
-                  </button>
-                )}
-
-                {model.downloaded && (
-                  <button className="lazyollama-gui__button lazyollama-gui__button--secondary">
-                    <X className="lazyollama-gui__button-icon" />
-                    Remove
-                  </button>
-                )}
-              </div>
-            )}
+        <div className="lazyollama-gui__pagination">
+          <Button onClick={onPreviousPageClick} variant="outline" size="sm">
+            Previous
+          </Button>
+          <div className="lazyollama-gui__pagination-info nunito-sans">
+            {range[0] + 1}-{range[1]} of {models.length}
           </div>
-        ))}
+          <Button onClick={onNextPageClick} variant="outline" size="sm">
+            Next
+          </Button>
+        </div>
       </div>
+
+      <ModelsList models={models} range={[range[0], range[1]]} />
     </div>
   );
 }

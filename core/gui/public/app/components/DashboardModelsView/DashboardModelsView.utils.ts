@@ -69,26 +69,39 @@ export function getComprehensiveModelsList(
 
 export function filterEngine(
   models: ComprehensiveModel[],
+  search?: string,
   popular?: boolean,
   all?: boolean,
   downloaded?: boolean,
   running?: boolean
 ): ComprehensiveModel[] {
-  if (all) return models;
-  if (popular)
-    models.filter(({ model_spec }) =>
-      [
-        /gemma3:1b/,
-        /qwq:32b/,
-        /deepseek-r1:1.5b/,
-        /deepseek-r1:7b/,
-        /deepseek-r1:8b/,
-        /deepseek-r1:32b/,
-        /deepseek-r1:70b/
-      ].some((regex) => regex.test(model_spec))
+  function filterOnSearchValue(model: ComprehensiveModel) {
+    if (!search) return true;
+    return (
+      model.model_spec.toLowerCase().includes(search.toLowerCase()) ||
+      model.description.toLowerCase().includes(search.toLowerCase())
     );
+  }
 
-  if (downloaded) return models.filter(({ downloaded }) => downloaded);
-  if (running) return models.filter(({ running }) => running);
-  return models;
+  if (all) return models.filter(filterOnSearchValue);
+
+  if (popular)
+    return models
+      .filter(({ model_spec }) =>
+        [
+          /gemma3:1b/,
+          /qwq:32b/,
+          /deepseek-r1:1.5b/,
+          /deepseek-r1:7b/,
+          /deepseek-r1:8b/,
+          /deepseek-r1:32b/,
+          /deepseek-r1:70b/
+        ].some((regex) => regex.test(model_spec))
+      )
+      .filter(filterOnSearchValue);
+
+  if (downloaded)
+    return models.filter(({ downloaded }) => downloaded).filter(filterOnSearchValue);
+  if (running) return models.filter(({ running }) => running).filter(filterOnSearchValue);
+  return models.filter(filterOnSearchValue);
 }

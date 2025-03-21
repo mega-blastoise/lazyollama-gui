@@ -199,3 +199,16 @@ div.lazyollama-gui__models-filters {
   gap: 16px;
   margin-bottom: 16px;
 }
+
+div.lazyollama-gui__pagination {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 16px;
+  margin-top: 16px;
+  margin-left: auto;
+
+  > div.lazyollama-gui__pagination-info {}
+  
+}
