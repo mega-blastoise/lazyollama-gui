@@ -1,4 +1,4 @@
-import React, { useMemo, useDeferredValue } from 'react';
+import React, { useMemo, useDeferredValue, Suspense } from 'react';
 import { Search } from 'lucide-react';
 import { useApplicationStore } from '@/gui/store';
 import { Button, Typography } from '@lazyollama-gui/typescript-react-components';
@@ -121,6 +121,8 @@ function LazyOllamaDashboardModelsView() {
               type="text"
               className="lazyollama-gui__search-input"
               placeholder="Search..."
+              onChange={(event) => setSearch(event.target.value)}
+              value={search}
             />
           </div>
         </div>
@@ -159,15 +161,16 @@ function LazyOllamaDashboardModelsView() {
             Previous
           </Button>
           <div className="lazyollama-gui__pagination-info nunito-sans">
-            {range[0] + 1}-{range[1]} of {models.length}
+            {page} Page of {pages}
           </div>
           <Button onClick={onNextPageClick} variant="outline" size="sm">
             Next
           </Button>
         </div>
       </div>
-
-      <ModelsList models={models} range={[range[0], range[1]]} />
+      <Suspense fallback={<div className='loader' data-loader-size="5xl"></div>}>
+      <ModelsList models={models.slice(range[0], range[1])} range={[range[0], range[1]]} />
+      </Suspense>
     </div>
   );
 }

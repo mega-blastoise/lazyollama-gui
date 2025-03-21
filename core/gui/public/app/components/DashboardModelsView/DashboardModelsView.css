@@ -3,6 +3,8 @@
   display: flex;
   flex-direction: column;
   gap: 16px;
+  /* overflow-y: scroll;
+  max-height: calc(99vh - 246px); */
 }
 
 .lazyollama-gui__model-card {
@@ -10,6 +12,8 @@
   overflow: hidden;
   border-width: 1px;
   border-style: solid;
+  /* min-height: 79px;
+  min-width: 100%; */
 }
 
 .lazyollama-gui--light .lazyollama-gui__model-card {
