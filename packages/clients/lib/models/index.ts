@@ -1,10 +1,7 @@
 export {
   default as Ollama,
-  OllamaClient,
-  OllamaClientCacheType,
-  type AdHocJsonSchema,
-  type ChatPromptConfiguration,
-  type ChatPromptFinalResponse,
-  type RunningModelConfiguration,
-  type RunningModelResponse
+  OllamaClient as BaseOllamaClient,
+  type NodeHtmlParserHTMLElement
 } from './Ollama';
+
+export { default as createOllamaRPCClient } from './OllamaRPC';

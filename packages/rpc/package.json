@@ -1,0 +1,54 @@
+{
+  "name": "@lazyollama-gui/typescript-rpc-core",
+  "type": "module",
+  "packageManager": "bun@1.2.5",
+  "version": "0.0.1-alpha.0.1",
+  "private": true,
+  "files": [
+    "out/",
+    "package.json"
+  ],
+  "exports": {
+    "./server": {
+      "import": "./out/lib/server.js",
+      "types": "./out/lib/server.d.ts",
+      "default": "./out/lib/server.js"
+    },
+    "./client": {
+      "import": "./out/lib/client.js",
+      "types": "./out/lib/client.d.ts",
+      "default": "./out/lib/client.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "scripts": {
+    "check-types": "tsc -p tsconfig.json",
+    "bundle": "bun run build.ts",
+    "build": "run-s clean bundle check-types",
+    "clean": "rm -rf out",
+    "test": "bun test"
+  },
+  "devDependencies": {
+    "@lazyollama-gui/typescript-common-types": "workspace:*",
+    "@lazyollama-gui/typescript-common": "workspace:*",
+    "@lazyollama-gui/typescript-configs": "workspace:*",
+    "@types/bun": "latest",
+    "@types/debug": "^4.1.12",
+    "chalk": "^5.4.1",
+    "debug": "^4.4.0",
+    "node-emoji": "^2.2.0",
+    "npm-run-all": "^4.1.5",
+    "typescript": "^5.0.0",
+    "node-html-parser": "^7.0.1",
+    "sleepydogs": "1.0.8-alpha.4"
+  },
+  "peerDependencies": {
+    "@lazyollama-gui/typescript-common": "workspace:*",
+    "chalk": "^5.4.1",
+    "debug": "^4.4.0",
+    "node-emoji": "^2.2.0",
+    "typescript": "^5.0.0",
+    "node-html-parser": "^7.0.1",
+    "sleepydogs": "1.0.8-alpha.4"
+  }
+}

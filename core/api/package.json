@@ -14,14 +14,17 @@
   },
   "devDependencies": {
     "@lazyollama-gui/typescript-configs": "workspace:*",
+    "@lazyollama-gui/typescript-common-types": "workspace:*",
     "@types/bun": "latest",
-    "@types/debug": "^4.1.12"
+    "@types/debug": "^4.1.12",
+    "@types/node-schedule": "^2.1.7"
   },
-  "peerDependencies": {},
   "dependencies": {
-    "@lazyollama-gui/typescript-common": "workspace:*",
     "@lazyollama-gui/typescript-clients": "workspace:*",
+    "@lazyollama-gui/typescript-common": "workspace:*",
+    "@lazyollama-gui/typescript-rpc-core": "workspace:*",
     "debug": "^4.4.0",
-    "sleepydogs": "1.0.8-alpha.2"
+    "node-schedule": "^2.1.1",
+    "sleepydogs": "1.0.8-alpha.4"
   }
 }

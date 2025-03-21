@@ -1,0 +1,39 @@
+{
+  "name": "@lazyollama-gui/typescript-common-types",
+  "type": "module",
+  "version": "0.0.1-alpha.0.1",
+  "private": true,
+  "types": "./out/lib/index.d.ts",
+  "module": "./out/lib/index.js",
+  "files": [
+    "out",
+    "package.json"
+  ],
+  "exports": {
+    ".": {
+      "import": "./out/lib/index.js",
+      "types": "./out/lib/index.d.ts",
+      "default": "./out/lib/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "packageManager": "bun@1.2.5",
+  "engines": {
+    "bun": ">=1.2.5"
+  },
+  "scripts": {
+    "check-types": "tsc -p tsconfig.json",
+    "bundle": "bun run build.ts",
+    "build": "run-s clean bundle check-types",
+    "clean": "rm -rf out",
+    "test": "bun test"
+  },
+  "devDependencies": {
+    "@lazyollama-gui/typescript-configs": "workspace:*",
+    "@types/bun": "latest",
+    "npm-run-all": "^4.1.5"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  }
+}

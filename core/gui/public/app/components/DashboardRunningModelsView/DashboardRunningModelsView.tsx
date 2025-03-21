@@ -59,15 +59,14 @@ function LazyOllamaDashboardRunningModelsView({
           ))}
         </div>
       ) : (
-
-          <GlassCard className='lazyollama-gui__empty-state' elevation='md'>
+        <GlassCard className="lazyollama-gui__empty-state" elevation="md">
           <Box className="lazyollama-gui__empty-icon" />
           <Typography
             variant="h4"
             weight="medium"
             className="lazyollama-gui__empty-title"
             style={{ marginBottom: '8px' }}
-            >
+          >
             No Models Running
           </Typography>
           <Typography
@@ -75,7 +74,7 @@ function LazyOllamaDashboardRunningModelsView({
             weight="normal"
             color="brand"
             className="lazyollama-gui__empty-text"
-            >
+          >
             Start a model from the Models tab to see it here.
           </Typography>
           <Button
@@ -83,10 +82,10 @@ function LazyOllamaDashboardRunningModelsView({
             size="sm"
             className="lazyollama-gui__button lazyollama-gui__button--primary"
             onClick={() => updateUiViewState('models')}
-            >
+          >
             Go to Models
           </Button>
-            </GlassCard>
+        </GlassCard>
       )}
     </div>
   );

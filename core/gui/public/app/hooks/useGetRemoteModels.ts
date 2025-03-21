@@ -1,37 +1,12 @@
 import React from 'react';
 import { useQuery } from '@tanstack/react-query';
+import rpc from '../lib/api/rpc-client';
 
-const method = 'queryRemoteModelRegistry';
-
-async function fetchRemoteModelRegistryModels() {
-  const proxyPath = process.env.LAZYOLLAMA_API_PROXY_URL;
-
-  if (proxyPath == null) {
-    throw new Error('LAZYOLLAMA_API_PROXY_URL is not defined');
-  }
-
-  const url = new URL(proxyPath);
-
-  const response = await Bun.fetch(url, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Accept: 'application/json',
-      'X-Request-ID': Date.now().toString(),
-      'X-Client-Request-ID': 'lazyollama-gui'
-    },
-    body: JSON.stringify({
-      method,
-      params: []
-    })
-  });
-  const data = await response.json();
-  return data;
-}
+const method = rpc.models.remote.method;
 
 export default function useGetRemoteModels() {
   return useQuery({
     queryKey: [method],
-    queryFn: fetchRemoteModelRegistryModels
+    queryFn: () => rpc.models.remote.fn([])
   });
 }

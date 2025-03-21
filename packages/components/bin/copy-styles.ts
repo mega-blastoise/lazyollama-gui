@@ -38,7 +38,8 @@ async function main() {
     const processor = postcss([autoprefixer, cssnano]);
 
     const promises = files.map(async (file) => {
-      const isComponent = (file.parentPath || file.path).includes('components/') && !unique.includes(file.name);
+      const isComponent =
+        (file.parentPath || file.path).includes('components/') && !unique.includes(file.name);
       const from = path.resolve(file.parentPath || file.path, file.name);
       const to = isComponent
         ? path.resolve(dist, 'components', file.name)

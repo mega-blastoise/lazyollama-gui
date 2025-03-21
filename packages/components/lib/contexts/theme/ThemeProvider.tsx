@@ -17,19 +17,19 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({
   // Initialize theme from localStorage or system preference
   const [theme, setThemeState] = useState<Theme>(() => {
     const savedTheme = localStorage.getItem('theme') as Theme | null;
-    
-    if (!savedTheme && typeof window !== "undefined" && window?.matchMedia) {
+
+    if (!savedTheme && typeof window !== 'undefined' && window?.matchMedia) {
       const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
       return prefersDark ? 'mint-dark' : 'mint-light';
     }
-    
+
     return savedTheme || initialTheme;
   });
 
   // Save theme to localStorage when it changes
   useEffect(() => {
     localStorage.setItem('theme', theme);
-    
+
     // Apply theme to document for potential global CSS selectors
     document.documentElement.setAttribute('data-theme', theme);
   }, [theme]);
@@ -42,7 +42,7 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({
   // Calculate theme properties
   const isDark = theme.includes('dark');
   const isLight = !isDark;
-  
+
   // Determine color scheme
   const colorScheme = theme.startsWith('mint') ? 'mint' : 'purple';
 
@@ -64,15 +64,15 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({
   };
 
   return (
-    <ThemeContext.Provider 
-      value={{ 
-        theme, 
-        setTheme, 
-        toggleTheme, 
-        toggleMode, 
-        isDark, 
-        isLight, 
-        colorScheme 
+    <ThemeContext.Provider
+      value={{
+        theme,
+        setTheme,
+        toggleTheme,
+        toggleMode,
+        isDark,
+        isLight,
+        colorScheme
       }}
     >
       <div className="lazyollama-theme" data-theme={theme}>

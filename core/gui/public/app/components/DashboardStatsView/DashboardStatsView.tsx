@@ -1,16 +1,18 @@
 import { GlassCard, Typography } from '@lazyollama-gui/typescript-react-components';
 import React from 'react';
 
-
 function DashboardStatsView() {
   return (
     <div className="lazyollama-gui__stats-tab">
-      <Typography variant="h3" className="lazyollama-gui__section-title lazyollama-gui__section-title--spaced">
+      <Typography
+        variant="h3"
+        className="lazyollama-gui__section-title lazyollama-gui__section-title--spaced"
+      >
         System Statistics
       </Typography>
 
       <div className="lazyollama-gui__stats-grid">
-        <GlassCard >
+        <GlassCard>
           <Typography variant="h4" className="lazyollama-gui__stat-title">
             CPU Usage
           </Typography>
@@ -25,7 +27,7 @@ function DashboardStatsView() {
           </div>
         </GlassCard>
 
-        <GlassCard >
+        <GlassCard>
           <Typography variant="h4" className="lazyollama-gui__stat-title">
             Memory Usage
           </Typography>
@@ -40,7 +42,7 @@ function DashboardStatsView() {
           </div>
         </GlassCard>
 
-        <GlassCard >
+        <GlassCard>
           <Typography variant="h4" className="lazyollama-gui__stat-title">
             GPU Memory
           </Typography>
@@ -56,13 +58,17 @@ function DashboardStatsView() {
         </GlassCard>
       </div>
 
-      <GlassCard >
+      <GlassCard>
         <Typography variant="h4" className="lazyollama-gui__chart-title">
           Model Usage History
         </Typography>
         <div className="lazyollama-gui__chart">
           {[40, 65, 30, 85, 55, 70, 45, 90, 65, 50, 75, 60].map((height, index) => (
-            <div key={index} className="lazyollama-gui__chart-bar" style={{ height: `${height}%` }}></div>
+            <div
+              key={index}
+              className="lazyollama-gui__chart-bar"
+              style={{ height: `${height}%` }}
+            ></div>
           ))}
         </div>
         <div className="lazyollama-gui__chart-labels">

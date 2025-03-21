@@ -1,9 +1,10 @@
-
 import React, { Suspense } from 'react';
 import { useApplicationStore } from '@/gui/store';
 
 const LazyOllamaDashboardModelsView = React.lazy(() => import('../DashboardModelsView'));
-const LazyOllamaDashboardRunningModelsView = React.lazy(() => import('../DashboardRunningModelsView'));
+const LazyOllamaDashboardRunningModelsView = React.lazy(
+  () => import('../DashboardRunningModelsView')
+);
 const LazyOllamaDashboardStatsView = React.lazy(() => import('../DashboardStatsView'));
 const LazyOllamaDashboardSettingsView = React.lazy(() => import('../DashboardSettingsView'));
 

@@ -9,7 +9,7 @@ function LazyOllamaDashboardSectionHeader() {
   const {
     ui: { view }
   } = useApplicationStore();
-  
+
   return (
     <header className="lazyollama-gui__header">
       <Typography variant="h2" className="lazyollama-gui__header-title">
@@ -27,40 +27,38 @@ function LazyOllamaDashboardSectionHeader() {
 
       <div className="theme-selection">
         {theme.includes('dark') ? (
-          <Button 
+          <Button
             variant="link"
-            onClick={toggleMode} 
-            className="theme-toggle" 
+            onClick={toggleMode}
+            className="theme-toggle"
             aria-label="Switch to light mode"
           >
             <Moon />
           </Button>
         ) : (
-          <Button 
+          <Button
             variant="link"
-            onClick={toggleMode} 
-            className="theme-toggle" 
+            onClick={toggleMode}
+            className="theme-toggle"
             aria-label="Switch to dark mode"
           >
             <Sun />
           </Button>
         )}
         <div className="color-scheme-selection">
-          <Button 
+          <Button
             variant="icon"
             onClick={() => setTheme(isDark ? 'mint-dark' : 'mint-light')}
             className={`color-option ${colorScheme === 'mint' ? 'active' : ''}`}
             aria-label="Use mint theme"
             // style={{backgroundColor: "#10b981", backgroundSize: ""}}
-          >
-          </Button>
-          <Button 
+          ></Button>
+          <Button
             variant="icon"
             onClick={() => setTheme(isDark ? 'purple-dark' : 'purple-light')}
             className={`color-option purple-theme ${colorScheme === 'purple' ? 'active' : ''}`}
             aria-label="Use purple theme"
-          >
-          </Button>
+          ></Button>
         </div>
       </div>
     </header>

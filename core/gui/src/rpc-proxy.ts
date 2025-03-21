@@ -18,5 +18,13 @@ export default async (request: Request): Promise<Response> => {
 
   if (RPC_API_URL == null) return new Response('Internal Server Error', { status: 500 });
 
-  return Bun.fetch(RPC_API_URL, { method: 'POST', body: JSON.stringify({ method, params }) });
+  const proxied = await Bun.fetch(RPC_API_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+    body: JSON.stringify({ method, params })
+  });
+
+  if (proxied.ok) return proxied;
+
+  return new Response(proxied.statusText, { status: proxied.status });
 };
