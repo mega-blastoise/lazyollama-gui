@@ -3,9 +3,9 @@ import middleware from './middleware';
 import { BunServerConfig } from './types';
 
 type WebsocketData = {
-    channelId: string;
-    authToken: string
-}
+  channelId: string;
+  authToken: string;
+};
 
 export default function createRunningBunWebsocketServer() {
   const port: BunServerConfig['port'] = parseInt(process.env.PORT ?? '4040', 10) + 1;
@@ -14,24 +14,26 @@ export default function createRunningBunWebsocketServer() {
     port,
     hostname: host,
     fetch(request, server) {
-      
       middleware(request);
 
-      if (server.upgrade(request, {
-        data: {
-            channelId: new URL(request.url).searchParams.get("channelId")
-        }
-      })) {
+      if (
+        server.upgrade(request, {
+          data: {
+            channelId: new URL(request.url).searchParams.get('channelId')
+          }
+        })
+      ) {
         return;
       }
 
       return new Response('Upgrade failed', { status: 500 });
     },
     websocket: {
-        message(ws: ServerWebSocket<WebsocketData>, message) {
-            const data = JSON.parse(message);
-            
-        },
+      message(ws: ServerWebSocket<WebsocketData>, message: any) {
+        const data = JSON.parse(
+          typeof message === 'string' ? message : JSON.stringify(message)
+        );
+      }
     }
   });
 
