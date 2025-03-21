@@ -8,7 +8,7 @@ export default async function init() {
   try {
     await LazyOllama.getInstance().updateInternalIndexes();
     logger.info('Finished initializing Ollama');
-  } catch(e) {
+  } catch (e) {
     logger.error('Error initializing Ollama');
     logger.error(e);
   }

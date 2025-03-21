@@ -7,7 +7,7 @@ const LazyOllamaDashboardSettingsView = React.lazy(() => import('../DashboardSet
 
 function LazyOllamaDashboardMainContent() {
   const {
-    ui: { view },
+    ui: { view }
   } = useApplicationStore();
 
   return (

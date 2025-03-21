@@ -3,10 +3,7 @@ import { Search } from 'lucide-react';
 import { useApplicationStore } from '@/gui/store';
 import { Button, Typography } from '@lazyollama-gui/typescript-react-components';
 import { ModelsList } from './components/ModelsList';
-import {
-  getComprehensiveModelsList,
-  filterEngine
-} from './DashboardModelsView.utils';
+import { getComprehensiveModelsList, filterEngine } from './DashboardModelsView.utils';
 
 let pageCount = 50;
 
@@ -168,8 +165,8 @@ function LazyOllamaDashboardModelsView() {
           </Button>
         </div>
       </div>
-      <Suspense fallback={<div className='loader' data-loader-size="5xl"></div>}>
-      <ModelsList models={models.slice(range[0], range[1])} range={[range[0], range[1]]} />
+      <Suspense fallback={<div className="loader" data-loader-size="5xl"></div>}>
+        <ModelsList models={models.slice(range[0], range[1])} range={[range[0], range[1]]} />
       </Suspense>
     </div>
   );

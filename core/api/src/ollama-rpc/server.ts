@@ -42,7 +42,6 @@ class LazyOllamaRPCServer extends ILazyOllamaRPCServer<IOllamaRPCAPI> {
   protected getDefaultHostname(): string {
     return process.env.HOSTNAME || '0.0.0.0';
   }
-
 }
 
 export default SuperLazySingletonFactory(LazyOllamaRPCServer) as ReturnType<

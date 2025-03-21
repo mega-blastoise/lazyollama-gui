@@ -4,12 +4,7 @@ import { Home, Box, Play, BarChart2, Settings, Bolt } from 'lucide-react';
 import { LazyOllamaDashboardSidebarNavigationItemProps } from '@/gui/components/DashboardSidebar/components/Nav/Item/types';
 import { OllamaModel } from '../types';
 
-export type ViewState =
-  | 'home'
-  | 'models'
-  | 'modelfile-builder'
-  | 'stats'
-  | 'settings';
+export type ViewState = 'home' | 'models' | 'modelfile-builder' | 'stats' | 'settings';
 
 export type ApplicationStoreState = {
   ui: {
