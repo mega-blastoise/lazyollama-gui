@@ -1,13 +1,12 @@
+import React from 'react';
 import { create } from 'zustand';
+import { Home, Box, Play, BarChart2, Settings, Bolt } from 'lucide-react';
 import { LazyOllamaDashboardSidebarNavigationItemProps } from '@/gui/components/DashboardSidebar/components/Nav/Item/types';
 import { OllamaModel } from '../types';
-import { Home, Box, Play, BarChart2, Settings, Bolt } from 'lucide-react';
-import React from 'react';
 
 export type ViewState =
   | 'home'
   | 'models'
-  | 'running'
   | 'modelfile-builder'
   | 'stats'
   | 'settings';
@@ -39,6 +38,7 @@ export type ApplicationStoreActions = {
   setExpandedModel(model: OllamaModel | null): void;
   expandSidebar(): void;
   collapseSidebar(): void;
+  updateApiState(api: Partial<ApplicationStoreState['api']>): void;
 };
 
 export type ApplicationStore = ApplicationStoreActions & ApplicationStoreState;
@@ -61,11 +61,6 @@ export const useApplicationStore = create<ApplicationStore>(($set) => ({
           to: 'models'
         },
         {
-          icon: <Play className="lazyollama-gui__nav-icon" />,
-          label: 'Running Models',
-          to: 'running'
-        },
-        {
           icon: <Bolt className="lazyollama-gui__nav-icon" />,
           label: 'Modelfile Builder (Beta)',
           to: 'modelfile-builder'
@@ -83,6 +78,7 @@ export const useApplicationStore = create<ApplicationStore>(($set) => ({
       ]
     }
   },
+
   updateUiViewState(view) {
     $set((state) => ({ ui: { ...state.ui, view } }));
   },
@@ -115,5 +111,9 @@ export const useApplicationStore = create<ApplicationStore>(($set) => ({
       running: [],
       remote: []
     }
+  },
+
+  updateApiState(api = {}) {
+    $set((state) => ({ ...state, api: { ...state.api, ...api } }));
   }
 }));

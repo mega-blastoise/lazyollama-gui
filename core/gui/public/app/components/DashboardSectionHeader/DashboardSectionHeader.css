@@ -171,6 +171,8 @@
 
 /* Theme Selection Controls */
 .theme-selection {
+  box-sizing: border-box;
+  margin-left: auto;
   display: flex;
   align-items: center;
   gap: var(--spacing-md);

@@ -1,36 +1,140 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Box, ChevronDown, Download, Play, Square, X } from 'lucide-react';
 import { useApplicationStore } from '@/gui/store';
-import { LazyOllamaDashboardModelsViewProps } from './types';
-import { Button, Typography } from '@lazyollama-gui/typescript-react-components';
+import { Button, Typography, GlassCard } from '@lazyollama-gui/typescript-react-components';
 
-function LazyOllamaDashboardModelsView({ models }: LazyOllamaDashboardModelsViewProps) {
+import { getComprehensiveModelsList, filterEngine } from './DashboardModelsView.utils';
+import { OllamaModel } from '@/gui/types';
+
+let pageCount = 50;
+
+function LazyOllamaDashboardModelsView() {
+  const [popular, setPopularActive] = React.useState(true);
+  const [all, setAllActive] = React.useState(false);
+  const [running, setRunningActive] = React.useState(false);
+  const [downloaded, setDownloadedActive] = React.useState(false);
+
+  const [page, setPage] = React.useState(1);
+  const [range, setRange] = React.useState([0, pageCount]);
+
+  function onPopularChipClick() {
+    if (popular) {
+      setPopularActive(false);
+      return;
+    }
+
+    setPopularActive(true);
+    setAllActive(false);
+    setDownloadedActive(false);
+  }
+
+  function onAllChipClick() {
+    if (all) {
+      setAllActive(false);
+      return;
+    }
+
+    setAllActive(true);
+    setPopularActive(false);
+    setDownloadedActive(false);
+  }
+
+  function onDownloadedChipClick() {
+    if (downloaded) {
+      setDownloadedActive(false);
+      return;
+    }
+
+    setDownloadedActive(true);
+    setAllActive(false);
+    setPopularActive(false);
+  }
+
+  function onRunningChipClick() {
+    if (running) {
+      setRunningActive(false);
+      return;
+    }
+
+    setRunningActive(true);
+    setAllActive(false);
+    setDownloadedActive(false);
+  }
+
+  function onNextPageClick() {
+    const currentMaxRange = range[1];
+    if (currentMaxRange + pageCount >= models.length) {
+      return;
+    } else {
+      setRange([currentMaxRange, currentMaxRange + pageCount]);
+    }
+  }
+
+  function onPreviousPageClick() {
+    const currentMinRange = range[0];
+    if (currentMinRange - pageCount <= 0) {
+      return;
+    } else {
+      setRange([currentMinRange - pageCount, currentMinRange]);
+    }
+  }
+
   const {
-    setExpandedModel,
-    ui: { expanded_model }
+    api,
+    ui: { expanded_model },
+    setExpandedModel
   } = useApplicationStore();
+
+  let models = useMemo(
+    () =>
+      filterEngine(getComprehensiveModelsList(api) || [], popular, all, downloaded, running),
+    [popular, all, downloaded, running, api]
+  );
+
+  const numOfModels = models.length;
+
+  const pages = Math.ceil(numOfModels / pageCount);
+
   return (
     <div className="lazyollama-gui__models-tab">
       <div className="lazyollama-gui__section-header">
         <Typography variant="h3" weight="semibold" className="lazyollama-gui__section-title">
-          Available Models
+          Models
         </Typography>
         <div className="lazyollama-gui__filter-buttons">
-          <Button variant="outline" size="sm">
+          <Button
+            onClick={onPopularChipClick}
+            variant={popular ? 'secondary' : 'outline'}
+            size="sm"
+          >
+            Popular
+          </Button>
+          <Button onClick={onAllChipClick} variant={all ? 'secondary' : 'outline'} size="sm">
             All
           </Button>
-          <Button variant="outline" size="sm">
+          <Button
+            onClick={onRunningChipClick}
+            variant={running ? 'secondary' : 'outline'}
+            size="sm"
+          >
+            Running
+          </Button>
+          <Button
+            onClick={onDownloadedChipClick}
+            variant={downloaded ? 'secondary' : 'outline'}
+            size="sm"
+          >
             Downloaded
           </Button>
         </div>
       </div>
 
       <div className="lazyollama-gui__models-list">
-        {models.available.map((model) => (
+        {models.slice(range[0], range[1]).map((model) => (
           <div key={model.id} className="lazyollama-gui__model-card">
             <div
               className="lazyollama-gui__model-header"
-              onClick={() => setExpandedModel(model.id)}
+              onClick={() => setExpandedModel(model as OllamaModel)}
             >
               <div className="lazyollama-gui__model-info">
                 <Box
@@ -44,26 +148,19 @@ function LazyOllamaDashboardModelsView({ models }: LazyOllamaDashboardModelsView
 
               <div className="lazyollama-gui__model-meta">
                 <div className="lazyollama-gui__model-tags">
-                  {model.tags.map((tag) => (
-                    <span key={tag} className="lazyollama-gui__model-tag">
-                      {tag}
-                    </span>
-                  ))}
+                  <span key={model.model_parameters} className="lazyollama-gui__model-tag">
+                    {model.model_parameters}
+                  </span>
                 </div>
                 <ChevronDown
-                  className={`lazyollama-gui__chevron ${expanded_model === model.id ? 'lazyollama-gui__chevron--expanded' : ''}`}
+                  className={`lazyollama-gui__chevron ${expanded_model?.id === model.id ? 'lazyollama-gui__chevron--expanded' : ''}`}
                 />
               </div>
             </div>
 
-            {expanded_model === model.id && (
+            {expanded_model?.id === model.id && (
               <div className="lazyollama-gui__model-actions">
-                {!model.downloaded && (
-                  <button className="lazyollama-gui__button lazyollama-gui__button--primary">
-                    <Download className="lazyollama-gui__button-icon" />
-                    Pull Model
-                  </button>
-                )}
+                {!model.downloaded && <Button variant="primary">Pull Model</Button>}
 
                 {model.downloaded && !model.running && (
                   <button className="lazyollama-gui__button lazyollama-gui__button--success">

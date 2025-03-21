@@ -15,50 +15,35 @@ function LazyOllamaDashboardSectionHeader() {
       <Typography variant="h2" className="lazyollama-gui__header-title">
         {view === 'home' && 'Home'}
         {view === 'models' && 'Models'}
-        {view === 'running' && 'Running Models'}
         {view === 'stats' && 'Statistics'}
         {view === 'settings' && 'Settings'}
       </Typography>
 
-      <div className="lazyollama-gui__search-container">
-        <Search className="lazyollama-gui__search-icon" />
-        <input type="text" className="lazyollama-gui__search-input" placeholder="Search..." />
-      </div>
-
       <div className="theme-selection">
         {theme.includes('dark') ? (
-          <Button
-            variant="link"
-            onClick={toggleMode}
-            className="theme-toggle"
-            aria-label="Switch to light mode"
-          >
-            <Moon />
+          <Button variant="link" onClick={toggleMode} aria-label="Switch to light mode">
+            Switch to Light
           </Button>
         ) : (
-          <Button
-            variant="link"
-            onClick={toggleMode}
-            className="theme-toggle"
-            aria-label="Switch to dark mode"
-          >
-            <Sun />
+          <Button variant="link" onClick={toggleMode} aria-label="Switch to dark mode">
+            Switch to Dark
           </Button>
         )}
         <div className="color-scheme-selection">
           <Button
-            variant="icon"
+            variant={theme.includes('mint') ? 'secondary' : 'tertiary'}
             onClick={() => setTheme(isDark ? 'mint-dark' : 'mint-light')}
-            className={`color-option ${colorScheme === 'mint' ? 'active' : ''}`}
             aria-label="Use mint theme"
-            // style={{backgroundColor: "#10b981", backgroundSize: ""}}
-          ></Button>
+          >
+            Mint
+          </Button>
           <Button
-            variant="icon"
+            variant={theme.includes('purple') ? 'secondary' : 'tertiary'}
             onClick={() => setTheme(isDark ? 'purple-dark' : 'purple-light')}
-            className={`color-option purple-theme ${colorScheme === 'purple' ? 'active' : ''}`}
             aria-label="Use purple theme"
-          ></Button>
+          >
+            Lavender
+          </Button>
         </div>
       </div>
     </header>

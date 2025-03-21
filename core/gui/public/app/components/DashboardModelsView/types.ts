@@ -38,11 +38,4 @@ const availableModels = [
 
 const runningModels = availableModels.filter((model) => model.running);
 
-interface LazyOllamaDashboardModelsViewProps {
-  models: {
-    available: OllamaModel[];
-    running: OllamaModel[];
-  };
-}
-
-export { type LazyOllamaDashboardModelsViewProps };
+export {};

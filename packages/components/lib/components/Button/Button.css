@@ -41,49 +41,40 @@
 .sb-button-primary {
   background-color: var(--color-primary);
   color: white;
-  box-shadow: var(--shadow-sm);
 }
 
 .sb-button-primary:hover {
   background-color: var(--color-secondary);
-  box-shadow: var(--shadow-md);
 }
 
 .sb-button-primary:active {
   background-color: var(--color-tertiary);
-  box-shadow: var(--shadow-sm);
 }
 
 .sb-button-secondary {
   background-color: var(--color-secondary);
   color: white;
-  box-shadow: var(--shadow-sm);
 }
 
 .sb-button-secondary:hover {
   background-color: var(--color-tertiary);
-  box-shadow: var(--shadow-md);
 }
 
 .sb-button-secondary:active {
   background-color: var(--color-primary);
-  box-shadow: var(--shadow-sm);
 }
 
 .sb-button-tertiary {
   background-color: var(--color-tertiary);
   color: white;
-  box-shadow: var(--shadow-sm);
 }
 
 .sb-button-tertiary:hover {
   background-color: var(--color-primary);
-  box-shadow: var(--shadow-md);
 }
 
 .sb-button-tertiary:active {
   background-color: var(--color-secondary);
-  box-shadow: var(--shadow-sm);
 }
 
 .sb-button-outline {
