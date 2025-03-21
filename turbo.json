@@ -32,6 +32,14 @@
       "docker": {
         "cache": false,
         "dependsOn": ["^docker"]
+      },
+      "api-dev": {
+        "cache": false,
+        "dependsOn": ["^api-dev"]
+      },
+      "gui-dev": {
+        "cache": false,
+        "dependsOn": ["^gui-dev"]
       }
     }
   }

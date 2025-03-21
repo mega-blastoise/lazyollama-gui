@@ -8,7 +8,7 @@
     "bun": ">=1.2.3"
   },
   "scripts": {
-    "dev": "bun run --watch src/index.ts",
+    "api-dev": "DEBUG=* NODE_ENV=development bun run --watch src/index.ts",
     "start": "bun run src/index.ts",
     "docker": "DEBUG=* NODE_ENV=production bun start"
   },

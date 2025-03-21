@@ -11,7 +11,7 @@
     "web:build": "DEBUG=* NODE_ENV=production bun run build/web.ts",
     "web:start:out:standalone": "bunx serve out/web/static",
     "build": "run-p web:build",
-    "dev": "DEBUG=* NODE_ENV=development bun run --watch src/index.ts",
+    "gui-dev": "DEBUG=* NODE_ENV=development bun run --watch src/index.ts",
     "start": "DEBUG=* NODE_ENV=production bun run src/index.ts",
     "docker": "bun start",
     "storybook": "storybook dev -p 6006",
