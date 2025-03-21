@@ -1,6 +1,24 @@
 import { ApplicationStoreState } from '@/gui/store';
 
-type ComprehensiveModel = Omit<ApplicationStoreState['api']['models']['available'][0], 'tags'>;
+export type ComprehensiveModel = Omit<
+  ApplicationStoreState['api']['models']['available'][0],
+  'tags'
+> & {
+  commit: string;
+  modelStorageSize: string;
+};
+
+function parseDescription(description: string) {
+  const [commit, modelSize] = description
+    .replace('\n', '')
+    .replace(',', '')
+    .trim()
+    .split(' • ');
+  return {
+    commit,
+    modelSize
+  };
+}
 
 export function getComprehensiveModelsList(
   api: ApplicationStoreState['api']
@@ -11,15 +29,23 @@ export function getComprehensiveModelsList(
 
   return remote
     .map(({ model, tags }) => {
-      return tags.map((tag) => ({
-        model,
-        tag: tag.href?.replaceAll('/library/', '').replaceAll(`${model}:`, '')
-      }));
+      return tags.map((tag) => {
+        const desc = parseDescription(tag.description);
+        return {
+          model,
+          tag: {
+            label: tag.href?.replaceAll('/library/', '').replaceAll(`${model}:`, ''),
+            parameter_size: tag.href?.replaceAll('/library/', '').replaceAll(`${model}:`, ''),
+            size: desc.modelSize,
+            commit: desc.commit
+          }
+        };
+      });
     })
     .flat()
     .map(({ model, tag }) => {
       if (tag === undefined) return null;
-      const spec = `${model}:${tag}`;
+      const spec = `${model}:${tag.label}`;
       return {
         name: model,
         downloaded: available.some(({ name }) => name === spec),
@@ -27,9 +53,11 @@ export function getComprehensiveModelsList(
         model_spec: spec,
         model_prefix: model,
         id: spec,
-        description: '',
-        model_parameters: tag
-      };
+        description: `${tag.commit} • ${tag.size}`,
+        model_parameters: tag.parameter_size,
+        commit: tag.commit,
+        modelStorageSize: tag.size
+      } as ComprehensiveModel;
     })
     .filter((model) => model !== null)
     .filter((model) => {
@@ -48,8 +76,16 @@ export function filterEngine(
 ): ComprehensiveModel[] {
   if (all) return models;
   if (popular)
-    models.filter(({ model_prefix }) =>
-      [/deepseek/, /llama/, /gemma/, /qwq/, /mistral/, /qwen/].some((regex) => regex.test(model_prefix))
+    models.filter(({ model_spec }) =>
+      [
+        /gemma3:1b/,
+        /qwq:32b/,
+        /deepseek-r1:1.5b/,
+        /deepseek-r1:7b/,
+        /deepseek-r1:8b/,
+        /deepseek-r1:32b/,
+        /deepseek-r1:70b/
+      ].some((regex) => regex.test(model_spec))
     );
 
   if (downloaded) return models.filter(({ downloaded }) => downloaded);

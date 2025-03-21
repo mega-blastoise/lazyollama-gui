@@ -54,7 +54,7 @@ const LazyOllamaDashboard = () => {
 
     const all = ((remote as any)?.data as any)?.response_data;
 
-    console.log({ local, remote, all });
+    console.log({ all });
 
     updateApiState({
       models: {

@@ -1,9 +1,13 @@
 import React, { useMemo } from 'react';
-import { Box, ChevronDown, Download, Play, Square, X } from 'lucide-react';
+import { Box, ChevronDown, Download, Play, Search, Square, X } from 'lucide-react';
 import { useApplicationStore } from '@/gui/store';
-import { Button, Typography, GlassCard } from '@lazyollama-gui/typescript-react-components';
+import { Button, Typography } from '@lazyollama-gui/typescript-react-components';
 
-import { getComprehensiveModelsList, filterEngine } from './DashboardModelsView.utils';
+import {
+  getComprehensiveModelsList,
+  filterEngine,
+  ComprehensiveModel
+} from './DashboardModelsView.utils';
 import { OllamaModel } from '@/gui/types';
 
 let pageCount = 50;
@@ -99,8 +103,22 @@ function LazyOllamaDashboardModelsView() {
     <div className="lazyollama-gui__models-tab">
       <div className="lazyollama-gui__section-header">
         <Typography variant="h3" weight="semibold" className="lazyollama-gui__section-title">
-          Models
+          Model Management
         </Typography>
+
+        <div className="lazyollama-gui__section-actions">
+          <div className="lazyollama-gui__search-container">
+            <Search className="lazyollama-gui__search-icon" />
+            <input
+              type="text"
+              className="lazyollama-gui__search-input"
+              placeholder="Search..."
+            />
+          </div>
+        </div>
+      </div>
+
+      <div className="lazyollama-gui__models-filters">
         <div className="lazyollama-gui__filter-buttons">
           <Button
             onClick={onPopularChipClick}
@@ -134,7 +152,12 @@ function LazyOllamaDashboardModelsView() {
           <div key={model.id} className="lazyollama-gui__model-card">
             <div
               className="lazyollama-gui__model-header"
-              onClick={() => setExpandedModel(model as OllamaModel)}
+              onClick={() =>
+                setExpandedModel({
+                  ...model,
+                  tags: [model.model_spec.replace(`${model.name}`, '')]
+                } as OllamaModel)
+              }
             >
               <div className="lazyollama-gui__model-info">
                 <Box
