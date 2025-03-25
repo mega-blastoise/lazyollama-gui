@@ -7,12 +7,19 @@
   "engines": {
     "bun": ">=1.2.3"
   },
+  "main": "./out/index.js",
   "scripts": {
-    "web:build": "DEBUG=* NODE_ENV=production bun run build/web.ts",
-    "web:start:out:standalone": "bunx serve out/web/static",
-    "build": "run-p web:build",
+    "web:bundle": "DEBUG=* NODE_ENV=production bun run build/web.ts",
+    "web:patch-bundled-css": "cp out/gui/browser/hydrate.*.css out/css/lazyollama-variables.css && mv out/index.css out/css/lazyollama-styles.css",
+    "web:patch-public-styles": "cp public/styles.css out/css/lazyollama-base.css",
+    "web:mkdir-css": "mkdir -p out/css",
+    "web:rm-css": "rm out/gui/browser/hydrate.*.css",
+    "web:build": "run-s web:bundle web:mkdir-css web:patch-bundled-css web:patch-public-styles web:rm-css",
+    "server:build": "DEBUG=* NODE_ENV=production bun run build/server.ts",
+    "clean": "rm -rf out",
+    "build": "run-p server:build web:build",
     "dev": "DEBUG=* NODE_ENV=development bun run --watch src/index.ts",
-    "start": "DEBUG=* NODE_ENV=production bun run src/index.ts",
+    "start": "DEBUG=* NODE_ENV=production bun run out/index.js",
     "docker": "bun start",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"

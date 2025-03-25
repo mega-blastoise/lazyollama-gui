@@ -1,0 +1,231 @@
+/* Header */
+.lazyollama-gui__header {
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+}
+
+/* Default Light/Dark Theme (for backward compatibility) */
+.lazyollama-gui--light .lazyollama-gui__header {
+  background-color: #ffffff;
+  border-bottom-color: #e0e0e0;
+}
+
+.lazyollama-gui--dark .lazyollama-gui__header {
+  background-color: #2a2a2a;
+  border-bottom-color: #444444;
+}
+
+/* Mint Light Theme */
+[data-theme='mint-light'] .lazyollama-gui__header {
+  background-color: rgba(255, 255, 255, 0.7);
+  border-bottom-color: var(--color-mint-border);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  color: var(--color-mint-text-primary);
+}
+
+/* Mint Dark Theme */
+[data-theme='mint-dark'] .lazyollama-gui__header {
+  background-color: rgba(15, 23, 42, 0.8);
+  border-bottom-color: var(--color-dark-mint-border);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  color: var(--color-dark-mint-text-primary);
+}
+
+/* Purple Light Theme */
+[data-theme='purple-light'] .lazyollama-gui__header {
+  background-color: rgba(255, 255, 255, 0.7);
+  border-bottom-color: var(--color-purple-border);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  color: var(--color-purple-text-primary);
+}
+
+/* Purple Dark Theme */
+[data-theme='purple-dark'] .lazyollama-gui__header {
+  background-color: rgba(26, 26, 46, 0.8);
+  border-bottom-color: var(--color-dark-purple-border);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  color: var(--color-dark-purple-text-primary);
+}
+
+.lazyollama-gui__header-title {
+  font-size: 2rem;
+  margin: 0;
+}
+
+.lazyollama-gui__search-container {
+  position: relative;
+  margin-right: 16px;
+  margin-left: auto;
+}
+
+.lazyollama-gui__search-icon {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #888888;
+  height: 20px;
+  width: 20px;
+}
+
+/* Theme-specific search icon colors */
+[data-theme='mint-light'] .lazyollama-gui__search-icon {
+  color: var(--color-mint-text-tertiary);
+}
+
+[data-theme='mint-dark'] .lazyollama-gui__search-icon {
+  color: var(--color-dark-mint-text-tertiary);
+}
+
+[data-theme='purple-light'] .lazyollama-gui__search-icon {
+  color: var(--color-purple-text-tertiary);
+}
+
+[data-theme='purple-dark'] .lazyollama-gui__search-icon {
+  color: var(--color-dark-purple-text-tertiary);
+}
+
+.lazyollama-gui__search-input {
+  padding: 8px 8px 8px 36px;
+  border-radius: var(--border-radius-md);
+  border: 1px solid transparent;
+  width: 200px;
+  font-family: var(--font-primary);
+  transition: all var(--transition-fast);
+}
+
+/* Default Light/Dark Theme Search */
+.lazyollama-gui--light .lazyollama-gui__search-input {
+  background-color: #f0f0f0;
+  color: #333333;
+}
+
+.lazyollama-gui--dark .lazyollama-gui__search-input {
+  background-color: #444444;
+  color: #ffffff;
+}
+
+/* Mint Light Theme Search */
+[data-theme='mint-light'] .lazyollama-gui__search-input {
+  background-color: rgba(255, 255, 255, 0.6);
+  border-color: var(--color-mint-border);
+  color: var(--color-mint-text-primary);
+}
+
+[data-theme='mint-light'] .lazyollama-gui__search-input:focus {
+  background-color: rgba(255, 255, 255, 0.8);
+  border-color: var(--color-mint-primary);
+  box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.2);
+  outline: none;
+}
+
+/* Mint Dark Theme Search */
+[data-theme='mint-dark'] .lazyollama-gui__search-input {
+  background-color: rgba(30, 30, 30, 0.6);
+  border-color: var(--color-dark-mint-border);
+  color: var(--color-dark-mint-text-primary);
+}
+
+[data-theme='mint-dark'] .lazyollama-gui__search-input:focus {
+  background-color: rgba(30, 30, 30, 0.8);
+  border-color: var(--color-dark-mint-primary);
+  box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.3);
+  outline: none;
+}
+
+/* Purple Light Theme Search */
+[data-theme='purple-light'] .lazyollama-gui__search-input {
+  background-color: rgba(255, 255, 255, 0.6);
+  border-color: var(--color-purple-border);
+  color: var(--color-purple-text-primary);
+}
+
+[data-theme='purple-light'] .lazyollama-gui__search-input:focus {
+  background-color: rgba(255, 255, 255, 0.8);
+  border-color: var(--color-purple-primary);
+  box-shadow: 0 0 0 2px rgba(124, 58, 237, 0.2);
+  outline: none;
+}
+
+/* Purple Dark Theme Search */
+[data-theme='purple-dark'] .lazyollama-gui__search-input {
+  background-color: rgba(30, 30, 30, 0.6);
+  border-color: var(--color-dark-purple-border);
+  color: var(--color-dark-purple-text-primary);
+}
+
+[data-theme='purple-dark'] .lazyollama-gui__search-input:focus {
+  background-color: rgba(30, 30, 30, 0.8);
+  border-color: var(--color-dark-purple-primary);
+  box-shadow: 0 0 0 2px rgba(124, 58, 237, 0.3);
+  outline: none;
+}
+
+/* Theme Selection Controls */
+.theme-selection {
+  box-sizing: border-box;
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+}
+
+.theme-toggle {
+  padding: var(--spacing-xs) !important;
+  min-width: unset !important;
+  width: auto !important;
+  height: auto !important;
+  border-radius: var(--border-radius-full) !important;
+}
+
+.color-scheme-selection {
+  display: flex;
+  gap: var(--spacing-xs);
+}
+
+.color-option {
+  width: 24px !important;
+  height: 24px !important;
+  min-width: unset !important;
+  padding: 2px !important;
+  border-radius: var(--border-radius-full) !important;
+  border: 2px solid transparent !important;
+}
+
+/* .color-option.active {
+  border-color: currentColor !important;
+} */
+
+/* Theme-specific color option active states */
+[data-theme='mint-light'] .color-option.active,
+[data-theme='mint-dark'] .color-option.active {
+  border-color: var(--color-mint-primary) !important;
+  background-color: var(--color-mint-primary) !important;
+}
+
+[data-theme='mint-light'] .color-option:not(.active),
+[data-theme='mint-dark'] .color-option:not(.active) {
+  border-color: var(--color-purple-primary) !important;
+}
+
+
+
+[data-theme='purple-light'] .color-option.active,
+[data-theme='purple-dark'] .color-option.active {
+  border-color: var(--color-purple-primary) !important;
+  background-color: var(--color-purple-primary) !important;
+}
+
+[data-theme='purple-light'] .color-option:not(.active),
+[data-theme='purple-dark'] .color-option:not(.active) {
+  border-color: var(--color-mint-primary) !important;
+}
+

@@ -1,4 +1,4 @@
-import { CORS_HEADERS } from './cors';
+import { CORS_HEADERS } from '../cors';
 
 export default async (request: Request): Promise<Response> => {
   if (request.method === 'OPTIONS') {

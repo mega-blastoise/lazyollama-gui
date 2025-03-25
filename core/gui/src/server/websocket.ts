@@ -1,5 +1,6 @@
 import { type ServerWebSocket } from 'bun';
-import middleware from './middleware';
+import { CORS_HEADERS } from './cors';
+import { middleware } from './middleware';
 import { BunServerConfig } from './types';
 
 type WebsocketData = {

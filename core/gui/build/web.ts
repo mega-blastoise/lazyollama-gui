@@ -1,10 +1,18 @@
 Bun.build({
-  entrypoints: ['public/dashboard.html', 'public/404.html'],
-  outdir: './out/web/static',
-  minify: {
-    identifiers: true,
-    syntax: true,
-    whitespace: true
-  },
-  root: process.cwd()
+  entrypoints: ['src/client/browser/hydrate.tsx'],
+  outdir: './out/gui/browser',
+  target: 'browser',
+  format: 'esm',
+  splitting: false,
+  sourcemap: 'linked',
+  minify: true,
+  root: process.cwd(),
+  external: [],
+  packages: 'bundle',
+  publicPath: '/',
+  naming: {
+    entry: '[name].[hash].[ext]',
+    chunk: '[name].[hash].[ext]',
+    asset: '[name].[ext]'
+  }
 });

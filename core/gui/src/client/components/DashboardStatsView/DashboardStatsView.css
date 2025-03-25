@@ -1,0 +1,92 @@
+/* Stats */
+.lazyollama-gui__stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-bottom: 24px;
+}
+
+.lazyollama-gui__stat-card {
+  padding: 16px;
+  border-radius: 8px;
+  border-width: 1px;
+  border-style: solid;
+}
+
+.lazyollama-gui--light .lazyollama-gui__stat-card {
+  background-color: #ffffff;
+  border-color: #e0e0e0;
+}
+
+.lazyollama-gui--dark .lazyollama-gui__stat-card {
+  background-color: #2a2a2a;
+  border-color: #444444;
+}
+
+.lazyollama-gui__stat-title {
+  font-size: 0.875rem;
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+.lazyollama-gui--light .lazyollama-gui__stat-title {
+  color: #666666;
+}
+
+.lazyollama-gui--dark .lazyollama-gui__stat-title {
+  color: #bbbbbb;
+}
+
+.lazyollama-gui__stat-value {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+.lazyollama-gui__chart-container {
+  padding: 16px;
+  border-radius: 8px;
+  border-width: 1px;
+  border-style: solid;
+  margin-bottom: 24px;
+}
+
+.lazyollama-gui--light .lazyollama-gui__chart-container {
+  background-color: #ffffff;
+  border-color: #e0e0e0;
+}
+
+.lazyollama-gui--dark .lazyollama-gui__chart-container {
+  background-color: #2a2a2a;
+  border-color: #444444;
+}
+
+.lazyollama-gui__chart-title {
+  font-weight: 500;
+  margin-bottom: 16px;
+}
+
+.lazyollama-gui__chart {
+  height: 256px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-around;
+  width: 100%;
+}
+
+.lazyollama-gui__chart-bar {
+  width: 32px;
+  margin: 0 4px;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  background-color: var(--color-primary);
+}
+
+.lazyollama-gui__chart-labels {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 8px;
+  font-size: 0.75rem;
+  color: #888888;
+  width: 100%;
+}

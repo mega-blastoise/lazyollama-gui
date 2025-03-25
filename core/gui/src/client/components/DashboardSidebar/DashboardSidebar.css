@@ -1,0 +1,265 @@
+/* Sidebar */
+.lazyollama-gui__sidebar {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  border-right-width: 1px;
+  border-right-style: solid;
+}
+
+/* Theme-specific sidebar styling */
+[data-theme='mint-light'] .lazyollama-gui__sidebar {
+  background-color: rgba(255, 255, 255, 0.7);
+  border-right-color: var(--color-mint-border);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+}
+
+[data-theme='mint-dark'] .lazyollama-gui__sidebar {
+  background-color: rgba(15, 23, 42, 0.8);
+  border-right-color: var(--color-dark-mint-border);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+}
+
+[data-theme='purple-light'] .lazyollama-gui__sidebar {
+  background-color: rgba(255, 255, 255, 0.7);
+  border-right-color: var(--color-purple-border);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+}
+
+[data-theme='purple-dark'] .lazyollama-gui__sidebar {
+  background-color: rgba(26, 26, 46, 0.8);
+  border-right-color: var(--color-dark-purple-border);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+}
+
+/* For backward compatibility */
+/* .lazyollama-gui--light .lazyollama-gui__sidebar {
+  background-color: #ffffff;
+  border-right-color: #e0e0e0;
+}
+
+.lazyollama-gui--dark .lazyollama-gui__sidebar {
+  background-color: #2a2a2a;
+  border-right-color: #444444;
+} */
+
+.lazyollama-gui__sidebar-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 32px;
+}
+
+.lazyollama-gui__logo-icon {
+  height: 32px;
+  width: 32px;
+  margin-right: 8px;
+}
+
+/* Theme-specific logo icon colors */
+[data-theme='mint-light'] .lazyollama-gui__logo-icon,
+[data-theme='mint-dark'] .lazyollama-gui__logo-icon {
+  color: var(--color-mint-primary);
+}
+
+[data-theme='purple-light'] .lazyollama-gui__logo-icon,
+[data-theme='purple-dark'] .lazyollama-gui__logo-icon {
+  color: var(--color-purple-primary);
+}
+
+.lazyollama-gui__title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  background: var(--gradient-background);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin: 0;
+}
+
+/* Theme-specific title gradients */
+[data-theme='mint-light'] .lazyollama-gui__title {
+  background: linear-gradient(to right, var(--color-mint-primary), var(--color-mint-secondary));
+  background-clip: text;
+  -webkit-background-clip: text;
+}
+
+[data-theme='mint-dark'] .lazyollama-gui__title {
+  background: linear-gradient(to right, var(--color-dark-mint-primary), var(--color-dark-mint-light));
+  background-clip: text;
+  -webkit-background-clip: text;
+}
+
+[data-theme='purple-light'] .lazyollama-gui__title {
+  background: linear-gradient(to right, var(--color-purple-primary), var(--color-purple-secondary));
+  background-clip: text;
+  -webkit-background-clip: text;
+}
+
+[data-theme='purple-dark'] .lazyollama-gui__title {
+  background: linear-gradient(to right, var(--color-dark-purple-primary), var(--color-dark-purple-light));
+  background-clip: text;
+  -webkit-background-clip: text;
+}
+
+.lazyollama-gui__nav {
+  flex: 1;
+}
+
+.lazyollama-gui__nav-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.lazyollama-gui__nav-item {
+  margin-bottom: 8px;
+  border-radius: var(--border-radius-md);
+}
+
+/* Theme-specific active nav items */
+[data-theme='mint-light'] .lazyollama-gui__nav-item--active {
+  background-color: rgba(16, 185, 129, 0.1);
+}
+
+[data-theme='mint-dark'] .lazyollama-gui__nav-item--active {
+  background-color: rgba(16, 185, 129, 0.2);
+}
+
+[data-theme='purple-light'] .lazyollama-gui__nav-item--active {
+  background-color: rgba(124, 58, 237, 0.1);
+}
+
+[data-theme='purple-dark'] .lazyollama-gui__nav-item--active {
+  background-color: rgba(124, 58, 237, 0.2);
+}
+
+/* .lazyollama-gui--light .lazyollama-gui__nav-item--active {
+  background-color: #e0e0e0;
+}
+
+.lazyollama-gui--dark .lazyollama-gui__nav-item--active {
+  background-color: #444444;
+} */
+
+.lazyollama-gui__nav-button {
+  padding: 8px !important;
+  width: 100%;
+  text-align: left;
+  border-radius: var(--border-radius-md) !important;
+  font-weight: 600;
+  justify-content: flex-start !important;
+  display: flex;
+}
+
+.lazyollama-gui__nav-button .sb-button-text {
+  display: flex;
+}
+
+.lazyollama-gui__nav-icon {
+  margin-right: 8px;
+  height: 20px;
+  width: 20px;
+}
+
+/* Theme-specific active nav icons */
+[data-theme='mint-light'] .lazyollama-gui__nav-item--active .lazyollama-gui__nav-icon,
+[data-theme='mint-dark'] .lazyollama-gui__nav-item--active .lazyollama-gui__nav-icon {
+  color: var(--color-mint-primary);
+}
+
+[data-theme='purple-light'] .lazyollama-gui__nav-item--active .lazyollama-gui__nav-icon,
+[data-theme='purple-dark'] .lazyollama-gui__nav-item--active .lazyollama-gui__nav-icon {
+  color: var(--color-purple-primary);
+}
+
+.lazyollama-gui__sidebar-expansion-toggle {
+  padding: 8px !important;
+  margin-top: 16px;
+  border-top-width: 1px;
+  border-top-style: solid;
+  width: 100%;
+  font-weight: 600;
+  justify-content: space-between !important;
+}
+
+/* Theme-specific toggle borders */
+[data-theme='mint-light'] .lazyollama-gui__sidebar-expansion-toggle {
+  border-top-color: var(--color-mint-border);
+}
+
+[data-theme='mint-dark'] .lazyollama-gui__sidebar-expansion-toggle {
+  border-top-color: var(--color-dark-mint-border);
+}
+
+[data-theme='purple-light'] .lazyollama-gui__sidebar-expansion-toggle {
+  border-top-color: var(--color-purple-border);
+}
+
+[data-theme='purple-dark'] .lazyollama-gui__sidebar-expansion-toggle {
+  border-top-color: var(--color-dark-purple-border);
+}
+
+/* .lazyollama-gui--light .lazyollama-gui__theme-toggle {
+  border-top-color: #e0e0e0;
+}
+
+.lazyollama-gui--dark .lazyollama-gui__theme-toggle {
+  border-top-color: #444444;
+} */
+
+@keyframes lazyollama-gui__fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.lazyollama-gui__nav-label {
+  opacity: 0;
+  transition: opacity 400ms;
+  animation: lazyollama-gui__fade-in 400ms forwards;
+  margin: 0 !important;
+}
+
+/* Expanded/collapsed states */
+.lazyollama-gui__sidebar[data-expanded="expanded"] {
+  width: 256px;
+  padding: 16px;
+  transition: width 400ms;
+}
+
+.lazyollama-gui__sidebar[data-expanded="collapsed"] {
+  width: 48px;
+  padding: 8px;
+  padding-top: 16px;
+  transition: width 400ms;
+}
+
+.lazyollama-gui__sidebar[data-expanded="collapsed"] .lazyollama-gui__logo-icon {
+  height: 32px;
+  width: 32px;
+  margin: 0px;
+}
+
+.lazyollama-gui__sidebar[data-expanded="collapsed"] .lazyollama-gui__nav-icon {
+  margin-right: 0px;
+  height: 20px;
+  width: 20px;
+}
+
+.lazyollama-gui__sidebar[data-expanded="collapsed"] .lazyollama-gui__nav-button {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 0px;
+  padding-right: 0px;
+  display: flex;
+  align-items: center;
+  justify-content: center !important;
+  width: 100%;
+}

@@ -1,0 +1,218 @@
+/* Models List */
+.lazyollama-gui__models-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  /* overflow-y: scroll;
+  max-height: calc(99vh - 246px); */
+}
+
+.lazyollama-gui__model-card {
+  border-radius: 8px;
+  overflow: hidden;
+  border-width: 1px;
+  border-style: solid;
+  /* min-height: 79px;
+  min-width: 100%; */
+}
+
+.lazyollama-gui--light .lazyollama-gui__model-card {
+  background-color: #ffffff;
+  border-color: #e0e0e0;
+}
+
+.lazyollama-gui--dark .lazyollama-gui__model-card {
+  background-color: #2a2a2a;
+  border-color: #444444;
+}
+
+.lazyollama-gui__model-header {
+  padding: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.lazyollama-gui--light .lazyollama-gui__model-header:hover {
+  background-color: #f8f8f8;
+}
+
+.lazyollama-gui--dark .lazyollama-gui__model-header:hover {
+  background-color: #3a3a3a;
+}
+
+.lazyollama-gui__model-info {
+  display: flex;
+  align-items: center;
+}
+
+.lazyollama-gui__model-icon {
+  margin-right: 12px;
+  height: 24px;
+  width: 24px;
+  color: #888888;
+}
+
+.lazyollama-gui__model-icon--running {
+  color: #10b981;
+}
+
+.lazyollama-gui__model-name {
+  font-weight: 500;
+}
+
+.lazyollama-gui__model-description {
+  font-size: 0.875rem;
+}
+
+.lazyollama-gui--light .lazyollama-gui__model-description {
+  color: #666666;
+}
+
+.lazyollama-gui--dark .lazyollama-gui__model-description {
+  color: #bbbbbb;
+}
+
+.lazyollama-gui__model-meta {
+  display: flex;
+  align-items: center;
+}
+
+.lazyollama-gui__model-tags {
+  display: flex;
+  margin-right: 16px;
+}
+
+.lazyollama-gui__model-tag {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  margin-right: 8px;
+}
+
+.lazyollama-gui--light .lazyollama-gui__model-tag {
+  background-color: #f0f0f0;
+}
+
+.lazyollama-gui--dark .lazyollama-gui__model-tag {
+  background-color: #444444;
+}
+
+.lazyollama-gui__chevron {
+  height: 20px;
+  width: 20px;
+  transition: transform 0.2s;
+}
+
+.lazyollama-gui__chevron--expanded {
+  transform: rotate(180deg);
+}
+
+.lazyollama-gui__model-actions {
+  padding: 16px;
+  border-top-width: 1px;
+  border-top-style: solid;
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.lazyollama-gui--light .lazyollama-gui__model-actions {
+  border-top-color: #e0e0e0;
+}
+
+.lazyollama-gui--dark .lazyollama-gui__model-actions {
+  border-top-color: #444444;
+}
+
+/* Buttons */
+.lazyollama-gui__button {
+  display: flex;
+  align-items: center;
+  padding: 4px 12px;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-family: 'Inter', sans-serif;
+}
+
+.lazyollama-gui__button-icon {
+  height: 16px;
+  width: 16px;
+  margin-right: 4px;
+}
+
+.lazyollama-gui__button--primary {
+  background-color: #2563eb;
+  color: white;
+}
+
+.lazyollama-gui__button--primary:hover {
+  background-color: #1d4ed8;
+}
+
+.lazyollama-gui__button--success {
+  background-color: #10b981;
+  color: white;
+}
+
+.lazyollama-gui__button--success:hover {
+  background-color: #059669;
+}
+
+.lazyollama-gui__button--danger {
+  background-color: #ef4444;
+  color: white;
+}
+
+.lazyollama-gui__button--danger:hover {
+  background-color: #dc2626;
+}
+
+.lazyollama-gui__button--secondary {
+  color: inherit;
+}
+
+.lazyollama-gui--light .lazyollama-gui__button--secondary {
+  background-color: #e0e0e0;
+}
+
+.lazyollama-gui--light .lazyollama-gui__button--secondary:hover {
+  background-color: #d0d0d0;
+}
+
+.lazyollama-gui--dark .lazyollama-gui__button--secondary {
+  background-color: #444444;
+}
+
+.lazyollama-gui--dark .lazyollama-gui__button--secondary:hover {
+  background-color: #555555;
+}
+
+div.lazyollama-gui__models-filters {
+  box-sizing: border-box;
+  margin-top: 24px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+div.lazyollama-gui__pagination {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 16px;
+  margin-top: 16px;
+  margin-left: auto;
+
+  > div.lazyollama-gui__pagination-info {}
+  
+}

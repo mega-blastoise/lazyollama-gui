@@ -1,0 +1,116 @@
+/* Settings */
+.lazyollama-gui__settings-card {
+  padding: 16px;
+  border-radius: 8px;
+  border-width: 1px;
+  border-style: solid;
+  margin-bottom: 24px;
+}
+
+.lazyollama-gui--light .lazyollama-gui__settings-card {
+  background-color: #ffffff;
+  border-color: #e0e0e0;
+}
+
+.lazyollama-gui--dark .lazyollama-gui__settings-card {
+  background-color: #2a2a2a;
+  border-color: #444444;
+}
+
+.lazyollama-gui__settings-title {
+  font-weight: 500;
+  margin-bottom: 16px;
+}
+
+.lazyollama-gui__settings-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.lazyollama-gui__form-group {
+  margin-bottom: 16px;
+}
+
+.lazyollama-gui__form-label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+
+.lazyollama-gui--light .lazyollama-gui__form-label {
+  color: #666666;
+}
+
+.lazyollama-gui--dark .lazyollama-gui__form-label {
+  color: #bbbbbb;
+}
+
+.lazyollama-gui__form-input {
+  display: block;
+  width: 100%;
+  padding: 8px 12px;
+  border-radius: 4px;
+  border-width: 1px;
+  border-style: solid;
+  font-family: 'Inter', sans-serif;
+}
+
+.lazyollama-gui--light .lazyollama-gui__form-input {
+  background-color: #ffffff;
+  border-color: #e0e0e0;
+  color: #333333;
+}
+
+.lazyollama-gui--dark .lazyollama-gui__form-input {
+  background-color: #3a3a3a;
+  border-color: #444444;
+  color: #ffffff;
+}
+
+.lazyollama-gui__toggle-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.lazyollama-gui__toggle {
+  position: relative;
+  display: inline-flex;
+  height: 24px;
+  width: 44px;
+  align-items: center;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.lazyollama-gui--light .lazyollama-gui__toggle {
+  background-color: #d0d0d0;
+}
+
+.lazyollama-gui--dark .lazyollama-gui__toggle {
+  background-color: #555555;
+}
+
+.lazyollama-gui__toggle--active {
+  background-color: #2563eb;
+}
+
+.lazyollama-gui__toggle-dot {
+  position: absolute;
+  height: 16px;
+  width: 16px;
+  border-radius: 50%;
+  background-color: white;
+  transition: left 0.2s;
+}
+
+.lazyollama-gui__toggle .lazyollama-gui__toggle-dot {
+  left: 4px;
+}
+
+.lazyollama-gui__toggle--active .lazyollama-gui__toggle-dot {
+  left: 24px;
+}
