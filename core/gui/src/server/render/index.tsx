@@ -11,9 +11,9 @@ type RenderIntoReadableStreamOptions<Props extends React.JSX.IntrinsicAttributes
 
 export async function renderIntoReadableStream(options: RenderIntoReadableStreamOptions) {
   const { Page, props, assets = [] } = options;
-  
+
   let scripts = [];
-  
+
   for (const asset of assets) {
     scripts.push(await getClientScript(asset));
   }
@@ -29,6 +29,6 @@ export async function renderIntoReadableStream(options: RenderIntoReadableStream
       console.log('Bootstrap script content');
     `,
     progressiveChunkSize: 4096,
-    signal,
+    signal
   });
 }

@@ -1,5 +1,5 @@
 Bun.build({
-  entrypoints: ['src/client/browser/hydrate.tsx'],
+  entrypoints: ['src/client/browser/hydrate.tsx', 'src/client/browser/worker.ts'],
   outdir: './out/gui/browser',
   target: 'browser',
   format: 'esm',
@@ -11,8 +11,8 @@ Bun.build({
   packages: 'bundle',
   publicPath: '/',
   naming: {
+    asset: '[name].[hash].[ext]',
     entry: '[name].[hash].[ext]',
-    chunk: '[name].[hash].[ext]',
-    asset: '[name].[ext]'
+    chunk: '[name].[hash].[ext]'
   }
 });

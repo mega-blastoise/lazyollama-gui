@@ -1,15 +1,46 @@
 import React from 'react';
-import { Box, ChevronDown, Play, Square, X } from 'lucide-react';
-import { Button } from '@lazyollama-gui/typescript-react-components';
+import { Box, ChevronDown, Download, Play, Square, X } from 'lucide-react';
+import { Button, useToast } from '@lazyollama-gui/typescript-react-components';
 import { useApplicationStore } from '@/gui/store';
 import { OllamaModel } from '@/gui/types';
 import { ComprehensiveModel } from '../../DashboardModelsView.utils';
+import { postMessageToWorker } from '@/gui/workers';
+import { OllamaRPCAPIAction } from '@lazyollama-gui/typescript-common-types';
 
 function ModelCard({ model }: { model: ComprehensiveModel }) {
   const {
     setExpandedModel,
-    ui: { expanded_model }
+    ui: { expanded_model },
+
+    state: sharedState,
+    updateAppSharedState
   } = useApplicationStore();
+
+  const { showToast } = useToast();
+
+  function onDownloadPress() {
+    console.warn('Attempting to pull model: %s', model.model_spec);
+    showToast({
+      variant: 'info',
+      content: `Queuing Model Pull: ${model.model_spec}`,
+      duration: 3000
+    });
+
+    updateAppSharedState({
+      apiQueues: {
+        ...sharedState.apiQueues,
+        pullQueued: [...sharedState.apiQueues.pullQueued, model.model_spec]
+      }
+    });
+
+    postMessageToWorker({
+      type: OllamaRPCAPIAction.ModelPull,
+      data: {
+        model: model.model_spec
+      }
+    });
+  }
+
   return (
     <div key={model.id} className="lazyollama-gui__model-card">
       <div
@@ -45,28 +76,30 @@ function ModelCard({ model }: { model: ComprehensiveModel }) {
 
       {expanded_model?.id === model.id && (
         <div className="lazyollama-gui__model-actions">
-          {!model.downloaded && <Button variant="primary">Pull Model</Button>}
+          <Button
+            size="sm"
+            variant="outline"
+            disabled={model.downloaded}
+            onClick={onDownloadPress}
+          >
+            <Download className="lazyollama-gui__button-icon" />
+            Pull Model
+          </Button>
 
-          {model.downloaded && !model.running && (
-            <button className="lazyollama-gui__button lazyollama-gui__button--success">
-              <Play className="lazyollama-gui__button-icon" />
-              Start Model
-            </button>
-          )}
+          <Button size="sm" variant="outline" disabled={!model.downloaded || model.running}>
+            <Play className="lazyollama-gui__button-icon" />
+            Start Model
+          </Button>
 
-          {model.running && (
-            <button className="lazyollama-gui__button lazyollama-gui__button--danger">
-              <Square className="lazyollama-gui__button-icon" />
-              Stop Model
-            </button>
-          )}
-
-          {model.downloaded && (
-            <button className="lazyollama-gui__button lazyollama-gui__button--secondary">
-              <X className="lazyollama-gui__button-icon" />
-              Remove
-            </button>
-          )}
+          <Button size="sm" variant="outline" disabled={!model.running}>
+            <Square className="lazyollama-gui__button-icon" />
+            Stop Model
+          </Button>
+          <Button size="sm" variant="outline" disabled={!model.downloaded || model.running}>
+            <X className="lazyollama-gui__button-icon" />
+            Remove
+          </Button>
+          {/* )} */}
         </div>
       )}
     </div>

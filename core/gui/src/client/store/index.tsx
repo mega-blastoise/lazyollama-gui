@@ -12,6 +12,14 @@ export type ApplicationStoreState = {
     expanded_model: OllamaModel | null;
     sidebar: { items: LazyOllamaDashboardSidebarNavigationItemProps[]; expanded: boolean };
   };
+  state: {
+    apiQueues: {
+      pullQueued: string[];
+      startQueued: string[];
+      stopQueued: string[];
+      unloadQueued: string[];
+    };
+  };
   api: {
     models: {
       available: OllamaModel[];
@@ -34,6 +42,7 @@ export type ApplicationStoreActions = {
   expandSidebar(): void;
   collapseSidebar(): void;
   updateApiState(api: Partial<ApplicationStoreState['api']>): void;
+  updateAppSharedState(sharedState: Partial<ApplicationStore['state']>): void;
 };
 
 export type ApplicationStore = ApplicationStoreActions & ApplicationStoreState;
@@ -110,5 +119,24 @@ export const useApplicationStore = create<ApplicationStore>(($set) => ({
 
   updateApiState(api = {}) {
     $set((state) => ({ ...state, api: { ...state.api, ...api } }));
+  },
+
+  state: {
+    apiQueues: {
+      pullQueued: [],
+      startQueued: [],
+      stopQueued: [],
+      unloadQueued: []
+    }
+  },
+
+  updateAppSharedState(sharedState = {}) {
+    $set((state) => ({
+      ...state,
+      state: {
+        ...state.state,
+        ...sharedState
+      }
+    }));
   }
 }));

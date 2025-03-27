@@ -1,9 +1,9 @@
 import { Dashboard } from '@/gui/pages/Dashboard';
 
-import { CORS_HEADERS } from '../cors';
-import { middleware } from '../middleware';
-import { renderIntoReadableStream } from '../render';
-import { BunRoutes } from '../types';
+import { CORS_HEADERS } from '@/server/cors';
+import { middleware } from '@/server/middleware';
+import { renderIntoReadableStream } from '@/server/render';
+import { BunRoutes } from '@/server/types';
 
 export const DASHBOARD_ROUTE_PATH = '/' as const;
 
