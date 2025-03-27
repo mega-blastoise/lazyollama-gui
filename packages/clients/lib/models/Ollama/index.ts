@@ -254,7 +254,7 @@ export class OllamaClient {
         return;
       }
 
-      this._post<{ status: string }, typeof payload>('/api/pull', payload)
+      this._post<{ error?: string | Error | unknown, status?: "success"| any } & any, typeof payload>('/api/pull', payload)
         .then(this.getPullModelOnSuccessCallback(model, prestart).bind(this))
         .catch(this.getPullModelOnErrorCallback(model).bind(this));
     } catch (e) {
@@ -269,8 +269,20 @@ export class OllamaClient {
   private getPullModelOnSuccessCallback(
     model: string,
     prestart = true
-  ): ({ status }: { status: string }) => void {
-    return ({ status }) => {
+  ): (params: { error?: string | Error | unknown, status?: "success"| any } & any) => void {
+    return (params) => {
+      if (params.error) {
+        this.logger.error(`Exception thrown in getPullModelOnSuccessCallback model: ${model}, ollama api responded with error: ${params.error}`);
+        this.cache.get(OllamaClientCacheType.PullCancelled)!.add(model);
+        setTimeout(
+          () => {
+            this.cache.get(OllamaClientCacheType.PullCancelled)!.delete(model);
+          },
+          60 * 60 * 1000
+        ); // 1 hour
+        this.cache.get(OllamaClientCacheType.PullQueued)!.delete(model);
+      }
+      const status = params?.status;
       if (status === 'success') {
         this.cache.get(OllamaClientCacheType.PullQueued)!.delete(model);
         this.cache.get(OllamaClientCacheType.PullCompleted)!.add(model);

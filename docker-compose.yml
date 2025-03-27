@@ -1,6 +1,6 @@
 services:
   ollama:
-    image: ollama/ollama:0.6.0
+    image: ollama/ollama:latest
     container_name: lazyollama
     restart: unless-stopped
     healthcheck:
