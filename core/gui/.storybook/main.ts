@@ -25,7 +25,7 @@ const config: StorybookConfig = {
   webpackFinal(config, options) {
     config.resolve ||= {};
     config.resolve.alias ||= {};
-    config.resolve.alias['@/gui'] = join(__dirname, '../public/app');
+    config.resolve.alias['@/gui'] = join(__dirname, '../src/client');
     return config;
   }
 };

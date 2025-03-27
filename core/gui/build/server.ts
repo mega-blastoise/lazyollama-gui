@@ -1,11 +1,6 @@
 import PackageJson from '../package.json';
 
-const external = Array.from(
-  new Set([
-    ...Object.keys(PackageJson.dependencies),
-    ...Object.keys(PackageJson.peerDependencies)
-  ])
-);
+const external = Array.from(new Set([...Object.keys(PackageJson.dependencies)]));
 
 Bun.build({
   entrypoints: ['src/index.ts'],

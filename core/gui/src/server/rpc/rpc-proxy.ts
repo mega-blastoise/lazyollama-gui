@@ -1,4 +1,6 @@
-import { CORS_HEADERS } from './cors';
+import { CORS_HEADERS } from '../cors';
+
+export const RPC_ROUTE_PATH = '/api/rpc/proxy' as const;
 
 export default async (request: Request): Promise<Response> => {
   if (request.method === 'OPTIONS') {
