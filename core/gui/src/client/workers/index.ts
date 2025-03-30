@@ -20,5 +20,6 @@ export function initializeWorker() {
   if (typeof window !== 'undefined' && 'Worker' in window) {
     worker = new window.Worker('worker.js');
     worker.postMessage({ type: 'INIT', data: {} });
+    return worker;
   }
 }

@@ -6,17 +6,20 @@ import { BunServerConfig } from './types';
 type LazyOllamaSocket = ServerWebSocket<any>;
 
 let server: Server | null = null;
+let socketClients = new Set();
 
 export function getBunServerRef() {
   return server;
+}
+
+export function getBunWebSocketClients() {
+  return socketClients;
 }
 
 export default function createRunningBunServer() {
   const logger = createLogger('lazyollama:core:web:server');
   const port: BunServerConfig['port'] = parseInt(process.env.PORT ?? '4040', 10);
   const host: BunServerConfig['hostname'] = process.env.HOSTNAME ?? '127.0.0.1';
-
-  const socketClients = new Set();
 
   server = Bun.serve({
     port,
@@ -26,6 +29,7 @@ export default function createRunningBunServer() {
     websocket: {
       open(ws: LazyOllamaSocket) {
         ws.data.id = randomUUIDv7();
+        ws.subscribe('lazyollama-channel');
         logger.info('WebSocket connection opened: %s', ws.data.id);
         socketClients.add(ws);
       },

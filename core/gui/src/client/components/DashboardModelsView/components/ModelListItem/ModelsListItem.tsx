@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, ChevronDown, Download, Play, Square, X } from 'lucide-react';
+import { Box, ChevronDown, Download, Play, Square, X, Loader } from 'lucide-react';
 import { Button, useToast } from '@lazyollama-gui/typescript-react-components';
 import { useApplicationStore } from '@/gui/store';
 import { OllamaModel } from '@/gui/types';
@@ -11,7 +11,6 @@ function ModelCard({ model }: { model: ComprehensiveModel }) {
   const {
     setExpandedModel,
     ui: { expanded_model },
-
     state: sharedState,
     updateAppSharedState
   } = useApplicationStore();
@@ -26,6 +25,10 @@ function ModelCard({ model }: { model: ComprehensiveModel }) {
       duration: 3000
     });
 
+    console.log(
+      'Updating shared app state: Adding %s to apiQueues.pullQueued',
+      model.model_spec
+    );
     updateAppSharedState({
       apiQueues: {
         ...sharedState.apiQueues,
@@ -33,6 +36,7 @@ function ModelCard({ model }: { model: ComprehensiveModel }) {
       }
     });
 
+    console.log('Posting "QueuePullModel" job to worker thread.');
     postMessageToWorker({
       type: OllamaRPCAPIAction.ModelPull,
       data: {
@@ -40,6 +44,8 @@ function ModelCard({ model }: { model: ComprehensiveModel }) {
       }
     });
   }
+
+  const isInDownloadQueue = sharedState.apiQueues.pullQueued.includes(model.model_spec);
 
   return (
     <div key={model.id} className="lazyollama-gui__model-card">
@@ -79,10 +85,14 @@ function ModelCard({ model }: { model: ComprehensiveModel }) {
           <Button
             size="sm"
             variant="outline"
-            disabled={model.downloaded}
+            disabled={model.downloaded || isInDownloadQueue}
             onClick={onDownloadPress}
           >
-            <Download className="lazyollama-gui__button-icon" />
+            {isInDownloadQueue ? (
+              <Loader className="lazyollama-gui__button-icon" />
+            ) : (
+              <Download className="lazyollama-gui__button-icon" />
+            )}
             Pull Model
           </Button>
 

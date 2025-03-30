@@ -2,15 +2,17 @@ import path from 'path';
 
 import { CORS_HEADERS, ALLOWED_ORIGINS } from '../cors';
 import { middleware } from '../middleware';
-import rpcRoutes, { RPC_ROUTE_PATH } from '../rpc/rpc-proxy';
+import rpcRoutes, { RPC_ROUTE_PATH } from './routes/rpc/rpc-proxy';
 import { BunRoutes, BunServerConfig } from '../types';
 
 import { DASHBOARD_ROUTE_PATH, routes as dashboardRoutes } from './routes/dashboard.routes';
+import { MODEL_PULL_RESPONSE_ROUTE, routes as modelRoutes } from './routes/api/model.routes';
 import { getClientScript } from '../lib';
 
 const routes: BunRoutes = {
   [DASHBOARD_ROUTE_PATH]: dashboardRoutes,
-  [RPC_ROUTE_PATH]: rpcRoutes
+  [RPC_ROUTE_PATH]: rpcRoutes,
+  [MODEL_PULL_RESPONSE_ROUTE]: modelRoutes
 };
 
 export default routes;
@@ -52,9 +54,6 @@ const fetchHandler: BunServerConfig['fetch'] = async function (request, server) 
     const didUpgrade = server.upgrade(request, {
       data: {
         channelId: new URL(request.url).searchParams.get('channelId')
-      },
-      headers: {
-        ...request.headers
       }
     });
     if (didUpgrade) return undefined;

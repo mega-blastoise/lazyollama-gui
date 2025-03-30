@@ -3,6 +3,7 @@ import {
   LazyOllamaWebThemeProvider,
   ToastProvider
 } from '@lazyollama-gui/typescript-react-components';
+import { WorkerProvider } from '@/gui/contexts';
 
 type Props = {
   children: React.ReactNode;
@@ -11,7 +12,11 @@ type Props = {
 function Layout({ children }: Props) {
   return (
     <LazyOllamaWebThemeProvider>
-      <ToastProvider>{children}</ToastProvider>
+      <ToastProvider>
+        <WorkerProvider>
+          {children}
+        </WorkerProvider>
+      </ToastProvider>
     </LazyOllamaWebThemeProvider>
   );
 }
