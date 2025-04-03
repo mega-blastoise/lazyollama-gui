@@ -12,4 +12,6 @@ const rpc = LazyOllamaRPCServerProvider.getInstance();
 
 rpc.start();
 
+logger.info('HMR in docker');
+
 logger.info('Server running @ %s', rpc.server!.url);

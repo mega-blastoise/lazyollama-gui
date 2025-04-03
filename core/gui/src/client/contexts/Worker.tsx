@@ -33,6 +33,7 @@ export function WorkerProvider({ children }: { children: React.ReactNode }) {
   
   useEffect(() => {
     console.log('Worker Context has mounted to the DOM');
+    setMounted(true);
     const $worker = initializeWorker();
     console.log('Worker ref: %o', $worker);
     if ($worker) {
@@ -54,6 +55,23 @@ export function WorkerProvider({ children }: { children: React.ReactNode }) {
       setWorker($worker);
       setSetupListeners(true);
       console.log('Finshed setting up listeners on worker ref');
+    } else {
+      /** 
+       * We should alert that we have failed to connect to the worker
+       * And we should intelligently re-try and dispatch an alert
+       * if we are able to connect
+       * or ultimately if we timeout and are unable
+       */
+      console.warn('Context Component [WorkerProvider]: Failed to connect to $worker reference. Re-trying...');
+      const intTime = 500;
+      const interval = setInterval(() => {
+        if (mounted && worker && setupListeners) {
+          clearInterval(interval);
+          console.log('Worker Context has attached to the worker reference');
+        } else {};
+      }, intTime);
+      const maxTime = 20000;
+      const timeout = setTimeout(() => clearInterval(interval), maxTime);
     }
   }, []);
 

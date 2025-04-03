@@ -100,6 +100,7 @@ async function workerPullModelJob(data: any, type: string) {
 
 onmessage = async (event) => {
   console.info('Worker (web) received message');
+  console.info('Event: %o', event);
 
   const data = event.data;
   const type: string = 'type' in data ? data.type : 'unknown';

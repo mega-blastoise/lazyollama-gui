@@ -3,9 +3,10 @@ import { Box, ChevronDown, Download, Play, Square, X, Loader } from 'lucide-reac
 import { Button, useToast } from '@lazyollama-gui/typescript-react-components';
 import { useApplicationStore } from '@/gui/store';
 import { OllamaModel } from '@/gui/types';
-import { ComprehensiveModel } from '../../DashboardModelsView.utils';
 import { postMessageToWorker } from '@/gui/workers';
 import { OllamaRPCAPIAction } from '@lazyollama-gui/typescript-common-types';
+import { ComprehensiveModel } from '../../DashboardModelsView.utils';
+import { default as LinearProgressLoader } from '@/gui/components/Atoms/LinearProgressLoader/LinearProgressLoader';
 
 function ModelCard({ model }: { model: ComprehensiveModel }) {
   const {
@@ -82,19 +83,19 @@ function ModelCard({ model }: { model: ComprehensiveModel }) {
 
       {expanded_model?.id === model.id && (
         <div className="lazyollama-gui__model-actions">
-          <Button
-            size="sm"
-            variant="outline"
-            disabled={model.downloaded || isInDownloadQueue}
-            onClick={onDownloadPress}
-          >
-            {isInDownloadQueue ? (
-              <Loader className="lazyollama-gui__button-icon" />
-            ) : (
+          {isInDownloadQueue ? (
+            <LinearProgressLoader value={undefined} infinite />
+          ) : (
+            <Button
+              size="sm"
+              variant="outline"
+              disabled={model.downloaded || isInDownloadQueue}
+              onClick={onDownloadPress}
+            >
               <Download className="lazyollama-gui__button-icon" />
-            )}
-            Pull Model
-          </Button>
+              Pull Model
+            </Button>
+          )}
 
           <Button size="sm" variant="outline" disabled={!model.downloaded || model.running}>
             <Play className="lazyollama-gui__button-icon" />
@@ -109,7 +110,6 @@ function ModelCard({ model }: { model: ComprehensiveModel }) {
             <X className="lazyollama-gui__button-icon" />
             Remove
           </Button>
-          {/* )} */}
         </div>
       )}
     </div>

@@ -1,4 +1,6 @@
-Bun.build({
+import { type BuildConfig } from 'bun';
+
+const WebClientConfiguration = {
   entrypoints: ['src/client/browser/hydrate.tsx', 'src/client/browser/worker.ts'],
   outdir: './out/gui/browser',
   target: 'browser',
@@ -15,4 +17,8 @@ Bun.build({
     entry: '[name].[hash].[ext]',
     chunk: '[name].[hash].[ext]'
   }
-});
+} as BuildConfig;
+
+Bun.build(WebClientConfiguration);
+
+export default WebClientConfiguration;

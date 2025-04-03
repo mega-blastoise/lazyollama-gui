@@ -1,0 +1,32 @@
+
+FROM oven/bun:1.2.4-alpine AS bun
+
+FROM bun as dev_workspace
+
+# Create app directory
+WORKDIR /app
+
+# Copy package.json files for dependency installation
+COPY ./package.json ./package.json
+COPY ./bun.lock* ./bun.lock*
+COPY ./turbo.json ./turbo.json
+COPY ./core/gui/package.json ./core/gui/package.json
+COPY ./packages ./packages
+
+FROM dev_workspace AS dev_install_deps
+
+# Install dependencies
+RUN bun install
+
+# We will mount the source code as a volume at runtime
+# This is for development only, not production use
+
+FROM dev_install_deps AS dev_runtime
+
+COPY ./core/gui ./core/gui
+
+# Expose port
+EXPOSE 4040
+
+# Start in development mode with hot reloading
+CMD ["bun", "run", "docker-dev"]

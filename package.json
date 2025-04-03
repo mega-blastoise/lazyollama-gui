@@ -19,7 +19,8 @@
     "check-types": "turbo run check-types",
     "build": "turbo run build",
     "format": "prettier --write \"**/*.{ts,tsx,js,jsx}\" --ignore-path .gitignore",
-    "docker": "turbo run docker"
+    "docker": "turbo run docker",
+    "docker-dev": "turbo run docker-dev"
   },
   "devDependencies": {
     "@types/bun": "^1.2.4",

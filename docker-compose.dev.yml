@@ -1,0 +1,74 @@
+services:
+  ollama:
+    image: ollama/ollama:latest
+    container_name: lazyollama
+    restart: unless-stopped
+    healthcheck:
+      test:  [ "CMD-SHELL", "bash", "-c", "{ printf >&3 'GET / HTTP/1.0\\r\\n\\r\\n'; cat <&3; } 3<>/dev/tcp/localhost/11434 | grep 'Ollama is running' || exit 1"  ]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+    ports:
+      - "11435:11434" # Remap external port in case user is already running Ollama 
+    expose:
+      - '11434'
+    volumes:
+      - ollama:/root/.ollama
+    networks:
+      - lazyollama-backend
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev.API
+    image: lazyollama/api:dev
+    container_name: lazyollama-api
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    expose:
+      - '3000'
+    depends_on:
+      - ollama
+    env_file:
+      - ./core/api/.env
+    volumes:
+      # Mount source code for hot reloading
+      - ./core/api:/app/core/api:rw
+      - ./packages:/app/packages:rw
+    networks:
+      - lazyollama-backend
+    environment:
+      - DEBUG=*
+      - NODE_ENV=development
+  gui:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev.GUI
+    image: lazyollama/gui:dev
+    container_name: lazyollama-gui
+    restart: unless-stopped
+    env_file:
+      - ./core/gui/.env
+    ports:
+      - "4040:4040"
+    expose:
+      - '4040'
+    depends_on:
+      - ollama
+      - api
+    volumes:
+      # Mount source code for hot reloading
+      - ./core/gui:/app/core/gui:rw
+      - ./packages:/app/packages:rw
+    networks:
+      - lazyollama-backend
+    environment:
+      - DEBUG=*
+      - NODE_ENV=development
+
+networks:
+  lazyollama-backend:
+
+volumes:
+  ollama:

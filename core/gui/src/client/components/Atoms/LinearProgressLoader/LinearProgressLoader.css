@@ -1,0 +1,58 @@
+/* LinearProgressLoader.css */
+:root {
+  /* Default theme variables - can be overridden at usage */
+  --progress-bg-color: #e0e0e0;
+  --progress-color: #2196f3;
+  --progress-secondary-color: #bbdefb;
+  --progress-animation-duration: 2s;
+  --progress-height: 4px;
+  --progress-border-radius: 4px;
+}
+
+.progress-container {
+  position: relative;
+  width: 100%;
+  height: var(--progress-height);
+  background-color: var(--progress-bg-color);
+  overflow: hidden;
+  border-radius: var(--progress-border-radius);
+}
+
+.progress-bar {
+  position: absolute;
+  height: 100%;
+  background-color: var(--progress-color);
+  transition: width 0.3s ease;
+  border-radius: var(--progress-border-radius);
+  left: 0;
+  top: 0;
+}
+
+/* Indeterminate animation styles */
+.progress-bar.indeterminate {
+  width: 30%;
+  animation: indeterminate-animation var(--progress-animation-duration) infinite;
+  background: linear-gradient(
+    90deg,
+    var(--progress-secondary-color) 0%,
+    var(--progress-color) 50%,
+    var(--progress-secondary-color) 100%
+  );
+  background-size: 200% 100%;
+}
+
+/* Animation for the indeterminate mode */
+@keyframes indeterminate-animation {
+  0% {
+    left: -30%;
+    background-position: 0% 0;
+  }
+  50% {
+    left: 100%;
+    background-position: 100% 0;
+  }
+  100% {
+    left: -30%;
+    background-position: 0% 0;
+  }
+}

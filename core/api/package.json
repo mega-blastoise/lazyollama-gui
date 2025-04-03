@@ -10,7 +10,8 @@
   "scripts": {
     "dev": "bun run --watch src/index.ts",
     "start": "bun run src/index.ts",
-    "docker": "DEBUG=* NODE_ENV=production bun start"
+    "docker": "DEBUG=* NODE_ENV=production bun start",
+    "docker-dev": "DEBUG=* NODE_ENV=development bun run dev"
   },
   "devDependencies": {
     "@lazyollama-gui/typescript-configs": "workspace:*",

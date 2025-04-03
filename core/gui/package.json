@@ -18,9 +18,10 @@
     "server:build": "DEBUG=* NODE_ENV=production bun run build/server.ts",
     "clean": "rm -rf out",
     "build": "run-p server:build web:build",
-    "dev": "DEBUG=* NODE_ENV=development bun run --watch src/index.ts",
+    "dev": "DEBUG=* NODE_ENV=development bun run --watch src/docker-hmr-bootstrap.ts",
     "start": "DEBUG=* NODE_ENV=production bun run out/index.js",
     "docker": "bun start",
+    "docker-dev": "bun run dev",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"
   },
