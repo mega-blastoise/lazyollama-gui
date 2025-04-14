@@ -1,12 +1,14 @@
 import React from 'react';
 import { Box, ChevronDown, Download, Play, Square, X, Loader } from 'lucide-react';
+import { OllamaRPCAPIAction } from '@lazyollama-gui/typescript-common-types';
 import { Button, useToast } from '@lazyollama-gui/typescript-react-components';
+
+import { default as LinearProgressLoader } from '@/gui/components/Atoms/LinearProgressLoader/LinearProgressLoader';
 import { useApplicationStore } from '@/gui/store';
 import { OllamaModel } from '@/gui/types';
 import { postMessageToWorker } from '@/gui/workers';
-import { OllamaRPCAPIAction } from '@lazyollama-gui/typescript-common-types';
+
 import { ComprehensiveModel } from '../../DashboardModelsView.utils';
-import { default as LinearProgressLoader } from '@/gui/components/Atoms/LinearProgressLoader/LinearProgressLoader';
 
 function ModelCard({ model }: { model: ComprehensiveModel }) {
   const {
@@ -83,19 +85,21 @@ function ModelCard({ model }: { model: ComprehensiveModel }) {
 
       {expanded_model?.id === model.id && (
         <div className="lazyollama-gui__model-actions">
-          {isInDownloadQueue ? (
-            <LinearProgressLoader value={undefined} infinite />
-          ) : (
-            <Button
-              size="sm"
-              variant="outline"
-              disabled={model.downloaded || isInDownloadQueue}
-              onClick={onDownloadPress}
-            >
-              <Download className="lazyollama-gui__button-icon" />
-              Pull Model
-            </Button>
-          )}
+          <Button
+            size="sm"
+            variant="outline"
+            disabled={model.downloaded || isInDownloadQueue}
+            onClick={onDownloadPress}
+          >
+            {isInDownloadQueue ? (
+              <LinearProgressLoader max={100} min={0} infinite />
+            ) : (
+              <>
+                <Download className="lazyollama-gui__button-icon" />
+                Pull Model
+              </>
+            )}
+          </Button>
 
           <Button size="sm" variant="outline" disabled={!model.downloaded || model.running}>
             <Play className="lazyollama-gui__button-icon" />

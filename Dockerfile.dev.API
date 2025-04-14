@@ -9,7 +9,6 @@ WORKDIR /app
 COPY ./package.json ./package.json
 COPY ./bun.lock* ./bun.lock*
 COPY ./turbo.json ./turbo.json
-COPY ./core/api/package.json ./core/api/package.json
 COPY ./packages ./packages
 
 FROM dev_workspace AS dev_install_deps
@@ -17,10 +16,17 @@ FROM dev_workspace AS dev_install_deps
 # Install dependencies
 RUN bun install
 
+RUN bun run build
+RUN bun run check-types
+
 # We will mount the source code as a volume at runtime
 # This is for development only, not production use
 
 FROM dev_install_deps AS dev_runtime
+
+COPY ./core/api/package.json ./core/api/package.json
+
+RUN bun install
 
 COPY ./core/api ./core/api
 

@@ -17,8 +17,10 @@ function setupSocketListeners() {
     switch (type) {
       case 'model-pull-resolved': {
         console.log('An event of type %s has occurred', type);
-        const { model, pulled, error, prestarted } = data;
+        const { model, pulled, error, prestarted } = data?.data || data || {};
+        console.log({ data });
         if (error || !pulled || !model) {
+          console.log('Getting into error block');
           postErrorMessage(error, data?.requestId, type);
         } else {
           postMessage({
@@ -71,17 +73,22 @@ async function workerPullModelJob(data: any, type: string) {
 
   const result = await rpc.model.pull.fn([model]);
 
-  const { response_data = undefined } =
-    ((result as unknown as { data: PullResult })?.data as PullResult) || result || {};
+  console.log('Queue Pull Result: %o', result);
 
-  if (response_data === undefined) {
+  const responseData =
+    'data' in result ? ('response_data' in (result.data as any) ? result.data : null) : null;
+
+  if (responseData === undefined) {
+    console.warn('Hitting Response Data is undefined block');
     postErrorMessage(result, data?.requestId, type);
     return;
   }
 
-  const { status } = response_data;
+  console.log('Response Data: %o', responseData);
 
-  if (status.toLowerCase() !== 'success') {
+  const { status } = (responseData || {}) as any;
+
+  if (status.toLowerCase() !== 'pull-queued') {
     postErrorMessage(result, data?.requestId, type);
     return;
   }

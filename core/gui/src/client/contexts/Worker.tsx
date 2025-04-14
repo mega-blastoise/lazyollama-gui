@@ -28,7 +28,8 @@ export function WorkerProvider({ children }: { children: React.ReactNode }) {
   const [worker, setWorker] = useState<ReturnType<typeof initializeWorker>>();
 
   const {
-    /** Update store when we receive events to from the worker  */
+    state: { apiQueues },
+    updateAppSharedState,
   } = useApplicationStore();
   
   useEffect(() => {
@@ -45,6 +46,9 @@ export function WorkerProvider({ children }: { children: React.ReactNode }) {
         const data = event?.data || {};
         console.info(event, data);
         switch (eventType) {
+          case '': {
+            break;
+          };
           default: {
             console.log('Unknown message type: %s', eventType);
             console.log('Data sent: %o', data);

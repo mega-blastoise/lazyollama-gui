@@ -5,3 +5,5 @@ import { hydrateRoot } from 'react-dom/client';
 import { Dashboard } from '../pages/Dashboard';
 
 hydrateRoot(document, <Dashboard />);
+
+export default {};

@@ -34,7 +34,7 @@ services:
       - ./core/api/.env
     volumes:
       # Mount source code for hot reloading
-      - ./core/api:/app/core/api:rw
+      - ./core/api/src:/app/core/api/src:rw
       - ./packages:/app/packages:rw
     networks:
       - lazyollama-backend
@@ -59,7 +59,7 @@ services:
       - api
     volumes:
       # Mount source code for hot reloading
-      - ./core/gui:/app/core/gui:rw
+      - ./core/gui/src:/app/core/gui/src:rw
       - ./packages:/app/packages:rw
     networks:
       - lazyollama-backend
