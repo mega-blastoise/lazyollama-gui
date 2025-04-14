@@ -88,7 +88,7 @@ async function workerPullModelJob(data: any, type: string) {
 
   const { status } = (responseData || {}) as any;
 
-  if (status.toLowerCase() !== 'pull-queued') {
+  if (status && status !== 'pull-queued') {
     postErrorMessage(result, data?.requestId, type);
     return;
   }
