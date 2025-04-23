@@ -2,6 +2,9 @@ import React, { createContext, useContext, useEffect, useState } from 'react';
 import { initializeWorker } from '@/gui/workers';
 import { useApplicationStore } from '../store';
 
+import { getComprehensiveModelsList } from '../components/DashboardModelsView/DashboardModelsView.utils';
+import { useToast } from '@lazyollama-gui/typescript-react-components';
+
 type WorkerContext = {
   state: {
     listeners: 'ready' | 'not-ready';
@@ -30,8 +33,12 @@ export function WorkerProvider({ children }: { children: React.ReactNode }) {
   const {
     state: { apiQueues },
     updateAppSharedState,
+    api,
+    updateApiState
   } = useApplicationStore();
-  
+
+  const { showToast } = useToast();
+
   useEffect(() => {
     console.log('Worker Context has mounted to the DOM');
     setMounted(true);
@@ -46,9 +53,54 @@ export function WorkerProvider({ children }: { children: React.ReactNode }) {
         const data = event?.data || {};
         console.info(event, data);
         switch (eventType) {
-          case '': {
+          case 'model-pull-resolved': {
+            /**
+             * We want to update our local state with a new field that says this model was downloaded in this session
+             */
+
+            const { model: modelSpec, pulled, prestarted } = data;
+
+            const model = getComprehensiveModelsList(api).find(
+              ({ model_spec }) => modelSpec === model_spec
+            );
+
+            const modelTags = api.models.remote.find(
+              ({ model: rmodel }) => rmodel === modelSpec
+            )?.tags;
+
+            if (pulled && model && modelTags) {
+              /**
+               * Remove the model from the pullQueued queue
+               */
+              updateAppSharedState({
+                apiQueues: {
+                  ...apiQueues,
+                  pullQueued: apiQueues.pullQueued.filter(
+                    (queueItem) => queueItem !== modelSpec
+                  )
+                }
+              });
+
+              /** 
+               * Add the model to the current session available
+               */
+              updateApiState({
+                ...api,
+                session: {
+                  ...api.session,
+                  available: [...api.session.available, { ...model, tags: [] }]
+                }
+              });
+            }
+
+            showToast({
+              variant: 'success',
+              content: `${modelSpec} was pulled successfully! You dog!`,
+              duration: 15000
+            });
+
             break;
-          };
+          }
           default: {
             console.log('Unknown message type: %s', eventType);
             console.log('Data sent: %o', data);
@@ -60,19 +112,22 @@ export function WorkerProvider({ children }: { children: React.ReactNode }) {
       setSetupListeners(true);
       console.log('Finshed setting up listeners on worker ref');
     } else {
-      /** 
+      /**
        * We should alert that we have failed to connect to the worker
        * And we should intelligently re-try and dispatch an alert
        * if we are able to connect
        * or ultimately if we timeout and are unable
        */
-      console.warn('Context Component [WorkerProvider]: Failed to connect to $worker reference. Re-trying...');
+      console.warn(
+        'Context Component [WorkerProvider]: Failed to connect to $worker reference. Re-trying...'
+      );
       const intTime = 500;
       const interval = setInterval(() => {
         if (mounted && worker && setupListeners) {
           clearInterval(interval);
           console.log('Worker Context has attached to the worker reference');
-        } else {};
+        } else {
+        }
       }, intTime);
       const maxTime = 20000;
       const timeout = setTimeout(() => clearInterval(interval), maxTime);

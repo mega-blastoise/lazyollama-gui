@@ -15,6 +15,7 @@ function ModelCard({ model }: { model: ComprehensiveModel }) {
     setExpandedModel,
     ui: { expanded_model },
     state: sharedState,
+    api: { session },
     updateAppSharedState
   } = useApplicationStore();
 
@@ -88,7 +89,13 @@ function ModelCard({ model }: { model: ComprehensiveModel }) {
           <Button
             size="sm"
             variant="outline"
-            disabled={model.downloaded || isInDownloadQueue}
+            disabled={
+              model.downloaded ||
+              Boolean(
+                session.available.find(({ model_spec }) => model_spec === model.model_spec)
+              ) ||
+              isInDownloadQueue
+            }
             onClick={onDownloadPress}
           >
             {isInDownloadQueue ? (
@@ -101,16 +108,39 @@ function ModelCard({ model }: { model: ComprehensiveModel }) {
             )}
           </Button>
 
-          <Button size="sm" variant="outline" disabled={!model.downloaded || model.running}>
+          <Button
+            size="sm"
+            variant="outline"
+            disabled={
+              !model.downloaded ||
+              !session.available.find(({ model_spec }) => model_spec === model.model_spec) ||
+              model.running
+            }
+          >
             <Play className="lazyollama-gui__button-icon" />
             Start Model
           </Button>
 
-          <Button size="sm" variant="outline" disabled={!model.running}>
+          <Button
+            size="sm"
+            variant="outline"
+            disabled={
+              !model.running ||
+              !session.running.find(({ model_spec }) => model_spec === model.model_spec)
+            }
+          >
             <Square className="lazyollama-gui__button-icon" />
             Stop Model
           </Button>
-          <Button size="sm" variant="outline" disabled={!model.downloaded || model.running}>
+          <Button
+            size="sm"
+            variant="outline"
+            disabled={
+              !model.downloaded ||
+              model.running ||
+              !session.available.find(({ model_spec }) => model_spec === model.model_spec)
+            }
+          >
             <X className="lazyollama-gui__button-icon" />
             Remove
           </Button>

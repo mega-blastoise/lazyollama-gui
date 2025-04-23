@@ -21,6 +21,12 @@ export type ApplicationStoreState = {
     };
   };
   api: {
+    session: {
+      available: OllamaModel[],
+      running: OllamaModel[],
+      stopped: OllamaModel[],
+      deleted: OllamaModel[]
+    },
     models: {
       available: OllamaModel[];
       running: OllamaModel[];
@@ -110,6 +116,12 @@ export const useApplicationStore = create<ApplicationStore>(($set) => ({
   },
 
   api: {
+    session: {
+      available: [],
+      deleted: [],
+      running: [],
+      stopped: [],
+    },
     models: {
       available: [],
       running: [],
