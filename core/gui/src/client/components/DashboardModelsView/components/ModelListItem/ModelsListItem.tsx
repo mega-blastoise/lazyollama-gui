@@ -55,12 +55,16 @@ function ModelCard({ model }: { model: ComprehensiveModel }) {
     <div key={model.id} className="lazyollama-gui__model-card">
       <div
         className="lazyollama-gui__model-header"
-        onClick={() =>
-          setExpandedModel({
-            ...model,
-            tags: [model.model_spec.replace(`${model.name}`, '')]
-          } as OllamaModel)
-        }
+        onClick={() => {
+          if (expanded_model?.id === model.id) {
+            setExpandedModel(null);
+          } else {
+            setExpandedModel({
+              ...model,
+              tags: [model.model_spec.replace(`${model.name}`, '')]
+            } as OllamaModel);
+          }
+        }}
       >
         <div className="lazyollama-gui__model-info">
           <Box

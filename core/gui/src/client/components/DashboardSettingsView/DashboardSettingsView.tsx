@@ -1,56 +1,100 @@
-import { useTheme } from '@lazyollama-gui/typescript-react-components';
-import React from 'react';
+import React, { useState } from 'react';
+import './DashboardSettingsView.css';
+import {
+  Button,
+  GlassCard,
+  Input,
+  Typography,
+  useTheme
+} from '@lazyollama-gui/typescript-react-components';
 
 function DashboardSettingsView() {
-  const { theme, toggleTheme } = useTheme();
+  const { theme, toggleMode, setTheme, isDark, colorScheme } = useTheme();
+  const [apiEndpoint, setApiEndpoint] = useState('http://localhost:3000');
+  const [apiTimeout, setApiTimeout] = useState('30');
+  const [autoRefresh, setAutoRefresh] = useState(true);
+
+  // Custom Toggle component
+  const Toggle = ({ isActive, onChange }) => {
+    return (
+      <div className={`toggle-wrapper ${isActive ? 'toggle-active' : ''}`} onClick={onChange}>
+        <div className="toggle-dot"></div>
+      </div>
+    );
+  };
+
   return (
-    <div className="lazyollama-gui__settings-tab">
-      <h3 className="lazyollama-gui__section-title lazyollama-gui__section-title--spaced">
-        Settings
-      </h3>
+    <div className="lazyollama-gui__settings-container">
+      <GlassCard hasBorder elevation="md">
+        <div className="lazyollama-gui__settings-card-content">
+          <Typography variant="h4" gutterBottom>
+            API Configuration
+          </Typography>
 
-      <div className="lazyollama-gui__settings-card">
-        <h4 className="lazyollama-gui__settings-title">API Configuration</h4>
+          <Input
+            label="Ollama API Endpoint"
+            value={apiEndpoint}
+            onChange={(e) => setApiEndpoint(e.target.value)}
+            isFullWidth
+          />
 
-        <div className="lazyollama-gui__settings-form">
-          <div className="lazyollama-gui__form-group">
-            <label className="lazyollama-gui__form-label">Ollama API Endpoint</label>
-            <input
-              type="text"
-              className="lazyollama-gui__form-input"
-              defaultValue="http://localhost:11434"
-            />
-          </div>
-
-          <div className="lazyollama-gui__form-group">
-            <label className="lazyollama-gui__form-label">API Timeout (seconds)</label>
-            <input type="number" className="lazyollama-gui__form-input" defaultValue="30" />
-          </div>
+          <Input
+            label="API Timeout (seconds)"
+            type="number"
+            value={apiTimeout}
+            onChange={(e) => setApiTimeout(e.target.value)}
+            isFullWidth
+          />
         </div>
-      </div>
+      </GlassCard>
 
-      <div className="lazyollama-gui__settings-card">
-        <h4 className="lazyollama-gui__settings-title">Interface Settings</h4>
+      <GlassCard hasBorder elevation="md">
+        <div className="lazyollama-gui__settings-card-content">
+          <Typography variant="h4" gutterBottom>
+            Interface Settings
+          </Typography>
 
-        <div className="lazyollama-gui__settings-form">
-          <div className="lazyollama-gui__toggle-row">
-            <label className="lazyollama-gui__form-label">Dark Mode</label>
-            <div
-              className={`lazyollama-gui__toggle ${theme === 'dark' ? 'lazyollama-gui__toggle--active' : ''}`}
-              onClick={toggleTheme}
-            >
-              <div className="lazyollama-gui__toggle-dot"></div>
+          <div className="lazyollama-gui__settings-row theme-mode-row">
+            <Typography variant="body1">Theme Mode</Typography>
+            <div className="theme-mode-buttons">
+              {isDark ? (
+                <Button variant="link" onClick={toggleMode} aria-label="Switch to light mode">
+                  Switch to Light
+                </Button>
+              ) : (
+                <Button variant="link" onClick={toggleMode} aria-label="Switch to dark mode">
+                  Switch to Dark
+                </Button>
+              )}
             </div>
           </div>
 
-          <div className="lazyollama-gui__toggle-row">
-            <label className="lazyollama-gui__form-label">Auto-refresh Running Models</label>
-            <div className="lazyollama-gui__toggle lazyollama-gui__toggle--active">
-              <div className="lazyollama-gui__toggle-dot"></div>
+          <div className="lazyollama-gui__settings-row color-scheme-row">
+            <Typography variant="body1">Color Scheme</Typography>
+            <div className="color-scheme-buttons">
+              <Button
+                variant={theme.includes('mint') ? 'secondary' : 'tertiary'}
+                onClick={() => setTheme(isDark ? 'mint-dark' : 'mint-light')}
+                aria-label="Use mint theme"
+              >
+                Mint
+              </Button>
+              <Button
+                variant={theme.includes('purple') ? 'secondary' : 'tertiary'}
+                onClick={() => setTheme(isDark ? 'purple-dark' : 'purple-light')}
+                aria-label="Use purple theme"
+              >
+                Lavender
+              </Button>
             </div>
           </div>
+
+          <div className="lazyollama-gui__settings-row">
+            <Typography variant="body1">Auto-refresh Running Models</Typography>
+            <Toggle isActive={autoRefresh} onChange={() => setAutoRefresh(!autoRefresh)} />
+          </div>
         </div>
-      </div>
+      </GlassCard>
     </div>
   );
 }

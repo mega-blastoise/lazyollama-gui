@@ -1,9 +1,9 @@
-@import "../DashboardModelsView/DashboardModelsView.css";
-@import "../DashboardRunningModelsView/DashboardRunningModelsView.css";
-@import "../DashboardSectionHeader/DashboardSectionHeader.css";
-@import "../DashboardSettingsView/DashboardSettingsView.css";
-@import "../DashboardSidebar/DashboardSidebar.css";
-@import "../DashboardStatsView/DashboardStatsView.css";
+@import '../DashboardModelsView/DashboardModelsView.css';
+@import '../DashboardRunningModelsView/DashboardRunningModelsView.css';
+@import '../DashboardSectionHeader/DashboardSectionHeader.css';
+@import '../DashboardSettingsView/DashboardSettingsView.css';
+@import '../DashboardSidebar/DashboardSidebar.css';
+@import '../DashboardStatsView/DashboardStatsView.css';
 
 .lazyollama-gui {
   font-family: 'Inter', sans-serif;
@@ -27,6 +27,7 @@
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  max-height: 100vh;
 }
 
 .lazyollama-gui__content {
@@ -59,6 +60,11 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 24px;
+  width: 100%;
+}
+
+.lazyollama-gui__models-header {
+  margin-bottom: 0;
 }
 
 .lazyollama-gui__section-title {

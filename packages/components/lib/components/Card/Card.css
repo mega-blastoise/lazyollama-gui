@@ -70,6 +70,7 @@
   display: flex;
   flex-direction: column;
   height: 100%;
+  width: 100%;
 }
 
 .sb-glass-card-align-start .sb-glass-card-content {
@@ -105,7 +106,9 @@
 [data-theme='mint-light'] .sb-glass-card-blur {
   background-color: rgba(255, 255, 255, var(--glass-opacity-light));
   border: var(--glass-border-light);
-  box-shadow: var(--glass-shadow-light), 0 0 15px var(--color-mint-glow);
+  box-shadow:
+    var(--glass-shadow-light),
+    0 0 15px var(--color-mint-glow);
 }
 
 /* Mint Dark Theme */
@@ -118,7 +121,9 @@
 [data-theme='mint-dark'] .sb-glass-card-blur {
   background-color: rgba(30, 30, 30, var(--glass-opacity-dark));
   border: var(--glass-border-dark);
-  box-shadow: var(--glass-shadow-dark), 0 0 20px var(--color-dark-mint-glow);
+  box-shadow:
+    var(--glass-shadow-dark),
+    0 0 20px var(--color-dark-mint-glow);
 }
 
 /* Purple Light Theme */
@@ -131,7 +136,9 @@
 [data-theme='purple-light'] .sb-glass-card-blur {
   background-color: rgba(255, 255, 255, var(--glass-opacity-light));
   border: var(--glass-border-light);
-  box-shadow: var(--glass-shadow-light), 0 0 15px var(--color-purple-glow);
+  box-shadow:
+    var(--glass-shadow-light),
+    0 0 15px var(--color-purple-glow);
 }
 
 /* Purple Dark Theme */
@@ -144,5 +151,7 @@
 [data-theme='purple-dark'] .sb-glass-card-blur {
   background-color: rgba(30, 30, 30, var(--glass-opacity-dark));
   border: var(--glass-border-dark);
-  box-shadow: var(--glass-shadow-dark), 0 0 20px var(--color-dark-purple-glow);
+  box-shadow:
+    var(--glass-shadow-dark),
+    0 0 20px var(--color-dark-purple-glow);
 }

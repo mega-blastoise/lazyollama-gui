@@ -19,7 +19,7 @@ function LazyOllamaDashboardSectionHeader() {
         {view === 'settings' && 'Settings'}
       </Typography>
 
-      <div className="theme-selection">
+      {/* <div className="theme-selection">
         {theme.includes('dark') ? (
           <Button variant="link" onClick={toggleMode} aria-label="Switch to light mode">
             Switch to Light
@@ -45,7 +45,7 @@ function LazyOllamaDashboardSectionHeader() {
             Lavender
           </Button>
         </div>
-      </div>
+      </div> */}
     </header>
   );
 }
