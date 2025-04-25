@@ -8,20 +8,20 @@ import {
   useTheme
 } from '@lazyollama-gui/typescript-react-components';
 
+// Custom Toggle component
+const Toggle = ({ isActive, onChange }) => {
+  return (
+    <div className={`toggle-wrapper ${isActive ? 'toggle-active' : ''}`} onClick={onChange}>
+      <div className="toggle-dot"></div>
+    </div>
+  );
+};
+
 function DashboardSettingsView() {
   const { theme, toggleMode, setTheme, isDark, colorScheme } = useTheme();
   const [apiEndpoint, setApiEndpoint] = useState('http://localhost:3000');
   const [apiTimeout, setApiTimeout] = useState('30');
   const [autoRefresh, setAutoRefresh] = useState(true);
-
-  // Custom Toggle component
-  const Toggle = ({ isActive, onChange }) => {
-    return (
-      <div className={`toggle-wrapper ${isActive ? 'toggle-active' : ''}`} onClick={onChange}>
-        <div className="toggle-dot"></div>
-      </div>
-    );
-  };
 
   return (
     <div className="lazyollama-gui__settings-container">
