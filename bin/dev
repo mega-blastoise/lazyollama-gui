@@ -1,0 +1,20 @@
+#!/bin/bash
+
+# Make script executable with: chmod +x dev.sh
+
+# Stop any existing dev containers
+echo "Stopping any existing devcontainers..."
+docker compose -f docker-compose.dev.yml down
+
+# Stop any existing prod containers
+echo "Stopping any existing prodcontainers..."
+docker compose -f docker-compose.yml down
+
+# Build and start the development containers
+echo "Building and starting development containers..."
+docker compose -f docker-compose.dev.yml up --build -d
+
+# Display logs
+echo "Development environment is up and running!"
+echo "Showing logs: (press Ctrl+C to exit logs, containers will continue running)"
+docker compose -f docker-compose.dev.yml logs -f

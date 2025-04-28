@@ -10,18 +10,18 @@ import {
 } from '@lazyollama-gui/typescript-common-types';
 import { type NodeHtmlParserHTMLElement } from './types';
 
-/**
- * What flows do we need to support?
- *
- * - Querying the remote model registry
- * - Pulling a model into memory from the remote model registry
- * - Starting a model
- * - Stopping a model
- * - Unloading a model
- * - Prompting a model
- * - Getting usage insights into memory and space usage of a model
- * - Get a state of all local models
- */
+type PullModelResult = {
+  model: string;
+  pulled: boolean;
+  prestarted?: boolean;
+  error?: Error | unknown;
+};
+
+type StartModelResult = {
+  model: string;
+  started: boolean;
+  error?: Error | unknown;
+};
 
 export class OllamaClient {
   private baseUrl = process.env.DOCKER_NETWORK_OLLAMA_API_URL;
@@ -165,7 +165,7 @@ export class OllamaClient {
       const body = JSON.stringify(payload);
       const response = await Bun.fetch(url.href, {
         method: 'POST',
-        headers: this.getPostRequestHeaders(body.length),
+        headers: this.getPostRequestHeaders(body),
         body
       });
       return response.json() as T;
@@ -196,11 +196,11 @@ export class OllamaClient {
     }
   }
 
-  private getPostRequestHeaders(contentLength: number) {
+  private getPostRequestHeaders(content: string) {
     return {
       'Content-Type': 'application/json',
       Accept: 'application/json',
-      'Content-Length': contentLength.toString()
+      'Content-Length': Buffer.byteLength(content).toString()
     };
   }
 
@@ -244,17 +244,24 @@ export class OllamaClient {
    * @param model The name of the model to pull.
    * @param stream Whether to stream the response.
    */
-  async pullModel(model: string, stream = false, prestart = true): Promise<void> {
+  async pullModel(model: string, stream = false, prestart = true): Promise<PullModelResult> {
     try {
       const payload = { model, stream };
       const cache = this.cache.get(OllamaClientCacheType.PullQueued)!;
       const cached = cache.has(model);
 
       if (cached) {
-        return;
+        return {
+          model,
+          pulled: true,
+          prestarted: this.cache.get(OllamaClientCacheType.Running)!.has(model)
+        };
       }
 
-      this._post<{ status: string }, typeof payload>('/api/pull', payload)
+      return this._post<
+        { error?: string | Error | unknown; status?: 'success' | any } & any,
+        typeof payload
+      >('/api/pull', payload)
         .then(this.getPullModelOnSuccessCallback(model, prestart).bind(this))
         .catch(this.getPullModelOnErrorCallback(model).bind(this));
     } catch (e) {
@@ -263,14 +270,46 @@ export class OllamaClient {
       } else {
         this.logger.error(`Error pulling model ${model}: ${e}`);
       }
+
+      return {
+        model,
+        pulled: Boolean(this.cache.get(OllamaClientCacheType.PullCompleted)?.has(model)),
+        error: e,
+        prestarted: Boolean(this.cache.get(OllamaClientCacheType.Running)?.has(model))
+      };
     }
   }
 
   private getPullModelOnSuccessCallback(
     model: string,
     prestart = true
-  ): ({ status }: { status: string }) => void {
-    return ({ status }) => {
+  ): (
+    params: { error?: string | Error | unknown; status?: 'success' | any } & any
+  ) => Promise<PullModelResult> {
+    return async (params) => {
+      if (params.error) {
+        this.logger.error(
+          `Exception thrown in getPullModelOnSuccessCallback model: ${model}, ollama api responded with error: ${params.error}`
+        );
+        this.cache.get(OllamaClientCacheType.PullCancelled)!.add(model);
+        setTimeout(
+          () => {
+            this.cache.get(OllamaClientCacheType.PullCancelled)!.delete(model);
+          },
+          60 * 60 * 1000
+        ); // 1 hour
+        this.cache.get(OllamaClientCacheType.PullQueued)!.delete(model);
+
+        return {
+          model,
+          pulled: false,
+          error: params.error,
+          prestarted: false
+        };
+      }
+
+      const status = params?.status;
+
       if (status === 'success') {
         this.cache.get(OllamaClientCacheType.PullQueued)!.delete(model);
         this.cache.get(OllamaClientCacheType.PullCompleted)!.add(model);
@@ -278,7 +317,27 @@ export class OllamaClient {
         this.logger.info(`Pulled model ${model}`);
 
         /** Preload the model into memory pre-emptively */
-        if (prestart) this.startModel(model);
+        if (prestart) {
+          return this.startModel(model).then(({ model, started, error }) => {
+            if (error) {
+              this.logger.warn('PrestartModel job resulted in an exception.');
+              return {
+                model,
+                pulled: true,
+                prestarted: false,
+                error
+              } as PullModelResult;
+            } else {
+              return {} as PullModelResult;
+            }
+          });
+        } else {
+          return {
+            model,
+            pulled: true,
+            prestarted: false
+          };
+        }
       } else {
         this.logger.error(`Error pulling model ${model}: ${status}`);
         this.cache.get(OllamaClientCacheType.PullCancelled)!.add(model);
@@ -289,12 +348,22 @@ export class OllamaClient {
           60 * 60 * 1000
         ); // 1 hour
         this.cache.get(OllamaClientCacheType.PullQueued)!.delete(model);
+
+        return {
+          model,
+          pulled: false,
+          prestarted: false,
+          error:
+            params?.error ||
+            params?.status ||
+            new Error(`${model} pull failed: unknown reason.`)
+        };
       }
     };
   }
 
   private getPullModelOnErrorCallback(model: string) {
-    return (e: unknown) => {
+    const onErr: (e: unknown) => PullModelResult = (e: unknown) => {
       if (e instanceof Error) {
         this.logger.error(`Error pulling model ${model}: ${e.message}`);
       } else {
@@ -302,33 +371,71 @@ export class OllamaClient {
       }
 
       this.cache.get(OllamaClientCacheType.PullQueued)!.delete(model);
+
+      return {
+        model,
+        pulled: false,
+        error: e,
+        prestarted: false
+      };
     };
+
+    return onErr;
   }
 
   /**
    * Start a model by loading it into memory (empty prompt).
    * @param model The model name to load.
    */
-  async startModel(model: string): Promise<any> {
+  async startModel(model: string): Promise<StartModelResult> {
+    this.logger.info('DownstreamClient requested "start" action on model %s', model);
+
     if (this.cache.get(OllamaClientCacheType.Running)!.has(model)) {
-      return;
+      return {
+        model,
+        started: true
+      };
     }
 
     // Sending an empty prompt loads the model into memory.
     const stream = false;
     const payload = { model, stream } as ChatPromptConfiguration;
 
-    const onSuccess = ({ done }: ChatPromptFinalResponse) => {
+    const onSuccess: ({
+      done,
+      error
+    }: ChatPromptFinalResponse & { error?: unknown }) => StartModelResult = ({
+      done,
+      error
+    }: ChatPromptFinalResponse & { error?: unknown }) => {
+      if (error) {
+        this.logger.error('"StartModel" Job resulted in an exception.');
+        this.logger.error(error);
+        return {
+          model,
+          started: false,
+          error
+        };
+      }
       if (done) this.cache.get(OllamaClientCacheType.Running)!.add(model);
+      return {
+        model,
+        started: true
+      };
     };
 
-    const onError = (e: unknown) => {
+    const onError: (e: unknown) => StartModelResult = (e: unknown) => {
       if (e instanceof Error) {
         this.logger.error(`Error starting model ${model}: ${e.message}`);
       } else {
         this.logger.error(`Error starting model ${model}: ${e}`);
       }
       this.cache.get(OllamaClientCacheType.Running)!.delete(model);
+
+      return {
+        model,
+        started: false
+      };
     };
 
     return this._post<ChatPromptFinalResponse, ChatPromptConfiguration>(

@@ -37,6 +37,7 @@ class LazyOllamaRPCCLient<APISpec extends RPCAPISpec>
   implements IRPCClient, ITypedRPCClient<APISpec>
 {
   private config;
+  private defaultTimeout = 15000;
   constructor(options: RPCClientConfig) {
     this.config = options;
 
@@ -52,7 +53,7 @@ class LazyOllamaRPCCLient<APISpec extends RPCAPISpec>
     const controller = new AbortController();
     const timeoutId = setTimeout(() => {
       controller.abort();
-    }, this.config.timeout);
+    }, this.config.timeout ?? this.defaultTimeout);
 
     try {
       const response = await fetch(this.config.rpcUrl, {

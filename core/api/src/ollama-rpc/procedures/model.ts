@@ -6,6 +6,8 @@ import {
   OllamaClientCacheType
 } from '@lazyollama-gui/typescript-common-types';
 
+import logger from '../../log';
+
 export type PullModelRPCConfiguration = {
   method: OllamaRPCAPIAction.ModelPull;
   params: IOllamaRPCAPI[OllamaRPCAPIAction.ModelPull]['params'];
@@ -20,10 +22,13 @@ export async function pullModel(
   const timer = new Timer();
   timer.start();
 
+  logger.info('OllamaAPIRPCServer has received a request to pull model %s', model);
+
   const ollama = LazyOllama.getInstance();
   const state = ollama.getLocalModelState(model);
 
   if (state[model]?.includes(OllamaClientCacheType.Running)) {
+    logger.warn('Model has already been pulled and is currently running.');
     timer.stop();
     return {
       requested_method: 'pullModel',
@@ -36,6 +41,7 @@ export async function pullModel(
   }
 
   if (state[model]?.includes(OllamaClientCacheType.Available)) {
+    logger.warn('Model has already been pulled.');
     timer.stop();
     return {
       requested_method: 'pullModel',
@@ -47,12 +53,91 @@ export async function pullModel(
     };
   }
 
+  logger.warn('Attempting clean pull of model %s from <https://ollama.com/library>.', model);
+
   const stream = false;
   const prestart = false;
 
-  ollama.pullModel(model, stream, prestart);
+  /**
+   * SECTION Event Dispatching
+   * Okay so, point of contention.
+   *
+   * We have this ollama client, and it can perform async operations against the ollama rest api
+   * They can take a variable amount of time, but in the shortest case for clean pulls they'll be long.
+   *
+   * This is of those cases where it's likely not easier to block the request response cycle on awaiting promise execution
+   *
+   * Small models are like 1gb, and larger ones could be 70+gb
+   * So the download time is a downhill curve here.
+   *
+   * It might make the most sense to attach a callback that we want to fire
+   * when the download completes, and then handle each case (Success, Error) accordingly.
+   *
+   * This will force us into a pattern in which we now need to POST the result of this operation back to the requesting scope
+   * Which in this case is gui:4040/api
+   *
+   * This is more akin to an event driven architecture but we're not using a message or event broker.
+   * Instead, different parts of the architecture have information pathways to queue up different events for
+   * other parts of the system to react/respond to.
+   * !SECTION Event Dispatching
+   */
+  ollama.pullModel(model, stream, prestart).then(async (result) => {
+    const { model, pulled, error, prestarted } = result;
+
+    logger.info('The "PullModel" Job has completed.');
+
+    if (error) {
+      logger.warn(
+        'The "PullModel" Job has completed, but an error was thrown during the operation.'
+      );
+      logger.warn(error);
+    }
+
+    logger.info(
+      'Attempting to POST a PullModel update to GUI for model %s, pulled: %s, error: %s, prestarted: %s',
+      model,  
+      pulled,
+      error,
+      prestarted
+    );
+
+    try {
+      const base = process.env.DOCKER_NETWORK_GUI_SERVER_URL;
+      if (!base) {
+        throw new Error('DOCKER_NETWORK_GUI_SERVER_URL must be set.');
+      }
+      const url = new URL(`api/models/pull/response`, base);
+
+      logger.info('Attempting to POST a PullModel update to GUI @ URI ', url.href);
+
+      const body = JSON.stringify({ model, pulled, error, prestarted });
+
+      logger.info('Body: %s', body);
+
+      const res = await Bun.fetch(url, {
+        method: 'POST',
+        body,
+        headers: {
+          'Content-Type': 'application/json',
+          'Content-Length': Buffer.byteLength(body).toString(),
+          'Content-Encoding': 'gzip, br',
+          Accept: 'application/json'
+        }
+      });
+
+      if (res.status === 200) {
+        logger.info('Pull Update Post succeded.');
+      } else {
+        logger.warn(res.statusText);
+      }
+    } catch (e) {
+      logger.warn('An exception was thrown while trying to POST a PullModel update to GUI');
+    }
+  });
 
   timer.stop();
+
+  logger.info('"PullModelJob" Queued.');
 
   return {
     requested_method: 'pullModel',

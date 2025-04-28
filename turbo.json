@@ -32,6 +32,10 @@
       "docker": {
         "cache": false,
         "dependsOn": ["^docker"]
+      },
+      "docker-dev": {
+        "cache": false,
+        "dependsOn": ["build", "check-types", "^docker-dev"]
       }
     }
   }

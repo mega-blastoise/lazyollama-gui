@@ -39,6 +39,7 @@ export abstract class ILazyOllamaRPCServer<T extends RPCAPISpec> {
     handler: RPCMethod<T[M]['result'], T[M]['params']>,
     replace = false
   ): boolean {
+    this.logger.warn('Setting up handler for method %s', method);
     if (this.handlers.has(method)) {
       if (replace) {
         this.handlers.set(method, handler);
@@ -59,6 +60,7 @@ export abstract class ILazyOllamaRPCServer<T extends RPCAPISpec> {
   }
 
   public start(): void {
+    this.logger.info('Starting bun rpc server...');
     this.server = Bun.serve({
       hostname: this.host,
       port: this.port,
@@ -118,6 +120,8 @@ export abstract class ILazyOllamaRPCServer<T extends RPCAPISpec> {
 
         const { method, params } = body;
 
+        this.logger.info('DownstreamClient has requested %s be invoked with %o params', method, params);
+
         const handler = this.handlers.get(method);
 
         if (!handler) {
@@ -126,9 +130,11 @@ export abstract class ILazyOllamaRPCServer<T extends RPCAPISpec> {
 
         const result: T[typeof method]['result'] = await handler(...params);
 
+        this.logger.info('method %s resulted in: ', method, result);
+
         const packet = { data: result };
 
-        return Response.json(packet, { status: 200 });
+        return Response.json(packet, { status: 200, statusText: 'OK' });
       } catch (e) {
         this.logger.error('Error handling incoming request');
         this.logger.error(e);

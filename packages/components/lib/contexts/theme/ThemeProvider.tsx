@@ -14,11 +14,12 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({
   children,
   initialTheme = 'mint-light'
 }) => {
-  // Initialize theme from localStorage or system preference
   const [theme, setThemeState] = useState<Theme>(() => {
-    const savedTheme = localStorage.getItem('theme') as Theme | null;
+    if (typeof window === 'undefined') return initialTheme;
 
-    if (!savedTheme && typeof window !== 'undefined' && window?.matchMedia) {
+    const savedTheme = window.localStorage.getItem('theme') as Theme | null;
+
+    if (!savedTheme) {
       const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
       return prefersDark ? 'mint-dark' : 'mint-light';
     }
@@ -26,11 +27,8 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({
     return savedTheme || initialTheme;
   });
 
-  // Save theme to localStorage when it changes
   useEffect(() => {
-    localStorage.setItem('theme', theme);
-
-    // Apply theme to document for potential global CSS selectors
+    window.localStorage.setItem('theme', theme);
     document.documentElement.setAttribute('data-theme', theme);
   }, [theme]);
 
