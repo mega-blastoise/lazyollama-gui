@@ -1,7 +1,7 @@
 import React, { useMemo, useDeferredValue, Suspense } from 'react';
 import { Search } from 'lucide-react';
 import { useApplicationStore } from '@/gui/store';
-import { Button, Typography } from '@lazyollama-gui/typescript-react-components';
+import { Button, GlassCard, Typography } from '@lazyollama-gui/typescript-react-components';
 import { ModelsList } from './components/ModelsList';
 import { getComprehensiveModelsList, filterEngine } from './DashboardModelsView.utils';
 
@@ -106,65 +106,67 @@ function LazyOllamaDashboardModelsView() {
 
   return (
     <div className="lazyollama-gui__models-tab">
-      <div className="lazyollama-gui__section-header">
-        <Typography variant="h3" weight="semibold" className="lazyollama-gui__section-title">
-          Model Management
-        </Typography>
+      <GlassCard className="lazyollama-gui__models-header-container" alignment="center">
+        <div className="lazyollama-gui__section-header lazyollama-gui__models-header">
+          <Typography variant="h3" weight="semibold" className="lazyollama-gui__section-title">
+            Model Management
+          </Typography>
 
-        <div className="lazyollama-gui__section-actions">
-          <div className="lazyollama-gui__search-container">
-            <Search className="lazyollama-gui__search-icon" />
-            <input
-              type="text"
-              className="lazyollama-gui__search-input"
-              placeholder="Search..."
-              onChange={(event) => setSearch(event.target.value)}
-              value={search}
-            />
+          <div className="lazyollama-gui__section-actions">
+            <div className="lazyollama-gui__search-container">
+              <Search className="lazyollama-gui__search-icon" />
+              <input
+                type="text"
+                className="lazyollama-gui__search-input"
+                placeholder="Search..."
+                onChange={(event) => setSearch(event.target.value)}
+                value={search}
+              />
+            </div>
           </div>
         </div>
-      </div>
 
-      <div className="lazyollama-gui__models-filters">
-        <div className="lazyollama-gui__filter-buttons">
-          <Button
-            onClick={onPopularChipClick}
-            variant={popular ? 'secondary' : 'outline'}
-            size="sm"
-          >
-            Popular
-          </Button>
-          <Button onClick={onAllChipClick} variant={all ? 'secondary' : 'outline'} size="sm">
-            All
-          </Button>
-          <Button
-            onClick={onRunningChipClick}
-            variant={running ? 'secondary' : 'outline'}
-            size="sm"
-          >
-            Running
-          </Button>
-          <Button
-            onClick={onDownloadedChipClick}
-            variant={downloaded ? 'secondary' : 'outline'}
-            size="sm"
-          >
-            Downloaded
-          </Button>
-        </div>
-
-        <div className="lazyollama-gui__pagination">
-          <Button onClick={onPreviousPageClick} variant="outline" size="sm">
-            Previous
-          </Button>
-          <div className="lazyollama-gui__pagination-info nunito-sans">
-            {page} Page of {pages}
+        <div className="lazyollama-gui__models-filters">
+          <div className="lazyollama-gui__filter-buttons">
+            <Button
+              onClick={onPopularChipClick}
+              variant={popular ? 'secondary' : 'outline'}
+              size="sm"
+            >
+              Popular
+            </Button>
+            <Button onClick={onAllChipClick} variant={all ? 'secondary' : 'outline'} size="sm">
+              All
+            </Button>
+            <Button
+              onClick={onRunningChipClick}
+              variant={running ? 'secondary' : 'outline'}
+              size="sm"
+            >
+              Running
+            </Button>
+            <Button
+              onClick={onDownloadedChipClick}
+              variant={downloaded ? 'secondary' : 'outline'}
+              size="sm"
+            >
+              Downloaded
+            </Button>
           </div>
-          <Button onClick={onNextPageClick} variant="outline" size="sm">
-            Next
-          </Button>
+
+          <div className="lazyollama-gui__pagination">
+            <Button onClick={onPreviousPageClick} variant="outline" size="sm">
+              Previous
+            </Button>
+            <div className="lazyollama-gui__pagination-info nunito-sans">
+              {page} Page of {pages}
+            </div>
+            <Button onClick={onNextPageClick} variant="outline" size="sm">
+              Next
+            </Button>
+          </div>
         </div>
-      </div>
+      </GlassCard>
       <Suspense fallback={<div className="loader" data-loader-size="5xl"></div>}>
         <ModelsList models={models.slice(range[0], range[1])} range={[range[0], range[1]]} />
       </Suspense>
