@@ -11,4 +11,4 @@ jobs:
           node-version: '20'
       - run: npm install -g bats
       - run: bats -v
-      - run: PRINT would run job on lazyOllama Push
+      - run: echo would run job on lazyOllama Push
